@@ -1,0 +1,37 @@
+
+body{
+    
+    padding:1px;
+    margin:1px;
+    display:flex;
+}
+form{
+    border:1px solid black;
+    width: 400px;
+    height:300px;
+    padding:50px ;
+    margin:100px auto;
+    }
+#login{
+    text-align: center;
+    font-style:normal;
+    padding: 10px;
+}   
+.container {
+    padding:30px ;
+}
+span.psw{
+    float:right;
+    padding:11px;
+    font-size: 11px;
+}
+button{
+    padding:1px;
+    font-size:16px ;
+    font-style: bold;
+    margin:10px;
+}
+button:hover {
+        opacity: 0.9;
+}
+
