@@ -9,7 +9,7 @@ form{
     border:1px solid black;
     width: 400px;
     height:300px;
-    padding:50px ;
+    padding:50px 5px 50px 50px;
     margin:100px auto;
     }
 #login{
@@ -21,15 +21,17 @@ form{
     padding:30px ;
 }
 span.psw{
-    float:right;
+    float:left;
     padding:11px;
     font-size: 11px;
+    margin:5px;
 }
 button{
-    padding:1px;
-    font-size:16px ;
+    padding:2px;
+    font-size:14px ;
     font-style: bold;
-    margin:10px;
+    margin:10px 50px 50px 100px;
+    
 }
 button:hover {
         opacity: 0.9;
