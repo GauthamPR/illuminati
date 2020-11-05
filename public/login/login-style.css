@@ -1,4 +1,22 @@
+@media only screen and (max-width : 700px) {
+   .form       {border: 2px solid black;
+    width: 250px;
+    height: 350px;
+    padding: 50px;
+    margin: 100px auto;}
+    button {
+        padding: 2px;
+        font-size: 14px;
+        font-style: bold;
+        margin: 10px;
+    }
 
+    .container {
+        padding: 20px;
+    }
+
+
+}
 body{
     
     padding:1px;
@@ -9,13 +27,13 @@ form{
     border:1px solid black;
     width: 400px;
     height:300px;
-    padding:50px 5px 50px 50px;
+    padding:50px 5px 50px 40px;
     margin:100px auto;
     }
 #login{
-    text-align: center;
+    text-align:center;
     font-style:normal;
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
 }   
 .container {
     padding:30px ;
