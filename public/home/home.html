@@ -4,11 +4,31 @@
         <link rel="stylesheet" href="../style.css">
       </head>
 <body>
-
-<ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li style="float:right"><a href="#about">Log in</a></li>
-</ul>
-
+  <div class="navbar">
+    <a  href="#home">Home</a>
+     <a href="#myrequests">My Requests</a> 
+     <a href="#myapprovals">My Approvals</a>
+    <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction()">Log in
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content" id="myDropdown">
+      <a href="#addordelete">ADD OR DELETE MEMBERS</a>
+      <a href="#changeuserpass">CHANGE USERNAME OR PASSWORD</a>
+      <a href="#signout"><u>SIGN OUT</u></a>
+    </div>
+    </div> 
+  </div>
+  
+  
+  <script>
+  /* When the user clicks on the button, 
+  toggle between hiding and showing the dropdown content */
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+  
+  
+  </script>
 </body>
 </html>
