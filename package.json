@@ -1,0 +1,22 @@
+{
+  "name": "illuminati",
+  "version": "1.0.0",
+  "description": "Reservation Site",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GauthamPR/illuminati.git"
+  },
+  "author": "Anaith A, Gautham P R, Swathi R M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GauthamPR/illuminati/issues"
+  },
+  "homepage": "https://github.com/GauthamPR/illuminati#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
