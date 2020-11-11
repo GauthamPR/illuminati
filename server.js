@@ -1,7 +1,10 @@
 const express = require('express');
+const connection = require('./connection.js');
 require('dotenv').config();
 
 const app = express();
+
+connection();
 
 app.use(express.static(__dirname + '/public'));
 
