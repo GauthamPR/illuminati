@@ -1,0 +1,61 @@
+@media only screen and (max-width : 700px)
+ {
+    .form {
+        border: 1px solid black;
+        width: 350px;
+        height: 420px;
+        padding: 50px 5px 50px 40px;
+        margin: 100px auto;
+    }
+
+    .container {
+        padding: 20px 5px;
+    }
+    
+    .button {
+        padding: 2px;
+        font-size: 14px;
+        font-style: bold;
+        margin: 10px 5px 5px 75px;
+    }
+
+}
+/* css code */
+body{
+    
+    padding:1px;
+    margin:1px;
+    display:flex;
+}
+form{
+    border:1px solid black;
+    width: 400px;
+    height:300px;
+    padding:50px 5px 50px 40px;
+    margin:100px auto;
+    }
+#login{
+    text-align:center;
+    font-style:normal;
+    padding: 10px 40px 10px 10px;
+}   
+.container {
+    padding:30px ;
+}
+span.psw{
+    float:left;
+    padding:11px;
+    font-size: 11px;
+    margin:5px;
+}
+button{
+    padding:2px;
+    font-size:14px ;
+    font-style: bold;
+    margin:10px 50px 50px 100px;
+    
+}
+button:hover {
+        opacity: 0.9;
+}
+
