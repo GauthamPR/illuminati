@@ -9,11 +9,11 @@ connection();
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res)=> {
-    res.sendFile(process.cwd() + '/public/home/home.html');
+    res.sendFile(process.cwd() + '/views/home/home.html');
 })
 
 app.get('/login', (req, res)=> {
     app.use(express.static(__dirname + '/public/login'));
-    res.sendFile(process.cwd() + '/public/login/login.html');
+    res.sendFile(process.cwd() + '/views/login/login.html');
 })
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
