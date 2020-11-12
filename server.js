@@ -9,6 +9,7 @@ connection();
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res)=> {
+    app.use(express.static(__dirname+'/views/home'));
     res.sendFile(process.cwd() + '/views/home/home.html');
 })
 
