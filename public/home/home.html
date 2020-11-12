@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-<link rel="stylesheet" href="cards.css">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+    <head>
+        <link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="cards.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+    <script>
 
+function myFunction() 
+  {  
+     document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+window.onclick = function(e) 
+ {
+  if (!e.target.matches('.dropbtn')) 
+  {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) 
+	{
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+  
+  </script>
+
+<body>
+  <div class="navbar">
+    <a  href="#home">Home</a>
+     <a href="#myrequests">My Requests</a> 
+     <a href="#myapprovals">My Approvals</a>
+    <div class="dropdown">
+    <button class="dropbtn" onclick="myFunction()">Log in
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content" id="myDropdown">
+      <a href="#addordelete">ADD OR DELETE MEMBERS</a>
+      <a href="#changeuserpass">CHANGE USERNAME OR PASSWORD</a>
+      <a href="#signout"><u>SIGN OUT</u></a>
+    </div>
+    </div> 
+  </div>
+  
 <h3>Upcoming Events</h3>
 <hr>
 <div class="row">
@@ -81,5 +118,6 @@
       </div>
     </div>
   </div>
+
 </body>
 </html>
