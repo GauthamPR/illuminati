@@ -5,7 +5,6 @@ module.exports= function(){
     mongoose.connect(process.env.URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
         .then(()=>{
             console.log("CONNECTED TO DB");
-            initial();
         })
         .catch(error => console.log(error));
 }

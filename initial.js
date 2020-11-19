@@ -47,6 +47,7 @@ var arrayOfUsers = [
 module.exports= function(){
     const personSchema = new mongoose.Schema({
         name: String,
+        admNo: Number,
         email: String,
         designation: String,
         parentID: ObjectID,
@@ -72,11 +73,10 @@ module.exports= function(){
             })
         }
     }
-    var printDatabase = function(err, data){
-        console.log("DATABASE: ", data);
-    }
 
     arrayOfUsers.forEach(elem => {
         savePerson(elem, assignParentID);       
     });
+
+    console.log("DATABASE UPDATED");
 }
