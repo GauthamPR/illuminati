@@ -4,6 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 var arrayOfUsers = [
     {
         name: "Soniya",
+        admNo: 181001,
         email: "soniya@gmail.com",
         designation: "IEEE Regional Head",
         parent: null,
@@ -11,6 +12,7 @@ var arrayOfUsers = [
     },
     {
         name: "Arundhathi",
+        admNo: 181002,
         email: "arundhathi@gmail.com",
         designation: "IEEE Student Head",
         parent: "Soniya",
@@ -18,6 +20,7 @@ var arrayOfUsers = [
     },
     {
         name: "Subbu",
+        admNo: 182001,
         email: "subbu@gmail.com",
         designation: "CS HOD",
         parent: null,
@@ -25,6 +28,7 @@ var arrayOfUsers = [
     },
     {
         name: "Kuttymalu",
+        admNo: 182002,
         email: "kuttymalu@gmail.com",
         designation: "Lanscape Faculty Head",
         parent: "Subbu",
@@ -32,6 +36,7 @@ var arrayOfUsers = [
     },
     {
         name: "Sreehari",
+        admNo: 182003,
         email: "sreehari@gmail.com",
         designation: "Lanscape Student Head",
         parent: "Kuttymalu",

@@ -1,12 +1,17 @@
 const express = require('express');
 const connection = require('./connection.js');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
 
-
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
 
+app.post('/loginInfo', (req, res)=> {
+    console.log(req.body);
+    res.send("Logged In");
+})
 app.get('/', (req, res)=> {
     res.sendFile(process.cwd() + '/views/home.html');
 })
