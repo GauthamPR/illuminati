@@ -1,34 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="css/login.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In - #website Name</title>
-</head>
-<body>
-    <div id="vis-holder">
-        <div id="header-form">
-            <div>Sign In</div>
-        </div>
-        <form action="/loginInfo" method="POST">
-            <div id="input-form">
-                <div class="containers">
-                    <label for="admNo">Admission Number</label>
-                    <input name="admNo" class="text-input" type="number" placeholder="Enter Admission Number">
-                </div>
-                <div class="containers">
-                    <label for="password">Password</label>
-                    <input name="password" class="text-input" type="password" placeholder="Enter Password">
-                </div>
-            </div>
-            <div id="submit-form">
-                <div id="forgot-password">
-                    <a href="#forgotPassword">forgot password?</a>
-                </div>
-                <button id="signin-button" type="submit">Sign In</button>
+<html>
+    <head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/login.css">   
+    </head>    
+    <body>    
+        <form>
+            <h1 id="login"> LOGIN </h1>
+            <div class="container">
+                <label for="uname">Username</label> &nbsp;&nbsp; <!-- space-->
+                <input type="text" id="username" placeholder="username"></br></br> </br>
+
+                <label for="psw">Password</label> &nbsp;&nbsp;&nbsp;
+                <input type="password" id="password" placeholder="password"></br></br>
+                
+                <span class="psw" text-align:left;> <a href="#">forgot password?</a></span>
+                <button type="submit" value="SUBMIT">SUBMIT</button> &nbsp;
             </div>
         </form>
-    </div>
-</body>
+    </body>
 </html>
