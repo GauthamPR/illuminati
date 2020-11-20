@@ -3,7 +3,7 @@ const { ObjectID } = require('mongodb');
 const mongoose = require('mongoose');
 const initial = require('./initial.js');
 
-module.exports= function(done){
+module.exports = function(done){
 
     mongoose.connect(process.env.URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
         .then(()=>{
