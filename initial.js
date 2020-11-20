@@ -58,7 +58,7 @@ module.exports= function(Users, Requests, Rooms){
             Users.findOne({name: userData.parent}, (err, parent)=> {
                 Users.findOneAndUpdate({name: userData.name}, {parentID: parent["_id"]}, (err, updatedUser)=> {
                     if(err) console.log(err);
-                    console.log("UPDATED: ", updatedUser.name)
+                    console.log("UPDATED: ");
                 })
             })
         }
