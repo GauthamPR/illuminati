@@ -45,4 +45,10 @@ app.route('/logout')
         res.redirect('/');
     })
 
+
+app.use((req, res, next)=>{
+    res.status(404)
+        .type('txt')
+        .send('Not Found');
+});
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
