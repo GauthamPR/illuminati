@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const ObjectID = require('mongodb').ObjectID;
+const bcrypt = require('bcrypt');
 
 var arrayOfUsers = [
     {
@@ -56,6 +56,8 @@ var arrayOfUsers = [
 
 module.exports= function(Users, Requests, Rooms){
     var savePerson = function(userData, done){
+        const hash = bcrypt.hashSync(userData.password, 12);
+        userData.password = hash;
         var user = new Users(userData);
         user.save((err, data)=> {
             if (err) return console.log(err);

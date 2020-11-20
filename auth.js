@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const connection = require('./connection.js');
+const bcrypt = require('bcrypt');
 
 require('dotenv').config();
 
@@ -46,7 +47,7 @@ module.exports = {
                 console.log('User', userID, 'attempted to login');
                 if(err) {return done(err);}
                 if(!user) {return done(null, false);}
-                if(password != user.password){
+                if(!bcrypt.compareSync(password, user.password)){
                     console.log("Wrong Password");
                     return done(null, false);
                 }
