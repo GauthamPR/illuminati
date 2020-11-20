@@ -30,4 +30,7 @@ app.get('/my-requests', (req, res)=> {
 app.get('/new-request', (req, res)=> {
     res.sendFile(process.cwd() + '/views/new-request.html');
 })
+app.get('/my-approvals', (req, res)=> {
+    res.sendFile(process.cwd() + '/views/my-approvals.html');
+})
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
