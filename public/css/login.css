@@ -46,11 +46,14 @@ input[type=number] {
     justify-content: space-around;
     align-items: center;
 }
-.text-input:focus{
+input:focus{
     outline: 1px solid rgb(94, 158, 214);
     border-radius: 0px;
 }
-.text-input{
+input:invalid{
+    border-radius: 0px;
+}
+input{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 16px;
     border-radius: 4px;

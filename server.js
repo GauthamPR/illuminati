@@ -6,7 +6,6 @@ const { ObjectID } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-connection();
 app.use(passport.initialize(), passport.session());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
