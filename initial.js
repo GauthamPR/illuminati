@@ -4,6 +4,7 @@ const ObjectID = require('mongodb').ObjectID;
 var arrayOfUsers = [
     {
         name: "Soniya",
+        admNo: 181001,
         email: "soniya@gmail.com",
         designation: "IEEE Regional Head",
         parent: null,
@@ -11,6 +12,7 @@ var arrayOfUsers = [
     },
     {
         name: "Arundhathi",
+        admNo: 181002,
         email: "arundhathi@gmail.com",
         designation: "IEEE Student Head",
         parent: "Soniya",
@@ -18,6 +20,7 @@ var arrayOfUsers = [
     },
     {
         name: "Subbu",
+        admNo: 182001,
         email: "subbu@gmail.com",
         designation: "CS HOD",
         parent: null,
@@ -25,6 +28,7 @@ var arrayOfUsers = [
     },
     {
         name: "Kuttymalu",
+        admNo: 182002,
         email: "kuttymalu@gmail.com",
         designation: "Lanscape Faculty Head",
         parent: "Subbu",
@@ -32,6 +36,7 @@ var arrayOfUsers = [
     },
     {
         name: "Sreehari",
+        admNo: 182003,
         email: "sreehari@gmail.com",
         designation: "Lanscape Student Head",
         parent: "Kuttymalu",
@@ -39,19 +44,10 @@ var arrayOfUsers = [
     }
 ];
 
-module.exports= function(){
-    const personSchema = new mongoose.Schema({
-        name: String,
-        email: String,
-        designation: String,
-        parentID: ObjectID,
-        parent: String
-    });
-    var personModel = mongoose.model('personModel', personSchema);
-    
+module.exports= function(Users, Requests, Rooms){
     var savePerson = function(userData, done){
-        var person = new personModel(userData);
-        person.save((err, data)=> {
+        var user = new Users(userData);
+        user.save((err, data)=> {
             if (err) return console.log(err);
             done(err, data);
         })
@@ -59,19 +55,18 @@ module.exports= function(){
 
     var assignParentID = function(err, userData){
         if(userData.parent != null){
-            personModel.findOne({name: userData.parent}, (err, parent)=> {
-                personModel.findOneAndUpdate({name: userData.name}, {parentID: parent["_id"]}, (err, updatedUser)=> {
+            Users.findOne({name: userData.parent}, (err, parent)=> {
+                Users.findOneAndUpdate({name: userData.name}, {parentID: parent["_id"]}, (err, updatedUser)=> {
                     if(err) console.log(err);
                     console.log("UPDATED: ", updatedUser.name)
                 })
             })
         }
     }
-    var printDatabase = function(err, data){
-        console.log("DATABASE: ", data);
-    }
 
     arrayOfUsers.forEach(elem => {
         savePerson(elem, assignParentID);       
     });
+
+    console.log("DATABASE UPDATED");
 }

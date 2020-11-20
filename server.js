@@ -1,12 +1,20 @@
 const express = require('express');
 const connection = require('./connection.js');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const { ObjectID } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-
-
+connection();
+app.use(passport.initialize(), passport.session());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
 
+app.post('/loginInfo', (req, res)=> {
+    console.log(req.body);
+    res.redirect('/');
+})
 app.get('/', (req, res)=> {
     res.sendFile(process.cwd() + '/views/home.html');
 })
