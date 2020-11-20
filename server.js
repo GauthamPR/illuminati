@@ -7,26 +7,9 @@ require('dotenv').config();
 
 const app = express();
 connection();
-app.use(session({
-    secret: process.env.SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: {secure: false}
-}));
 app.use(passport.initialize(), passport.session());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
-
-passport.serializeUser((user, done)=> {
-    done(null, user._id);
-})
-
-passport.deserializeUser((id, done)=> {
-    myDatabase.findOne({_id: new ObjectID(id)}, (err, doc)=>{
-        if(err) console.error(err);
-        done(null, null);
-    })
-})
 
 app.post('/loginInfo', (req, res)=> {
     console.log(req.body);
