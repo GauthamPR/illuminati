@@ -5,7 +5,17 @@ body{
     place-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+/*Chrome - Safari
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 #vis-holder{
     background-color: white;
     display: grid;
@@ -37,9 +47,8 @@ body{
     align-items: center;
 }
 .text-input:focus{
-    outline: none;
-    box-shadow: 0px 1px 2px #0000007a;
-    border: 1px solid #0000009c;
+    outline: 1px solid rgb(94, 158, 214);
+    border-radius: 0px;
 }
 .text-input{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
