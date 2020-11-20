@@ -7,12 +7,18 @@ const LocalStrategy = require('passport-local');
 const { ObjectID } = require('mongodb');
 require('dotenv').config();
 
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/login');
+}
 var Users, Requests, Rooms;
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({
-    secret: process.env.SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {secure: false}
@@ -42,7 +48,7 @@ passport.use(new LocalStrategy({
         if(err) {return done(err);}
         if(!user) {return done(null, false);}
         if(password != user.password){
-            console.log("failed");
+            console.log("Wrong Password");
             return done(null, false);
         }
         return done(null, user);
@@ -64,14 +70,14 @@ app.get('/login', (req, res)=> {
     res.sendFile(process.cwd() + '/views/login.html');
 })
 
-app.get('/my-requests', (req, res)=> {
+app.get('/my-requests', ensureAuthenticated, (req, res)=> {
     res.sendFile(process.cwd() + '/views/my-requests.html');
 })
 
-app.get('/new-request', (req, res)=> {
+app.get('/new-request', ensureAuthenticated, (req, res)=> {
     res.sendFile(process.cwd() + '/views/new-request.html');
 })
-app.get('/my-approvals', (req, res)=> {
+app.get('/my-approvals', ensureAuthenticated, (req, res)=> {
     res.sendFile(process.cwd() + '/views/my-approvals.html');
 })
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
