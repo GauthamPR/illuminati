@@ -1,38 +1,44 @@
 const express = require('express');
 const connection = require('./connection.js');
-const session = require('express-session');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const { ObjectID } = require('mongodb');
 require('dotenv').config();
 
+var Users, Requests, Rooms;
 const app = express();
-connection();
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {secure: false}
 }));
-
 app.use(passport.initialize())
 app.use(passport.session());
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.urlencoded({extended: true}))
-//Authentication
+connection((res_Users, res_Requests, res_Rooms)=>{
+    Users = res_Users;
+    Requests = res_Requests;
+    Rooms = res_Rooms;
+});
 passport.serializeUser((user, done)=>{
     done(null, user._id);
 });
-passport.deserializeUser((user, done)=>{
+passport.deserializeUser((id, done)=>{
     Users.findOne({_id: new ObjectID(id)}, (err, doc)=>{
         done(null, doc);
     })
 })
-passport.use(new LocalStrategy((userID, password, done)=>{
-    console.log("here");
+passport.use(new LocalStrategy({
+    usernameField: 'userID',
+    passwordField: 'password'
+    },
+    (userID, password, done)=>{
     Users.findOne({admNo: userID},(err, user)=>{
-        console.log('User', username, 'attempted to login');
+        console.log('User', userID, 'attempted to login');
         if(err) {return done(err);}
         if(!user) {return done(null, false);}
         if(password != user.password){
