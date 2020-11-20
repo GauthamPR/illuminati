@@ -12,6 +12,7 @@ module.exports= function(done){
                 name: String,
                 admNo: Number,
                 password: String,
+                level: String,
                 email: String,
                 designation: String,
                 parentID: ObjectID,

@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const { ObjectID } = require('mongodb');
+let cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 function ensureAuthenticated(req, res, next){
@@ -58,7 +59,8 @@ passport.use(new LocalStrategy({
 app.use(express.static(__dirname + '/public'));
 
 app.route('/loginInfo').post(passport.authenticate('local', {failureRedirect: '/my-requests'}), (req, res)=> {
-    console.log(req.body);
+    res.cookie('User Name', req.user.name);
+    res.cookie('Level', req.user.level);
     res.redirect('/');
 })
 
@@ -79,5 +81,9 @@ app.get('/new-request', ensureAuthenticated, (req, res)=> {
 })
 app.get('/my-approvals', ensureAuthenticated, (req, res)=> {
     res.sendFile(process.cwd() + '/views/my-approvals.html');
+})
+app.get('/logout', (req, res)=>{
+    req.logout();
+    res.redirect('/');
 })
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
