@@ -45,19 +45,9 @@ var arrayOfUsers = [
 ];
 
 module.exports= function(){
-    const personSchema = new mongoose.Schema({
-        name: String,
-        admNo: Number,
-        email: String,
-        designation: String,
-        parentID: ObjectID,
-        parent: String
-    });
-    var personModel = mongoose.model('personModel', personSchema);
-    
     var savePerson = function(userData, done){
-        var person = new personModel(userData);
-        person.save((err, data)=> {
+        var user = new Users(userData);
+        user.save((err, data)=> {
             if (err) return console.log(err);
             done(err, data);
         })
@@ -65,8 +55,8 @@ module.exports= function(){
 
     var assignParentID = function(err, userData){
         if(userData.parent != null){
-            personModel.findOne({name: userData.parent}, (err, parent)=> {
-                personModel.findOneAndUpdate({name: userData.name}, {parentID: parent["_id"]}, (err, updatedUser)=> {
+            Users.findOne({name: userData.parent}, (err, parent)=> {
+                Users.findOneAndUpdate({name: userData.name}, {parentID: parent["_id"]}, (err, updatedUser)=> {
                     if(err) console.log(err);
                     console.log("UPDATED: ", updatedUser.name)
                 })

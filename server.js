@@ -6,14 +6,14 @@ const { ObjectID } = require('mongodb');
 require('dotenv').config();
 
 const app = express();
-
-app.use(session({
+connection();
+/*app.use(session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {secure: false}
 }));
-
+*/
 app.use(passport.initialize(), passport.session());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
@@ -31,7 +31,7 @@ passport.deserializeUser((id, done)=> {
 
 app.post('/loginInfo', (req, res)=> {
     console.log(req.body);
-    res.send("Logged In");
+    res.redirect('/');
 })
 app.get('/', (req, res)=> {
     res.sendFile(process.cwd() + '/views/home.html');
