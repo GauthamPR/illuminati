@@ -44,7 +44,7 @@ var arrayOfUsers = [
     }
 ];
 
-module.exports= function(){
+module.exports= function(Users, Requests, Rooms){
     var savePerson = function(userData, done){
         var user = new Users(userData);
         user.save((err, data)=> {

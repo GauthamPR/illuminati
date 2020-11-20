@@ -7,13 +7,12 @@ require('dotenv').config();
 
 const app = express();
 connection();
-/*app.use(session({
+app.use(session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
     cookie: {secure: false}
 }));
-*/
 app.use(passport.initialize(), passport.session());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/public'));
