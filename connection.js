@@ -13,6 +13,7 @@ module.exports= function(){
     const userSchema = new mongoose.Schema({
         name: String,
         admNo: Number,
+        password: String,
         email: String,
         designation: String,
         parentID: ObjectID,
@@ -32,5 +33,5 @@ module.exports= function(){
     var Users = mongoose.model('Users', userSchema);
     var Requests = mongoose.model('Requests', requestSchema);
     var Rooms = mongoose.model('Rooms', roomSchema);
-    initial(Users, Requests, Rooms);
+    //initial(Users, Requests, Rooms);
 }
