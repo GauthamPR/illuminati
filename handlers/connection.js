@@ -7,6 +7,7 @@ module.exports =async function main(){
         .then(()=>{
             console.log("CONNECTED TO DB");
             //initial();
+            return ;
         })
         .catch(error => console.log(error));
 }
