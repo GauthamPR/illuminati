@@ -1,8 +1,6 @@
-const session = require('express-session');
 const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
-const connection = require('./connection.js');
 const bcrypt = require('bcrypt');
 
 require('dotenv').config();
@@ -14,22 +12,7 @@ module.exports = {
         }
         res.redirect('/login');
     },
-    start: function start(app){
-        var Users, Requests, Rooms;
-
-        connection((res_Users, res_Requests, res_Rooms)=>{
-            Users = res_Users;
-            Requests = res_Requests;
-            Rooms = res_Rooms;
-        });
-        app.use(session({
-            secret: process.env.SESSION_SECRET,
-            resave: true,
-            saveUninitialized: true,
-            cookie: {secure: false}
-        }));
-        app.use(passport.initialize())
-        app.use(passport.session());
+    setStrategies: function (app, Users){
         passport.serializeUser((user, done)=>{
             done(null, user._id);
         });
