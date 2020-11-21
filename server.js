@@ -23,9 +23,9 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session());
 
-DB((Users, Requests, Rooms) =>{
+DB(() =>{
     routes(app);
-    auth.setStrategies(app, Users);
+    auth.setStrategies(app);
 })
 
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
