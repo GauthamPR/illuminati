@@ -1,54 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const session = require('express-session');
 require('dotenv').config();
-const auth = require('./auth.js');
+const auth = require('./handlers/auth.js');
+const DB = require('./handlers/connection.js');
+const routes = require('./handlers/routes.js');
 
 const app = express();
-auth.start(app);
+app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+    cookie: {
+        secure: false,
+        sameSite: true
+    }
+}));
+app.use(passport.initialize())
+app.use(passport.session());
 
-app.use(express.static(__dirname + '/public'));
-
-app.get('/', (req, res)=> {
-    res.sendFile(process.cwd() + '/views/home.html');
+DB((Users, Requests, Rooms) =>{
+    routes(app);
+    auth.setStrategies(app, Users);
 })
-app.route('/login')
-    .get((req, res)=> {
-        res.sendFile(process.cwd() + '/views/login.html');
-    })
-    .post(passport.authenticate('local', {failureRedirect: '/my-requests'}), (req, res)=> {
-        res.cookie('User Name', req.user.name);
-        res.cookie('Level', req.user.level);
-        res.redirect('/');
-    })
 
-app.route('/my-requests')
-    .get(auth.ensureAuthenticated, (req, res)=> {
-        res.sendFile(process.cwd() + '/views/my-requests.html');
-    })
-
-app.route('/new-request')
-    .get(auth.ensureAuthenticated, (req, res)=> {
-        res.sendFile(process.cwd() + '/views/new-request.html');
-    })
-
-app.route('/my-approvals')
-    .get(auth.ensureAuthenticated, (req, res)=> {
-        res.sendFile(process.cwd() + '/views/my-approvals.html');
-    })
-
-app.route('/logout')
-    .get((req, res)=>{
-        req.logout();
-        res.redirect('/');
-    })
-
-
-app.use((req, res, next)=>{
-    res.status(404)
-        .type('txt')
-        .send('Not Found');
-});
 app.listen(process.env.PORT || 3000, ()=> console.log('listening on Port', process.env.PORT));
