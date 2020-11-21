@@ -1,6 +1,9 @@
 const auth = require('./auth.js');
 const passport = require('passport');
+const requestHandle = require('./requestHandle.js');
+
 module.exports = function (app) {
+    
     app.get('/', (req, res) => {
         res.sendFile(process.cwd() + '/views/home.html');
     })
@@ -22,6 +25,9 @@ module.exports = function (app) {
     app.route('/new-request')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/new-request.html');
+        })
+        .post(auth.ensureAuthenticated, (req, res)=>{
+            requestHandle.saveRequest(req.body, req.user);
         })
 
     app.route('/my-approvals')

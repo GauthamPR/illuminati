@@ -1,4 +1,9 @@
 const bcrypt = require('bcrypt');
+const customModel = require('./models.js');
+
+var Users = customModel.Users;
+var Requests = customModel.Requests;
+var Halls = customModel.Halls;
 
 var arrayOfUsers = [
     {
@@ -53,7 +58,7 @@ var arrayOfUsers = [
     }
 ];
 
-module.exports= function(Users, Requests, Rooms){
+module.exports= function(){
     var savePerson = function(userData, done){
         const hash = bcrypt.hashSync(userData.password, 12);
         userData.password = hash;

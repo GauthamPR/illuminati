@@ -2,6 +2,7 @@ const LocalStrategy = require('passport-local');
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const bcrypt = require('bcrypt');
+const customModel = require('./models.js');
 
 require('dotenv').config();
 
@@ -12,7 +13,9 @@ module.exports = {
         }
         res.redirect('/login');
     },
-    setStrategies: function (app, Users){
+    setStrategies: function (app){
+        var Users = customModel.Users;
+
         passport.serializeUser((user, done)=>{
             done(null, user._id);
         });
