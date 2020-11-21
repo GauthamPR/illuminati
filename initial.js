@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
-const ObjectID = require('mongodb').ObjectID;
+const bcrypt = require('bcrypt');
 
 var arrayOfUsers = [
     {
         name: "Soniya",
         admNo: 181001,
+        password: "Soniya1001",
+        level: "Alpha",
         email: "soniya@gmail.com",
         designation: "IEEE Regional Head",
         parent: null,
@@ -13,6 +15,8 @@ var arrayOfUsers = [
     {
         name: "Arundhathi",
         admNo: 181002,
+        password: "Arundhathi1002",
+        level: "Beta",
         email: "arundhathi@gmail.com",
         designation: "IEEE Student Head",
         parent: "Soniya",
@@ -21,6 +25,8 @@ var arrayOfUsers = [
     {
         name: "Subbu",
         admNo: 182001,
+        password: "Subbu2001",
+        level: "Alpha",
         email: "subbu@gmail.com",
         designation: "CS HOD",
         parent: null,
@@ -29,6 +35,8 @@ var arrayOfUsers = [
     {
         name: "Kuttymalu",
         admNo: 182002,
+        password: "Kuttymalu2002",
+        level: "Alpha",
         email: "kuttymalu@gmail.com",
         designation: "Lanscape Faculty Head",
         parent: "Subbu",
@@ -37,6 +45,8 @@ var arrayOfUsers = [
     {
         name: "Sreehari",
         admNo: 182003,
+        password: "Sreehari2003",
+        level: "Beta",
         email: "sreehari@gmail.com",
         designation: "Lanscape Student Head",
         parent: "Kuttymalu",
@@ -46,6 +56,8 @@ var arrayOfUsers = [
 
 module.exports= function(Users, Requests, Rooms){
     var savePerson = function(userData, done){
+        const hash = bcrypt.hashSync(userData.password, 12);
+        userData.password = hash;
         var user = new Users(userData);
         user.save((err, data)=> {
             if (err) return console.log(err);
