@@ -1,13 +1,9 @@
 body{
-	margin:20px;
-    }
-
-.pgdivision {
-    display:flex;
-    flex-direction:column;
-    }     
+	margin:30px;
+    
+}
 .accordion {
-  background-color: #eee;
+  background-color:#eee;
   color: #444;
   cursor: pointer;
   padding: 18px;
@@ -16,12 +12,22 @@ body{
   text-align: left;
   font-size: 13px;
   transition: 0.4s;
+  display:grid;
+  display:flex;
   flex-direction:column;
-    }
+}
 
 .active, .accordion:hover {
   background-color: #ccc;
-    }   
+}
+
+.pgdivision {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-evenly;
+    
+    
+    }  
 
 .headbar {
 display:grid;
@@ -29,18 +35,18 @@ background-color:#2F3675;
 padding: 18px;
 width: 713px;
 border: none;
-color:white;
 text-align: left;
+color:white;
 font-size: 15px;
 border:1px solid black;
 outline:none;
 grid-template-columns:120px 190px 160px 100px;
 grid-gap:50px 53px;
-    }
+}
 
 #head {
 padding:10px 1px;
-font-style:bold;
+text-style:bold;
 }
 
 .container1 {
@@ -51,16 +57,33 @@ grid-gap:50px 40px;
 }
 
 .panel {
-  padding: 0px 30px;
+  padding: 0px 20px;
   margin:5px ;
   display:grid;
-  grid-gap:3px 3px;
+  grid-template-rows: 70px;
+  grid-template-columns:350px 180px ;
+  flex-direction:row;
+  grid-gap:100px 100px;
   align-self:end;
   background-color: white;
   max-height:0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
+.subContainer1{
+margin:5px;
+
+}
+.subContainer2{
+display:grid;
+margin:30px 10px;
+grid-template-columns:75px 75px;
+grid-template-rows: 20px;
+grid-gap:0px 40px;
+
+
+}
+
 #pending {
 border:1px solid black;
 padding:2px;
