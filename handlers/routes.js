@@ -17,21 +17,22 @@ module.exports = function (app) {
             res.redirect('/');
         })
 
-    app.route(auth.ensureAuthenticated, '/my-requests')
-        .get((req, res) => {
+    app.route('/my-requests')
+        .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
         })
 
-    app.route(auth.ensureAuthenticated, '/new-request')
-        .get((req, res) => {
+    app.route('/new-request')
+        .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/new-request.html');
         })
-        .post((req, res)=>{
+        .post(auth.ensureAuthenticated, (req, res)=>{
             requestHandle.saveRequest(req.body, req.user);
+            res.redirect('/my-requests');
         })
 
-    app.route(auth.ensureAuthenticated, '/my-approvals')
-        .get((req, res) => {
+    app.route('/my-approvals')
+        .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-approvals.html');
         })
 
