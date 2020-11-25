@@ -1,12 +1,12 @@
 body{
-	margin:40px;
+	margin:30px 50px;
     
 }
 .accordion {
   background-color:#eee;
   color: #444;
   cursor: pointer;
-  padding: 18px;
+  padding: 20px;
   width: 750px;
   border: none;
   text-align: left;
@@ -71,7 +71,8 @@ grid-gap:50px 40px;
   transition: max-height 0.2s ease-out;
 }
 .subContainer1{
-margin:5px;
+margin:10px 10px;
+padding:0px;
 
 }
 .subContainer2{
@@ -80,6 +81,7 @@ margin:30px 10px;
 grid-template-columns:75px 75px;
 grid-template-rows: 20px;
 grid-gap:0px 40px;
+
 
 
 }
