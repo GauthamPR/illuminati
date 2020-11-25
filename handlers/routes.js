@@ -27,7 +27,14 @@ module.exports = function (app) {
             res.sendFile(process.cwd() + '/views/new-request.html');
         })
         .post(auth.ensureAuthenticated, (req, res)=>{
-            requestHandle.saveRequest(req.body, req.user);
+            requestHandle.saveRequest(req.body, req.user)
+            .then((message)=>{
+                res.redirect('/my-requests');
+            })
+            .catch((err)=>{
+                console.error(err.name + ": " + err.message);
+                res.send(err.message);
+            })
         })
 
     app.route('/my-approvals')
