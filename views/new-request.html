@@ -26,9 +26,34 @@
     </nav>
     
 <div class="container">
-    <form action="/action_page.php">
+<form action="/new-request" method="post">
+
+
+   <div class="row">
+        <div class="col-25">
+          <label for="date">DATE</label>
+        </div>
+        <div class="col-25">
+          <input type="date" id="date" name="eventDate" 
+          value="2020-01-01" max="2025-12-31">
+        </div>
+    </div>
     
-      <div class="row">
+  <div class="row">
+        <div class="col-25">
+          <label for="time">TIME</label>
+        </div>
+        <div class="col-25">
+          <input type="time" id="time" name="startTime" 
+          value="09:00" max="16:15" required>
+        </div>
+        <div class="col-25">
+          <input type="time" id="time" name="endTime" 
+          value="09:45" max="16:30" required>
+        </div>
+   </div>
+    
+  <div class="row">
         <div class="col-25">
           <label for="hallid">HALL NO</label>
         </div>
@@ -40,26 +65,31 @@
             <option value="hallid401">401</option>
           </select>
         </div>
-      </div>
-       <div class="row">
+   </div>
+       
+  <div class="row">
         <div class="col-25">
           <label for="eventname">NAME OF THE EVENT</label>
         </div>
+
         <div class="col-75">
           <input type="text" id="eventname" name="eventname" >
         </div>
-      </div>
-      <div class="row">
+  </div>
+
+  <div class="row">
         <div class="col-25">
           <label for="eventdesc">DESCRIPTION OF THE EVENT</label>
         </div>
         <div class="col-75">
           <textarea id="eventdesc" name="eventdesc" style="height:200px"></textarea>
         </div>
-      </div>
-      <div class="row">
+  </div>
+
+    <div class="row">
         <input type="submit" value="Submit">
-      </div>
+    </div>
+
     </form>
   </div>
   
