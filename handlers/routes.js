@@ -1,6 +1,7 @@
 const auth = require('./auth.js');
 const passport = require('passport');
 const requestHandle = require('./requestHandle.js');
+const getData = require('./getData.js');
 
 module.exports = function (app) {
     
@@ -20,6 +21,11 @@ module.exports = function (app) {
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
+        })
+    app.route('/user-requests')
+        .get(auth.ensureAuthenticated, async (req, res) => {
+            var data = await getData.requests(req.user);
+            res.send(data);
         })
 
     app.route('/new-request')
