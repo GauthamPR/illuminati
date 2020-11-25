@@ -12,17 +12,20 @@ const userSchema = new mongoose.Schema({
     parent: String
 });
 const requestSchema = new mongoose.Schema({
-    hallId: ObjectID,
+    hallID: ObjectID,
     eventName: String,
     eventDesc: String,
+    from: Date,
+    to: Date,
     requestor: ObjectID,
     status: String,
     next_approver: ObjectID,
-    approved_by: Array
+    approved_by: [ObjectID]
 });
 const hallSchema = new mongoose.Schema({
     name: String,
-    realID: String
+    in_charge: ObjectID,
+    in_charge_name: String
 });
 var Users = mongoose.model('Users', userSchema);
 var Requests = mongoose.model('Requests', requestSchema);
