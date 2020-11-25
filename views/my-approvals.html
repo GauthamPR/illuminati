@@ -25,7 +25,6 @@
         </div>
       </div> 
   </nav>
-  <form action ="/my-appovals" method="post">
   <div class= "pgdivision">
     <div id="head"> Pending Approval </div>
     <div class="headbar">
@@ -48,10 +47,12 @@
            <div id="approveid">Approved By ID    : 100122</div>
            <div id="napproveid">Next Approved By ID    : 100122</div>
         </div>
-        <div class="subContainer2">  
-           <button type="submit" name="subject" value="approve"> Accept </button>
-           <button type="submit" name="subject" value="decline"> Decline </button>
-        </div>
+        <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
+              <button type="submit" name="subject" value="approve"> Accept </button>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>  
     </div>
     <button class="accordion">
       <div class="container1">
@@ -67,10 +68,12 @@
           <div id="approveid">Approved By ID    : 100122</div>
           <div id="napproveid">Next Approved By ID    : 100122</div>
       </div>
-      <div class="subContainer2">
-          <button type="submit" name="subject" value="approve"> Accept </button>
-          <button type="submit" name="subject" value="decline"> Decline </button>
-      </div>
+      <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
+              <button type="submit" name="subject" value="approve"> Accept </button>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>
     </div>        
     <button class="accordion">
       <div class="container1">
@@ -86,11 +89,14 @@
           <div id="approveid">Approved By ID    : 100122</div>
           <div id="napproveid">Next Approved By ID    : 100122</div>
       </div>
-      <div class="subContainer2">
-          <button type="submit" name="subject" value="approve"> Accept </button>
-          <button type="submit" name="subject" value="decline"> Decline </button>
-      </div>
+      <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
+              <button type="submit" name="subject" value="approve"> Accept </button>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>
     </div>
+  </div>  
   <div class= "pgdivision">
     <div id="head"> My Approval </div>
     <div class="headbar">
@@ -113,10 +119,12 @@
             <div id="approveid">Approved By ID    : 100122</div>
             <div id="napproveid">Next Approved By ID    : 100122</div>
       </div>
-      <div class="subContainer2">
-            <button type="submit" name="subject" value="approve"> Accept </button>
-            <button type="submit" name="subject" value="decline"> Decline </button>
-      </div>
+      <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
+              <button type="submit" name="subject" value="approve"> Accept </button>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>
     </div>    
     <button class="accordion">
       <div class="container1">
@@ -132,10 +140,12 @@
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
       </div>
-      <div class="subContainer2">
+      <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-      </div>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>
     </div> 
     <button class="accordion">
       <div class="container1">
@@ -151,12 +161,14 @@
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
       </div>
-      <div class="subContainer2">
+      <form action ="/my-appovals" method="post">
+          <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-      </div>
+              <button type="submit" name="subject" value="decline"> Decline </button>  
+          </div>
+        </form>
     </div>
-    
+  </div>  
     <script>
     var acc = document.getElementsByClassName("accordion");
     var i;
@@ -173,6 +185,5 @@
       });
     }
     </script>  
- </form>
  </body>
  </html>

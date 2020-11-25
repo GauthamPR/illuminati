@@ -1,5 +1,5 @@
 body{
-	margin:30px;
+	margin:40px;
     
 }
 .accordion {
@@ -46,7 +46,7 @@ grid-gap:50px 53px;
 
 #head {
 padding:10px 1px;
-text-style:bold;
+font-style:bold;
 }
 
 .container1 {
