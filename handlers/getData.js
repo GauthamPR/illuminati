@@ -12,6 +12,7 @@ module.exports = {
                     if(err) reject(err);
                     data.forEach((elem)=>{
                         var jsonObject = {
+                            id: elem._id.toString(),
                             hallName: elem.hallDetails[0].name,
                             startTime: elem.from,
                             endTime: elem.to,

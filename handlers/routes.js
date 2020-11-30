@@ -47,6 +47,15 @@ module.exports = function (app) {
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-approvals.html');
         })
+        .post(auth.ensureAuthenticated, async (req, res)=> {
+            var requestID = Object.getOwnPropertyNames(req.body)[0];
+            await requestHandle.update({
+                userID: req.user._id,
+                requestID: requestID,
+                response: req.body[requestID]
+            });
+            res.redirect('/my-approvals');
+        })
 
     app.route('/logout')
         .get((req, res) => {

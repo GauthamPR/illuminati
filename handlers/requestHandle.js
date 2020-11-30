@@ -1,3 +1,5 @@
+const { request } = require('express');
+const { ObjectID } = require('mongodb');
 const customModel = require('./models.js');
 
 module.exports = {
@@ -36,5 +38,30 @@ module.exports = {
                 }
             })
         })
+    },
+    update: async function update(values){
+        var requestID = new ObjectID(values.requestID);
+        if(values.response == "approve"){
+            await customModel.Requests.aggregate([
+                { $match: {_id: requestID} },
+                { $lookup: {from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user'}}
+            ], (err, requests)=>{
+                if(err) console.error(err);
+                requests.forEach(request=>{
+                    request.next_approver = request.user[0].parentID;
+                    if(request.user[0].parentID == null){
+                        request.status = "APPROVED"
+                    }
+                    request.approved_by.push(values.userID);
+                    customModel.Requests.findByIdAndUpdate(request._id, request, (err, updatedDoc)=>{
+                        if(err) console.error(err);
+                    })
+                })
+            })
+        }else if(values.response == "decline"){
+            customModel.Requests.findByIdAndUpdate(values.requestID, { status: "DENIED"}, (err, doc)=>{
+                if(err) console.error(err);
+            })
+        }
     }
 }
