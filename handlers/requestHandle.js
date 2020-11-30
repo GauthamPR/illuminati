@@ -15,7 +15,7 @@ module.exports = {
                 newRequest.status = "PENDING";
                 newRequest.next_approver = userData.parentID;
             })
-            await customModel.Requests.find({hallID: newRequest.hallID}, (err, existingRequests)=>{
+            await customModel.Requests.find({hallID: newRequest.hallID, status: "APPROVED"}, (err, existingRequests)=>{
                 if(err) console.error(err);
                 var available = true;
                 existingRequests.forEach((existingRequest)=>{
