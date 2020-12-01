@@ -28,7 +28,7 @@ app.use(passport.session());
 mongoose.connect(process.env.URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     .then(()=>{
         console.log("CONNECTED TO DB");
-        //initial();
+        initial();
         routes(app);
         auth.setStrategies(app);
     })

@@ -7,20 +7,32 @@ module.exports = {
             customModel.Requests.aggregate([
                 { $match: { requestor: userData._id } },
                 { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails' } },
-                { $lookup: { from: 'users', localField: 'next_approver', foreignField: '_id', as:'user'}}
+                { $lookup: { from: 'users', localField: 'next_approver', foreignField: '_id', as:'user'}},
+                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as:'historyOfApproval' }}
             ], (err, data)=>{
                     if(err) reject(err);
-                    data.forEach((elem)=>{
+                    data.forEach((request)=>{
                         var jsonObject = {
-                            id: elem._id.toString(),
-                            hallName: elem.hallDetails[0].name,
-                            startTime: elem.from,
-                            endTime: elem.to,
-                            eventName: elem.eventName,
-                            eventDesc: elem.eventDesc,
-                            status: elem.status,
-                            nextApproverAdmNo: elem.user[0].admNo,
-                            nextApproverName: elem.user[0].name
+                            id: request._id.toString(),
+                            hallName: request.hallDetails[0].name,
+                            startTime: request.from,
+                            endTime: request.to,
+                            eventName: request.eventName,
+                            eventDesc: request.eventDesc,
+                            status: request.status,
+                            approved_by: []
+                        }
+                        if(request.user.length != 0){
+                            jsonObject.nextApproverAdmNo= request.user[0].admNo;
+                            jsonObject.nextApproverName= request.user[0].name;
+                        }
+                        if(request.historyOfApproval.length != 0){
+                            request.historyOfApproval.forEach(personInHistory=>{
+                                jsonObject.approved_by.push({
+                                    admNo: personInHistory.admNo,
+                                    name: personInHistory.name
+                                });
+                            })
                         }
                         returnData.push(jsonObject);
                     })
