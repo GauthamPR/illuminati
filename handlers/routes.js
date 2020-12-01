@@ -24,13 +24,11 @@ module.exports = function (app) {
         })
     app.route('/user-requests')
         .get(auth.ensureAuthenticated, async (req, res) => {
-            getData.requests(req.user)
-            .then(data => res.send(data));
+            res.send(await getData.requests(req.user));
         })
     app.route('/user-approvals')
         .get(auth.ensureAuthenticated, async(req, res)=>{
-            getData.approvals(req.user)
-            .then(data => res.send(data))
+            res.send(await getData.approvals(req.user));
         })
 
     app.route('/new-request')
