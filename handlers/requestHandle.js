@@ -44,14 +44,15 @@ module.exports = {
         if(values.response == "approve"){
             await customModel.Requests.aggregate([
                 { $match: {_id: requestID} },
-                { $lookup: {from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user'}}
+                { $lookup: {from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user'}},
+                { $lookup: {from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hall'}}
             ], (err, requests)=>{
                 if(err) console.error(err);
                 requests.forEach(request=>{
-                    request.next_approver = request.user[0].parentID;
-                    if(request.user[0].parentID == null){
-                        request.status = "APPROVED"
-                    }
+                    if(request.user[0].parentID == null)
+                        request.next_approver = request.hall[0].in_charge;
+                    else
+                        request.next_approver = request.user[0].parentID;
                     request.approved_by.push(values.userID);
                     customModel.Requests.findByIdAndUpdate(request._id, request, (err, updatedDoc)=>{
                         if(err) console.error(err);
