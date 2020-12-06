@@ -1,3 +1,5 @@
+const { request } = require('express');
+const { ObjectID } = require('mongodb');
 const customModel = require('./models.js');
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
                 newRequest.status = "PENDING";
                 newRequest.next_approver = userData.parentID;
             })
-            await customModel.Requests.find({hallID: newRequest.hallID}, (err, existingRequests)=>{
+            await customModel.Requests.find({hallID: newRequest.hallID, status: "APPROVED"}, (err, existingRequests)=>{
                 if(err) console.error(err);
                 var available = true;
                 existingRequests.forEach((existingRequest)=>{
@@ -36,5 +38,31 @@ module.exports = {
                 }
             })
         })
+    },
+    update: async function update(values){
+        var requestID = new ObjectID(values.requestID);
+        if(values.response == "approve"){
+            await customModel.Requests.aggregate([
+                { $match: {_id: requestID} },
+                { $lookup: {from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user'}},
+                { $lookup: {from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hall'}}
+            ], (err, requests)=>{
+                if(err) console.error(err);
+                requests.forEach(request=>{
+                    if(request.user[0].parentID == null)
+                        request.next_approver = request.hall[0].in_charge;
+                    else
+                        request.next_approver = request.user[0].parentID;
+                    request.approved_by.push(values.userID);
+                    customModel.Requests.findByIdAndUpdate(request._id, request, (err, updatedDoc)=>{
+                        if(err) console.error(err);
+                    })
+                })
+            })
+        }else if(values.response == "decline"){
+            customModel.Requests.findByIdAndUpdate(values.requestID, { status: "DENIED"}, (err, doc)=>{
+                if(err) console.error(err);
+            })
+        }
     }
 }

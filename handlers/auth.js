@@ -11,6 +11,7 @@ module.exports = {
         if(req.isAuthenticated()){
             return next();
         }
+        req.session.redirectTo = req.originalUrl;
         res.redirect('/login');
     },
     setStrategies: function (app){

@@ -89,6 +89,27 @@ var arrayOfHalls = [
         in_charge: null,
         in_charge_name: "Binu Rajan"
     }
+];
+
+var arrayOfRequests = [
+    {
+        hallName: "101",
+        eventName: "Acceptance routine",
+        eventDescription: "Check for Acceptance",
+        from: new Date("12/09/2020 09:00"),
+        to: new Date("12/09/2020 12:00"),
+        requestorName: "Sreehari",
+        status: "PENDING",
+    },
+    {
+        hallName: "101",
+        eventName: "Acceptance routine",
+        eventDescription: "Check for Acceptance",
+        from: new Date("12/09/2020 09:00"),
+        to: new Date("12/09/2020 12:00"),
+        requestorName: "Sreehari",
+        status: "PENDING",
+    }
 ]
 module.exports= function(){
     var savePerson = function(userData, done){

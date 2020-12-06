@@ -1,6 +1,7 @@
 const auth = require('./auth.js');
 const passport = require('passport');
 const requestHandle = require('./requestHandle.js');
+const getData = require('./getData.js');
 
 module.exports = function (app) {
     
@@ -11,15 +12,35 @@ module.exports = function (app) {
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
         })
-        .post(passport.authenticate('local', { failureRedirect: '/my-requests' }), (req, res) => {
+        .post(passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
             res.cookie('User Name', req.user.name);
             res.cookie('Level', req.user.level);
-            res.redirect('/');
+            var url = req.session.redirectTo || '/';
+            delete req.session.redirectTo;
+            res.redirect(url);
         })
 
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
+        })
+    app.route('/user-requests')
+        .get(auth.ensureAuthenticated, (req, res) => {
+            getData.requests(req.user)
+            .then(data => res.send(data))
+            .catch(err=>{
+                console.error(err);
+                res.send("Error Occured");
+            })
+        })
+    app.route('/user-approvals')
+        .get(auth.ensureAuthenticated, (req, res)=>{
+            getData.approvals(req.user)
+            .then(data=>res.send(data))
+            .catch(err=>{
+                console.error(err);
+                res.send("Error Occured");
+            })
         })
 
     app.route('/new-request')
@@ -40,6 +61,15 @@ module.exports = function (app) {
     app.route('/my-approvals')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-approvals.html');
+        })
+        .post(auth.ensureAuthenticated, async (req, res)=> {
+            var requestID = Object.getOwnPropertyNames(req.body)[0];
+            await requestHandle.update({
+                userID: req.user._id,
+                requestID: requestID,
+                response: req.body[requestID]
+            });
+            res.redirect('/my-approvals');
         })
 
     app.route('/logout')
