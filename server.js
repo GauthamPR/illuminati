@@ -11,15 +11,17 @@ const initial = require('./handlers/initial.js');
 const app = express();
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    key: 'express.sid',
     cookie: {
         secure: false,
         sameSite: true
-    }
+    },
+    store: store
 }));
 app.use(passport.initialize())
 app.use(passport.session());

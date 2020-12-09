@@ -23,6 +23,7 @@ module.exports = {
         });
         passport.deserializeUser((id, done)=>{
             Users.findOne({_id: new ObjectID(id)}, (err, doc)=>{
+                if(err) console.error(err);
                 done(null, doc);
             })
         })
@@ -39,6 +40,7 @@ module.exports = {
                     console.log("Wrong Password");
                     return done(null, false);
                 }
+                console.log(user);
                 return done(null, user);
             })
         }));
@@ -48,11 +50,12 @@ module.exports = {
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
             callbackURL: "http://localhost:3000/auth/github/callback" 
         },(accessToken, refreshToken, profile, cb)=>{
+            console.log(profile);
             customModel.Users.findOneAndUpdate(
-                { id: profile.id },
+                { githubID: profile.id },
                 {
                   $setOnInsert: {
-                    id: profile.id,
+                    githubID: profile.id,
                   },
                   $set: {
                     last_login: new Date()
@@ -63,7 +66,8 @@ module.exports = {
                 },
                 { upsert: true, new: true },
                 (err, doc) => {
-                  return cb(null, doc.value);
+                    if(err) console.error(err);
+                    return cb(null, doc);
                 }
               );
         }))

@@ -24,8 +24,8 @@ module.exports = function (app) {
     
     app.route('/auth/github/callback')
         .get(passport.authenticate('github',{failureRedirect: "/login"}), (req, res)=>{
-            console.log("here");
-            res.redirect('/');
+            req.session.user_id = req.user.id;
+            res.redirect('/my-requests');
         })
 
     app.route('/my-requests')

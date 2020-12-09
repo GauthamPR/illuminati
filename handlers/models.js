@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {ObjectID} = require('mongodb');
 
 const userSchema = new mongoose.Schema({
-    id: String,
+    githubID: String,
     name: String,
     admNo: Number,
     password: String,
