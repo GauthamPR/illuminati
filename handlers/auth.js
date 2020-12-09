@@ -1,6 +1,6 @@
 const LocalStrategy = require('passport-local');
 const GitHubStrategy = require('passport-github').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const bcrypt = require('bcrypt');
@@ -46,8 +46,8 @@ module.exports = {
         }));
         
         passport.use(new GoogleStrategy({
-            consumerKey: process.env.GOOGLE_CLIENT_ID,
-            consumerSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
             callbackURL: "http://localhost:3000/auth/google/callback"
         },(accessToken, refreshToken, profile, cb)=>{
             console.log(profile);
