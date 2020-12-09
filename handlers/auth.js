@@ -40,7 +40,6 @@ module.exports = {
                     console.log("Wrong Password");
                     return done(null, false);
                 }
-                console.log(user);
                 return done(null, user);
             })
         }));
