@@ -1,4 +1,5 @@
 const LocalStrategy = require('passport-local');
+const GitHubStrategy = require('passport-github').Strategy;
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const bcrypt = require('bcrypt');
@@ -42,5 +43,29 @@ module.exports = {
             })
         }));
         
+        passport.use(new GitHubStrategy({
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/github/callback" 
+        },(accessToken, refreshToken, profile, cb)=>{
+            customModel.Users.findOneAndUpdate(
+                { id: profile.id },
+                {
+                  $setOnInsert: {
+                    id: profile.id,
+                  },
+                  $set: {
+                    last_login: new Date()
+                  },
+                  $inc: {
+                    login_count: 1
+                  }
+                },
+                { upsert: true, new: true },
+                (err, doc) => {
+                  return cb(null, doc.value);
+                }
+              );
+        }))
     }
 }

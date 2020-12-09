@@ -19,6 +19,14 @@ module.exports = function (app) {
             delete req.session.redirectTo;
             res.redirect(url);
         })
+    app.route('/auth/github')
+        .get(passport.authenticate('github'));
+    
+    app.route('/auth/github/callback')
+        .get(passport.authenticate('github',{failureRedirect: "/login"}), (req, res)=>{
+            console.log("here");
+            res.redirect('/');
+        })
 
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
