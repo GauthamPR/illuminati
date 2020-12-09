@@ -3,6 +3,7 @@ const {ObjectID} = require('mongodb');
 
 const userSchema = new mongoose.Schema({
     githubID: String,
+    googleID: String,
     name: String,
     admNo: Number,
     password: String,

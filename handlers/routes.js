@@ -27,7 +27,12 @@ module.exports = function (app) {
             req.session.user_id = req.user.id;
             res.redirect('/my-requests');
         })
-
+    app.route('/auth/google')
+        .get(passport.authenticate('google', {scope: "https://www.google.com/m8/feeds"}));
+    app.route('/auth/google/callback')
+        .get(passport.authenticate('google', {failureRedirect: '/login'}), (req, res)=>{
+            res.redirect('/my-requests');
+        })
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
