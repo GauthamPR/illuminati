@@ -36,10 +36,9 @@ module.exports = {
             Users.findOne({admNo: userID},(err, user)=>{
                 console.log('User', userID, 'attempted to login');
                 if(err) {return done(err);}
-                if(!user) {return done(null, false);}
+                if(!user) {return done(null, false, {message: 'User Not Registered'});}
                 if(!bcrypt.compareSync(password, user.password)){
-                    console.log("Wrong Password");
-                    return done(null, false);
+                    return done(null, false, {message: 'Wrong Password'});
                 }
                 return done(null, user);
             })
