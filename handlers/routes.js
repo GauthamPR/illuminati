@@ -5,9 +5,22 @@ const getData = require('./getData.js');
 
 module.exports = function (app) {
     
-    app.get('/', (req, res) => {
-        res.sendFile(process.cwd() + '/views/home.html');
-    })
+    app.route('/')
+        .get((req, res) => {
+            res.sendFile(process.cwd() + '/views/home.html');
+        });
+    app.route('/home/requests')
+        .get(auth.ensureAuthenticated, (req, res)=>{
+            Promise.all([getData.previous(4), getData.upcoming(4)])
+                .then(values=>{
+                    res.send({
+                        previous: values[0],
+                        upcoming: values[1]
+                    })
+                })
+                .catch(e=>console.error(e));
+        })
+    
     app.route('/login')
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
