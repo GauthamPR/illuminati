@@ -42,15 +42,30 @@ module.exports = function (app) {
         })
         .post((req, res)=>{
             user.add(req.body)
-                .then(messages=>{
-                    console.log(messages);
-                    req.flash('success', "Email verification send to your account");
-                    res.redirect('/success');
+                .then(email=>{
+                    console.log(email);
+                    req.session.email = email;
+                    res.redirect('/register/verify');
                 })
                 .catch((err)=>{
                     console.log(err);
                     req.flash('error', err);
                     res.redirect('/error');
+                })
+        })
+    app.route('/register/verify')
+        .get((req, res)=>{
+            res.sendFile(process.cwd() + '/views/verify.html')
+        })
+        .post((req, res)=>{
+            user.verify(req.session.email, req.body.otp)
+                .then(message=>{
+                    req.flash('success', message);
+                    res.redirect('/success');
+                })
+                .catch(err=>{
+                    req.flash('error', err);
+                    res.redirect('/error')
                 })
         })
     app.route('/login')

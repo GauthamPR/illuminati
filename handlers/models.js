@@ -6,6 +6,7 @@ const newUserSchema = new mongoose.Schema({
     admNo: Number,
     role: String,
     password: String,
+    otp: String,
     email: String,
     status: String,
     designation: String,

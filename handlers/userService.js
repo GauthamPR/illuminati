@@ -1,5 +1,6 @@
 const customModel = require('./models.js');
 const bcrypt = require('bcrypt');
+const mail = require('./mailer.js');
 
 module.exports = {
     add: function(userData){
@@ -59,12 +60,36 @@ module.exports = {
                     newUser.status = "PRE-VERIFICATION";
                     newUser.password = bcrypt.hashSync(userData.password, 12);
                     newUser.parentID = messages[0];
-                    newUser.save((err, doc)=>{
-                        if(err) console.error(err);
-                        resolve(messages);
-                    })
+                    mail.send(newUser.email)
+                        .then(otp=>{
+                            newUser.otp = otp;
+                            newUser.save((err, doc)=>{
+                                if(err) console.error(err);
+                                resolve(newUser.email);
+                            })
+                        })
                 })
                 .catch(err=>reject(err));
+        })
+    },
+
+    verify: function(email, otp){
+        return new Promise((resolve, reject)=>{
+            customModel.newUsers.findOne({email: email}, (err, newUser)=>{
+                if(err) console.error(err);
+                if(!newUser) reject('Email: ' + email + ' not found');
+                else if(newUser.otp !== otp) reject('Invalid Otp')
+                else{
+                    var user = new customModel.Users(newUser.toJSON());
+                    user.save((err)=> {
+                        if(err) console.error(err);
+                        newUser.remove((err)=>{
+                            if(err) console.error(err);
+                        })
+                        resolve('Account Verfied Succesfully');
+                })
+                }
+            })
         })
     }
 }
