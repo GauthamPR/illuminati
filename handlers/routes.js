@@ -9,7 +9,32 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/home.html');
     })
 
-
+    app.route('/')
+        .get((req, res) => {
+            res.sendFile(process.cwd() + '/views/home.html');
+        });
+    app.route('/events')
+        .get((req, res)=>{
+            Promise.all([getData.previous(4), getData.upcoming(4)])
+                .then(values=>{
+                    res.send({
+                        previous: values[0],
+                        upcoming: values[1]
+                    })
+                })
+                .catch(e=>console.error(e));
+        })
+    app.route('/upcoming')
+        .get((req, res)=>{
+            getData.upcoming()
+                .then(data=> res.send(data));
+        });
+    
+    app.route('/previous')
+        .get((req, res)=>{
+            getData.previous()
+                .then(data=> res.send(data));
+        })
     app.route('/login')
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
