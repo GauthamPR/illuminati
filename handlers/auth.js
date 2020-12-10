@@ -1,4 +1,6 @@
 const LocalStrategy = require('passport-local');
+//const GitHubStrategy = require('passport-github').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
 const bcrypt = require('bcrypt');
@@ -22,6 +24,7 @@ module.exports = {
         });
         passport.deserializeUser((id, done)=>{
             Users.findOne({_id: new ObjectID(id)}, (err, doc)=>{
+                if(err) console.error(err);
                 done(null, doc);
             })
         })
@@ -42,5 +45,49 @@ module.exports = {
             })
         }));
         
+        passport.use(new GoogleStrategy({
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/google/callback"
+        },(accessToken, refreshToken, profile, cb)=>{
+            console.log(profile);
+            customModel.Users.findOneAndUpdate({email: profile.emails[0].value},
+                {
+                    googleID: profile.id,
+                    last_login: new Date(),
+                    $inc: {login_count: 1}
+                },
+                (err, doc)=>{
+                    if(err) console.error(err);
+                    if(doc)
+                        return cb(null, doc);
+                    else
+                        return cb(null, false, {message: "User Not Registered"});
+                })
+        }))
+
+        /*passport.use(new GitHubStrategy({
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: "http://localhost:3000/auth/github/callback" 
+        },(accessToken, refreshToken, profile, cb)=>{
+            console.log(profile);
+            customModel.Users.findOneAndUpdate({ email: profile.emails[0].value },
+                {
+                    githubID: profile.id,
+                    last_login: new Date(),
+                    $inc: {
+                        login_count: 1
+                    }
+                },
+                (err, doc) => {
+                    if(err) console.error(err);
+                    if(doc)
+                        return cb(null, doc);
+                    else
+                        return cb(null, false, {message: "User Not Registered"});
+                }
+              );
+        }))*/
     }
 }

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const {ObjectID} = require('mongodb');
 
 const userSchema = new mongoose.Schema({
+    githubID: String,
+    googleID: String,
     name: String,
     admNo: Number,
     password: String,
@@ -9,7 +11,9 @@ const userSchema = new mongoose.Schema({
     email: String,
     designation: String,
     parentID: ObjectID,
-    parent: String
+    parent: String,
+    last_login: Date,
+    login_count: Number
 });
 const requestSchema = new mongoose.Schema({
     hallID: ObjectID,
