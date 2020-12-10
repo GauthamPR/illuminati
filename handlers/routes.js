@@ -8,6 +8,8 @@ module.exports = function (app) {
     app.get('/', (req, res) => {
         res.sendFile(process.cwd() + '/views/home.html');
     })
+
+
     app.route('/login')
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
@@ -19,19 +21,28 @@ module.exports = function (app) {
             delete req.session.redirectTo;
             res.redirect(url);
         })
-    app.route('/auth/github')
+
+    /*app.route('/auth/github')
         .get(passport.authenticate('github'));
-    
+
     app.route('/auth/github/callback')
-        .get(passport.authenticate('github',{failureRedirect: "/login"}), (req, res)=>{
+        .get(passport.authenticate('github',{failureRedirect: "/error", failureFlash: true}), (req, res)=>{
             req.session.user_id = req.user.id;
             res.redirect('/my-requests');
         })
+    */
+   
     app.route('/auth/google')
         .get(passport.authenticate('google', {scope: ["profile", "email"]}));
+
     app.route('/auth/google/callback')
-        .get(passport.authenticate('google', {failureRedirect: '/login'}), (req, res)=>{
+        .get(passport.authenticate('google', {failureRedirect: '/error', failureFlash: true}), (req, res)=>{
             res.redirect('/my-requests');
+        });
+
+    app.route('/error')
+        .get((req, res)=>{
+            res.send(req.flash('error')[0]);
         })
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {

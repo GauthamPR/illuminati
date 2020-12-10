@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const flash = require('connect-flash');
 const session = require('express-session');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -20,6 +21,7 @@ app.use(session({
         secure: false
     }
 }));
+app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session());
 

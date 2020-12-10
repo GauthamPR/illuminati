@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local');
-const GitHubStrategy = require('passport-github').Strategy;
+//const GitHubStrategy = require('passport-github').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
 const { ObjectID } = require('mongodb');
@@ -51,50 +51,43 @@ module.exports = {
             callbackURL: "http://localhost:3000/auth/google/callback"
         },(accessToken, refreshToken, profile, cb)=>{
             console.log(profile);
-            customModel.Users.findOneAndUpdate({googleID: profile.id},
+            customModel.Users.findOneAndUpdate({email: profile.emails[0].value},
                 {
-                    $setOnInsert: {
-                        googleID: profile.id
-                    },
-                    $set: {
-                        last_login: new Date()
-                    },
-                    $inc: {
-                        login_count: 1
-                    }
+                    googleID: profile.id,
+                    last_login: new Date(),
+                    $inc: {login_count: 1}
                 },
-                {upsert: true, new: true},
                 (err, doc)=>{
                     if(err) console.error(err);
-                    return cb(null, doc);
+                    if(doc)
+                        return cb(null, doc);
+                    else
+                        return cb(null, false, {message: "User Not Registered"});
                 })
         }))
 
-        passport.use(new GitHubStrategy({
+        /*passport.use(new GitHubStrategy({
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
             callbackURL: "http://localhost:3000/auth/github/callback" 
         },(accessToken, refreshToken, profile, cb)=>{
             console.log(profile);
-            customModel.Users.findOneAndUpdate(
-                { githubID: profile.id },
+            customModel.Users.findOneAndUpdate({ email: profile.emails[0].value },
                 {
-                  $setOnInsert: {
                     githubID: profile.id,
-                  },
-                  $set: {
-                    last_login: new Date()
-                  },
-                  $inc: {
-                    login_count: 1
-                  }
+                    last_login: new Date(),
+                    $inc: {
+                        login_count: 1
+                    }
                 },
-                { upsert: true, new: true },
                 (err, doc) => {
                     if(err) console.error(err);
-                    return cb(null, doc);
+                    if(doc)
+                        return cb(null, doc);
+                    else
+                        return cb(null, false, {message: "User Not Registered"});
                 }
               );
-        }))
+        }))*/
     }
 }
