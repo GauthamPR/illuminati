@@ -1,14 +1,23 @@
 const mongoose = require('mongoose');
 const {ObjectID} = require('mongodb');
 
-const newUserSchema = new mongoose.Schema({
+const tempUserSchema = new mongoose.Schema({
     name: String,
     admNo: Number,
     role: String,
     password: String,
     otp: String,
     email: String,
-    status: String,
+    designation: String,
+    parentID: ObjectID,
+});
+
+const unapprovedUserSchema = new mongoose.Schema({
+    name: String,
+    admNo: Number,
+    role: String,
+    password: String,
+    email: String,
     designation: String,
     parentID: ObjectID,
 });
@@ -44,13 +53,15 @@ const hallSchema = new mongoose.Schema({
     in_charge: ObjectID,
     in_charge_name: String
 });
-var newUsers = mongoose.model('newUsers', newUserSchema);
+var tempUsers = mongoose.model('new_users', tempUserSchema);
+var unapprovedUsers = mongoose.model('unapproved_users', unapprovedUserSchema);
 var Users = mongoose.model('Users', userSchema);
 var Requests = mongoose.model('Requests', requestSchema);
 var Halls = mongoose.model('Halls', hallSchema);
 
 module.exports = {
-    newUsers: newUsers,
+    tempUsers: tempUsers,
+    unapprovedUsers: unapprovedUsers,
     Users: Users,
     Requests: Requests,
     Halls: Halls

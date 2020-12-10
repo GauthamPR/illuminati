@@ -28,7 +28,7 @@ module.exports = {
             
             function checkIfUserAppliedBefore(admNo){
                 return new Promise((resolve, reject)=>{
-                    customModel.newUsers.findOne({admNo: admNo}, (err, user)=>{
+                    customModel.unapprovedUsers.findOne({admNo: admNo}, (err, user)=>{
                         if(err) console.error(err);
                         if(user)reject('User Already Applied');
                         resolve('User Not Applied Before');
@@ -48,24 +48,37 @@ module.exports = {
                     }
                 })
             }
-            var newUser = new customModel.newUsers(userData);
+            function removeUserFromTemp(admNo, email){
+                return new Promise((resolve)=>{
+                    customModel.tempUsers.find({
+                        $or: [{admNo: admNo}, {email: email}]
+                    }, (err, docs)=>{
+                        if(err) console.error(err)
+                        if(docs)
+                            docs.forEach(tempUser=>tempUser.remove());
+                        resolve("TempUser Checked and Cleared");
+                    })
+                })
+            }
+            var tempUser = new customModel.tempUsers(userData);
             parentAdmNo = parseInt(userData.parent.match(/\((.*)\)/)[1]);
             Promise.all([
                 findParentID(parentAdmNo),
                 passwordCheck(userData.password, userData.confirmPassword),
-                checkIfUserExists(newUser.admNo), 
-                checkIfUserAppliedBefore(newUser.admNo),
+                checkIfUserExists(tempUser.admNo), 
+                checkIfUserAppliedBefore(tempUser.admNo),
+                removeUserFromTemp(tempUser.admNo, tempUser.email)
             ])
                 .then(messages=>{
-                    newUser.status = "PRE-VERIFICATION";
-                    newUser.password = bcrypt.hashSync(userData.password, 12);
-                    newUser.parentID = messages[0];
-                    mail.send(newUser.email)
+                    tempUser.status = "PRE-VERIFICATION";
+                    tempUser.password = bcrypt.hashSync(userData.password, 12);
+                    tempUser.parentID = messages[0];
+                    mail.send(tempUser.email)
                         .then(otp=>{
-                            newUser.otp = otp;
-                            newUser.save((err, doc)=>{
+                            tempUser.otp = otp;
+                            tempUser.save((err, doc)=>{
                                 if(err) console.error(err);
-                                resolve(newUser.email);
+                                resolve(tempUser.email);
                             })
                         })
                 })
@@ -75,15 +88,15 @@ module.exports = {
 
     verify: function(email, otp){
         return new Promise((resolve, reject)=>{
-            customModel.newUsers.findOne({email: email}, (err, newUser)=>{
+            customModel.tempUsers.findOne({email: email}, (err, tempUser)=>{
                 if(err) console.error(err);
-                if(!newUser) reject('Email: ' + email + ' not found');
-                else if(newUser.otp !== otp) reject('Invalid Otp')
+                if(!tempUser) reject('Email: ' + email + ' not found');
+                else if(tempUser.otp !== otp) reject('Invalid Otp')
                 else{
-                    var user = new customModel.Users(newUser.toJSON());
+                    var user = new customModel.unapprovedUsers(tempUser.toJSON());
                     user.save((err)=> {
                         if(err) console.error(err);
-                        newUser.remove((err)=>{
+                        tempUser.remove((err)=>{
                             if(err) console.error(err);
                         })
                         resolve('Account Verfied Succesfully');
