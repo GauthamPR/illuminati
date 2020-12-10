@@ -9,7 +9,7 @@ module.exports = function (app) {
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/home.html');
         });
-    app.route('/home/requests')
+    app.route('/events')
         .get(auth.ensureAuthenticated, (req, res)=>{
             Promise.all([getData.previous(4), getData.upcoming(4)])
                 .then(values=>{

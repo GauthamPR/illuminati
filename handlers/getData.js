@@ -112,11 +112,11 @@ module.exports = {
                             });
                         })
                     }
-                    if(numberOfRequests){
-                        if(upcomingEvents.length <= numberOfRequests)
-                            upcomingEvents.push(jsonObject);
-                    }else{
+                    if(numberOfRequests == undefined){
                         upcomingEvents.push(jsonObject);
+                    }else{
+                        if(upcomingEvents.length < numberOfRequests)
+                            upcomingEvents.push(jsonObject);
                     }
                 })
                 resolve(upcomingEvents);
@@ -155,11 +155,11 @@ module.exports = {
                             });
                         })
                     }
-                    if(numberOfRequests){
-                        if(previousEvents.length <= numberOfRequests)
-                            previousEvents.push(jsonObject);
-                    }else{
+                    if(numberOfRequests == undefined){
                         previousEvents.push(jsonObject);
+                    }else{
+                        if(previousEvents.length < numberOfRequests)
+                            previousEvents.push(jsonObject);
                     }
                 })
                 resolve(previousEvents);
