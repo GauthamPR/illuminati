@@ -1,6 +1,6 @@
 const auth = require('./auth.js');
 const passport = require('passport');
-const requestHandle = require('./requestService.js');
+const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const user = require('./userService.js');
 
@@ -42,15 +42,30 @@ module.exports = function (app) {
         })
         .post((req, res)=>{
             user.add(req.body)
-                .then(messages=>{
-                    console.log(messages);
-                    req.flash('success', "Email verification send to your account");
-                    res.redirect('/success');
+                .then(email=>{
+                    console.log(email);
+                    req.session.email = email;
+                    res.redirect('/register/verify');
                 })
                 .catch((err)=>{
                     console.log(err);
                     req.flash('error', err);
                     res.redirect('/error');
+                })
+        })
+    app.route('/register/verify')
+        .get((req, res)=>{
+            res.sendFile(process.cwd() + '/views/verify.html')
+        })
+        .post((req, res)=>{
+            user.verify(req.session.email, req.body.otp)
+                .then(message=>{
+                    req.flash('success', message);
+                    res.redirect('/success');
+                })
+                .catch(err=>{
+                    req.flash('error', err);
+                    res.redirect('/error')
                 })
         })
     app.route('/login')
@@ -111,7 +126,7 @@ module.exports = function (app) {
             res.sendFile(process.cwd() + '/views/new-request.html');
         })
         .post(auth.ensureAuthenticated, (req, res)=>{
-            requestHandle.saveRequest(req.body, req.user)
+            requestService.saveRequest(req.body, req.user)
             .then((message)=>{
                 res.redirect('/my-requests');
             })
@@ -127,7 +142,7 @@ module.exports = function (app) {
         })
         .post(auth.ensureAuthenticated, async (req, res)=> {
             var requestID = Object.getOwnPropertyNames(req.body)[0];
-            await requestHandle.update({
+            await requestService.update({
                 userID: req.user._id,
                 requestID: requestID,
                 response: req.body[requestID]
