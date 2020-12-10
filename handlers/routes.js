@@ -1,7 +1,8 @@
 const auth = require('./auth.js');
 const passport = require('passport');
-const requestHandle = require('./requestHandle.js');
+const requestHandle = require('./requestService.js');
 const getData = require('./getData.js');
+const user = require('./userService.js');
 
 module.exports = function (app) {
     
@@ -35,11 +36,28 @@ module.exports = function (app) {
             getData.previous()
                 .then(data=> res.send(data));
         })
+    app.route('/register')
+        .get((req, res)=>{
+            res.sendFile(process.cwd() + '/views/register.html');
+        })
+        .post((req, res)=>{
+            user.add(req.body)
+                .then(messages=>{
+                    console.log(messages);
+                    req.flash('success', "Email verification send to your account");
+                    res.redirect('/success');
+                })
+                .catch((err)=>{
+                    console.log(err);
+                    req.flash('error', err);
+                    res.redirect('/error');
+                })
+        })
     app.route('/login')
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
         })
-        .post(passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+        .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true}), (req, res) => {
             res.cookie('User Name', req.user.name);
             res.cookie('Level', req.user.level);
             var url = req.session.redirectTo || '/';
@@ -65,10 +83,6 @@ module.exports = function (app) {
             res.redirect('/my-requests');
         });
 
-    app.route('/error')
-        .get((req, res)=>{
-            res.send(req.flash('error')[0]);
-        })
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
@@ -119,6 +133,15 @@ module.exports = function (app) {
                 response: req.body[requestID]
             });
             res.redirect('/my-approvals');
+        });
+        
+    app.route('/success')
+        .get((req, res)=>{
+            res.send(req.flash('success')[0])
+        })
+    app.route('/error')
+        .get((req, res)=>{
+            res.send(req.flash('error')[0]);
         })
 
     app.route('/logout')

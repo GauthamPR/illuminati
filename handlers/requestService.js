@@ -1,4 +1,3 @@
-const { request } = require('express');
 const { ObjectID } = require('mongodb');
 const customModel = require('./models.js');
 
