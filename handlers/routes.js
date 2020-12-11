@@ -3,9 +3,10 @@ const passport = require('passport');
 const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const user = require('./userService.js');
+const userService = require('./userService.js');
 
 module.exports = function (app) {
-    
+
     app.get('/', (req, res) => {
         res.sendFile(process.cwd() + '/views/home.html');
     })
@@ -14,56 +15,56 @@ module.exports = function (app) {
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/home.html');
         });
-    app.route('/events')
-        .get((req, res)=>{
-            Promise.all([getData.previous(4), getData.upcoming(4)])
-                .then(values=>{
+    app.route('/getData/events')
+        .get((req, res) => {
+            Promise.all([getData.previousEvents(4), getData.upcomingEvents(4)])
+                .then(values => {
                     res.send({
                         previous: values[0],
                         upcoming: values[1]
                     })
                 })
-                .catch(e=>console.error(e));
+                .catch(e => console.error(e));
         })
-    app.route('/upcoming')
-        .get((req, res)=>{
-            getData.upcoming()
-                .then(data=> res.send(data));
+    app.route('/getData/upcoming-events')
+        .get((req, res) => {
+            getData.upcomingEvents()
+                .then(data => res.send(data));
         });
-    
-    app.route('/previous')
-        .get((req, res)=>{
-            getData.previous()
-                .then(data=> res.send(data));
+
+    app.route('/getData/previous-events')
+        .get((req, res) => {
+            getData.previousEvents()
+                .then(data => res.send(data));
         })
     app.route('/register')
-        .get((req, res)=>{
+        .get((req, res) => {
             res.sendFile(process.cwd() + '/views/register.html');
         })
-        .post((req, res)=>{
+        .post((req, res) => {
             user.add(req.body)
-                .then(email=>{
+                .then(email => {
                     console.log(email);
                     req.session.email = email;
                     res.redirect('/register/verify');
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     console.log(err);
                     req.flash('error', err);
                     res.redirect('/error');
                 })
         })
     app.route('/register/verify')
-        .get((req, res)=>{
+        .get((req, res) => {
             res.sendFile(process.cwd() + '/views/verify.html')
         })
-        .post((req, res)=>{
+        .post((req, res) => {
             user.verify(req.session.email, req.body.otp)
-                .then(message=>{
+                .then(message => {
                     req.flash('success', message);
                     res.redirect('/success');
                 })
-                .catch(err=>{
+                .catch(err => {
                     req.flash('error', err);
                     res.redirect('/error')
                 })
@@ -72,7 +73,7 @@ module.exports = function (app) {
         .get((req, res) => {
             res.sendFile(process.cwd() + '/views/login.html');
         })
-        .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true}), (req, res) => {
+        .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
             res.cookie('User Name', req.user.name);
             res.cookie('Level', req.user.level);
             var url = req.session.redirectTo || '/';
@@ -89,58 +90,85 @@ module.exports = function (app) {
             res.redirect('/my-requests');
         })
     */
-   
+
     app.route('/auth/google')
-        .get(passport.authenticate('google', {scope: ["profile", "email"]}));
+        .get(passport.authenticate('google', { scope: ["profile", "email"] }));
 
     app.route('/auth/google/callback')
-        .get(passport.authenticate('google', {failureRedirect: '/error', failureFlash: true}), (req, res)=>{
+        .get(passport.authenticate('google', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
             res.redirect('/my-requests');
         });
 
+    app.route('/manage-users')
+        .get(auth.ensureAuthenticated, (req, res) => {
+            res.sendFile(process.cwd() + '/views/manage-users.html');
+        })
+        .post(auth.ensureAuthenticated, (req, res)=>{
+            var userID = Object.getOwnPropertyNames(req.body)[0];
+            userService.updateUnapproved({
+                id: userID,
+                order: req.body[userID]
+            })
+            .then(()=>{
+                res.redirect('/manage-users');
+            })
+            .catch((err)=>{
+                req.flash('error', err);
+                res.redirect('/error');
+            })
+        })
+    app.route('/getData/unapproved-users')
+        .get(auth.ensureAuthenticated, (req, res)=>{
+            getData.unapprovedUsers(req.user)
+                .then(data=>res.send(data))
+                .catch(err=>{
+                    console.error(err);
+                    res.send('Error Occured');
+                })
+        })
     app.route('/my-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-requests.html');
         })
-    app.route('/user-requests')
+    app.route('/getData/user-requests')
         .get(auth.ensureAuthenticated, (req, res) => {
             getData.requests(req.user)
-            .then(data => res.send(data))
-            .catch(err=>{
-                console.error(err);
-                res.send("Error Occured");
-            })
+                .then(data => res.send(data))
+                .catch(err => {
+                    console.error(err);
+                    res.send("Error Occured");
+                })
         })
-    app.route('/user-approvals')
-        .get(auth.ensureAuthenticated, (req, res)=>{
+    app.route('/getData/user-approvals')
+        .get(auth.ensureAuthenticated, (req, res) => {
             getData.approvals(req.user)
-            .then(data=>res.send(data))
-            .catch(err=>{
-                console.error(err);
-                res.send("Error Occured");
-            })
+                .then(data => res.send(data))
+                .catch(err => {
+                    console.error(err);
+                    res.send("Error Occured");
+                })
         })
 
     app.route('/new-request')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/new-request.html');
         })
-        .post(auth.ensureAuthenticated, (req, res)=>{
+        .post(auth.ensureAuthenticated, (req, res) => {
             requestService.saveRequest(req.body, req.user)
-            .then((message)=>{
-                res.redirect('/my-requests');
-            })
-            .catch((err)=>{
-                console.error(err.name + ": " + err.message);
-                res.send(err.message);
-            })
+                .then((message) => {
+                    res.redirect('/my-requests');
+                })
+                .catch((err) => {
+                    console.error(err.name + ": " + err.message);
+                    res.send(err.message);
+                })
         })
 
     app.route('/my-approvals')
         .get(auth.ensureAuthenticated, (req, res) => {
             res.sendFile(process.cwd() + '/views/my-approvals.html');
         })
-        .post(auth.ensureAuthenticated, async (req, res)=> {
+        .post(auth.ensureAuthenticated, async (req, res) => {
             var requestID = Object.getOwnPropertyNames(req.body)[0];
             await requestService.update({
                 userID: req.user._id,
@@ -149,13 +177,13 @@ module.exports = function (app) {
             });
             res.redirect('/my-approvals');
         });
-        
+
     app.route('/success')
-        .get((req, res)=>{
+        .get((req, res) => {
             res.send(req.flash('success')[0])
         })
     app.route('/error')
-        .get((req, res)=>{
+        .get((req, res) => {
             res.send(req.flash('error')[0]);
         })
 

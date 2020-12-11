@@ -81,7 +81,7 @@ module.exports = {
         })
     },
 
-    previous: function(numberOfRequests){
+    previousEvents: function(numberOfRequests){
         return new Promise((resolve, reject)=>{
             var previousEvents=[];
             customModel.Requests.aggregate([
@@ -129,7 +129,7 @@ module.exports = {
         })
     },
 
-    upcoming: function(numberOfRequests){
+    upcomingEvents: function(numberOfRequests){
         return new Promise((resolve, reject)=>{
             var upcomingEvents = [];
             customModel.Requests.aggregate([
@@ -173,6 +173,28 @@ module.exports = {
                     }
                 })
                 resolve(upcomingEvents);
+            })
+        })
+    },
+    
+    unapprovedUsers: function(user){
+        return new Promise((resolve, reject)=>{
+            customModel.unapprovedUsers.find({parentID: user._id},(err, users)=>{
+                if(err) console.error(err);
+                var returnData = [];
+                var jsonObject;
+                users.forEach((user)=>{
+                    jsonObject = {
+                        id: user._id.toString(),
+                        admNo: user.admNo,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                        designation: user.designation
+                    };
+                    returnData.push(jsonObject);
+                })
+                resolve(returnData);
             })
         })
     }

@@ -3,3 +3,5 @@
 .env
 /views/register.html
 /views/verify.html
+/views/manage-users.html
+/public/js/manage-users.js
