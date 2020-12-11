@@ -53,7 +53,7 @@ const hallSchema = new mongoose.Schema({
     in_charge: ObjectID,
     in_charge_name: String
 });
-var tempUsers = mongoose.model('new_users', tempUserSchema);
+var tempUsers = mongoose.model('temp_users', tempUserSchema);
 var unapprovedUsers = mongoose.model('unapproved_users', unapprovedUserSchema);
 var Users = mongoose.model('Users', userSchema);
 var Requests = mongoose.model('Requests', requestSchema);

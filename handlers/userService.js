@@ -1,6 +1,7 @@
 const customModel = require('./models.js');
 const bcrypt = require('bcrypt');
 const mail = require('./mailer.js');
+const {ObjectID} = require('mongodb');
 
 module.exports = {
     add: function(userData){
@@ -103,6 +104,32 @@ module.exports = {
                 })
                 }
             })
+        })
+    },
+
+    updateUnapproved: function(response){
+        return new Promise((resolve, reject)=>{
+            var userID = new ObjectID(response.id);
+            if(response.order === "approve"){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    var newUser = customModel.Users(user.toJSON());
+                    newUser.save((err)=>{
+                        if(err) console.error(err);
+                        user.remove();
+                        resolve("Approved User");
+                    })
+                })
+
+            }else if(response.order === "deny"){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    user.remove();
+                    resolve("User Removed");
+                })
+            }else{
+                reject("Undefined response");
+            }
         })
     }
 }
