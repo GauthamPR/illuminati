@@ -71,9 +71,15 @@ module.exports = {
                 removeUserFromTemp(tempUser.admNo, tempUser.email)
             ])
                 .then(messages=>{
-                    tempUser.status = "PRE-VERIFICATION";
                     tempUser.password = bcrypt.hashSync(userData.password, 12);
                     tempUser.parentID = messages[0];
+                    if(tempUser.role === "Student"){
+                        tempUser.role = "STUDENT";
+                    }else if(tempUser.role === "Teacher"){
+                        tempUser.role = "TEACHER";
+                    }else{
+                        tempUser.role = null;
+                    }
                     mail.send(tempUser.email)
                         .then(otp=>{
                             tempUser.otp = otp;
