@@ -50,8 +50,7 @@ const requestSchema = new mongoose.Schema({
 });
 const hallSchema = new mongoose.Schema({
     name: String,
-    in_charge: ObjectID,
-    in_charge_name: String
+    in_charge: ObjectID
 });
 var tempUsers = mongoose.model('temp_users', tempUserSchema);
 var unapprovedUsers = mongoose.model('unapproved_users', unapprovedUserSchema);
