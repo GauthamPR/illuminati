@@ -159,6 +159,26 @@ module.exports = {
         })
     },
 
+    changePassword: function(inputData){
+        return new Promise((resolve, reject)=>{
+            checkPasswordsConsistency(inputData.newPassword, inputData.confirmNewPassword)
+            .then(()=>{
+                customModel.Users.findById(inputData.userID, (err, user)=>{
+                    if(err) console.error(err);
+                    if(!user) reject("User Not Found")
+                    else if(!bcrypt.compareSync(inputData.oldPassword, user.password)) reject("Wrong Old Password")
+                    else{
+                        changePassword(inputData.userID, inputData.newPassword)
+                        .then(message=>resolve(message))
+                        .catch(err=>reject(err))
+                    }
+                })
+                
+            })
+            .catch(err=>reject(err))
+        })
+    },
+
     forgotPassword: function (email){
         return new Promise((resolve, reject)=>{
             customModel.Users.findOne({email: email},(err, user)=>{

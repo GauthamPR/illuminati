@@ -118,6 +118,27 @@ module.exports = function (app) {
             })
         })
 
+    app.route('/change-password')
+        .get(auth.ensureAuthenticated, (req, res)=>{
+            res.sendFile(process.cwd() + '/views/change-password.html');
+        })
+        .post(auth.ensureAuthenticated, (req, res)=>{
+            userService.changePassword({
+                userID: req.user._id,
+                oldPassword: req.body.oldPassword,
+                newPassword: req.body.newPassword,
+                confirmNewPassword: req.body.confirmNewPassword
+            })
+            .then(message=>{
+                req.flash('success', message);
+                req.logout();
+                res.redirect('/success');
+            })
+            .catch(err=>{
+                req.flash('error', err);
+                res.redirect('/error');
+            })
+        })
     app.route('/forgot-password')
         .get((req, res)=>{
             res.sendFile(process.cwd() + '/views/forgot-password.html');
