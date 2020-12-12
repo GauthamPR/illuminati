@@ -216,7 +216,10 @@ module.exports = {
                     if(err) console.error(err);
                     if(!resetLink) reject("ERROR");
                     changePassword(resetLink.userID, resetInput.password)
-                    .then((message)=>resolve(message))
+                    .then((message)=>{
+                        resetLink.remove();
+                        resolve(message)
+                    })
                     .catch((err)=>reject(err));
                 })
             })
