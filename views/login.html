@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/inputFormatter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - #website Name</title>
@@ -14,14 +15,14 @@
         </div>
         <form action="/login" method="POST">
             <div id="input-form">
-                <div class="containers">
-                    <label for="userID">Admission No</label>
-                    <input id="userID" type="number" min="0" name="userID" placeholder="Enter Admission Number">
-                </div>
-                <div class="containers">
+                <section class="containers">
+                    <label for="admNo">Admission No</label>
+                    <input id="admNo" type="number" name="admNo" placeholder="Enter Admission Number" autocomplete="username">
+                </section>
+                <section class="containers">
                     <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Enter Password">
-                </div>
+                    <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password">
+                </section>
             </div>
             <div id="submit-form">
                 <div id="forgot-password">
