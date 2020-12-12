@@ -2,24 +2,36 @@ const customModel = require('./models.js');
 const bcrypt = require('bcrypt');
 const mail = require('./mailer.js');
 const {ObjectID} = require('mongodb');
+const mailer = require('./mailer.js');
 
+function changePassword(userID, newPassword){
+    return new Promise((resolve, reject)=>{
+        newPassword = bcrypt.hashSync(newPassword, 12);
+        customModel.Users.findByIdAndUpdate(userID, {password: newPassword}, (err, user)=>{
+            if(err) console.error(err);
+            resolve("Password Changed");
+        })
+    })
+}
+
+function checkPasswordsConsistency(password, confirmPassword){
+    return new Promise((resolve, reject)=>{
+        var passwordRegex = new RegExp(/^[\w`~@!#$*%^&*()]*$/);
+        //var admNoRegex = new RegExp(/[0-9]{6}/);
+        /*if(!admNoRegex.test(userData.admNo))
+            reject("Admission Number can only have 6 numbers");
+        else*/ if(password !== confirmPassword)
+            reject("Passwords mismatch");
+        else if(!passwordRegex.test(password))
+            reject("Passwords can only include letters, alpahbets, `, ~, ! ,@ , #, $, %, ^, &, *, (, )");
+        else
+            resolve("Passwords Check Done");
+    })
+}
 module.exports = {
     add: function(userData){
         return new Promise((resolve, reject)=>{
-            function checkForInconsitency(userData){
-                return new Promise((resolve, reject)=>{
-                    var passwordRegex = new RegExp(/^[\w`~@!#$*%^&*()]*$/);
-                    var admNoRegex = new RegExp(/[0-9]{6}/);
-                    if(!admNoRegex.test(userData.admNo))
-                        reject("Admission Number can only have 6 numbers");
-                    else if(userData.password !== userData.confirmPassword)
-                        reject("Passwords mismatch");
-                    else if(!passwordRegex.test(userData.password))
-                        reject("Passwords can only include letters, alpahbets, `, ~, ! ,@ , #, $, %, ^, &, *, (, )");
-                    else
-                        resolve("Passwords Check Done");
-                })
-            }
+            
             function checkIfUserExists(admNo) {
                 return new Promise((resolve, reject)=>{
                     customModel.Users.findOne({admNo: admNo},(err, user)=>{
@@ -73,7 +85,7 @@ module.exports = {
             parentAdmNo = parseInt(userData.parent.match(/\((.*)\)/)[1]);
             Promise.all([
                 findParentID(parentAdmNo),
-                checkForInconsitency(userData),
+                checkPasswordsConsistency(userData.password, userData.confirmPassword),
                 checkIfUserExists(tempUser.admNo), 
                 checkIfUserAppliedBefore(tempUser.admNo),
                 removeUserFromTemp(tempUser.admNo, tempUser.email)
@@ -88,7 +100,7 @@ module.exports = {
                     }else{
                         tempUser.role = null;
                     }
-                    mail.send(tempUser.email)
+                    mail.sendOTP(tempUser.email)
                         .then(otp=>{
                             tempUser.otp = otp;
                             tempUser.save((err, doc)=>{
@@ -144,6 +156,51 @@ module.exports = {
             }else{
                 reject("Undefined response");
             }
+        })
+    },
+
+    forgotPassword: function (email){
+        return new Promise((resolve, reject)=>{
+            customModel.Users.findOne({email: email},(err, user)=>{
+                if(err) console.error(err);
+                if(!user) reject("No user is registered with emailID as", email);
+                else{
+                    mail.sendResetLink(email)
+                    .then(rand=>{
+                        var resetLink = new customModel.resetLinks({userID: user._id, randomValue: rand});
+                        resetLink.save((err)=>{
+                            if(err) console.error(err);
+                            resolve("Reset Link Successfully sent");
+                        })
+                    })
+                }
+            })
+        })
+    },
+
+    verifyResetLink: function(randomValue){
+        return new Promise((resolve, reject)=>{
+            customModel.resetLinks.findOne({randomValue: randomValue},(err, resetLink)=>{
+                if(err) console.error(err);
+                if(!resetLink) reject("Invalid Link");
+                else resolve("Valid Link");
+            })
+        })
+    },
+
+    resetPassword: function(resetInput){
+        return new Promise((resolve, reject)=>{
+            checkPasswordsConsistency(resetInput.password, resetInput.confirmPassword)
+            .then((message)=>{
+                customModel.resetLinks.findOne({randomValue: resetInput.randomValue},(err, resetLink)=>{
+                    if(err) console.error(err);
+                    if(!resetLink) reject("ERROR");
+                    changePassword(resetLink.userID, resetInput.password)
+                    .then((message)=>resolve(message))
+                    .catch((err)=>reject(err));
+                })
+            })
+            .catch((err)=>reject(err))
         })
     }
 }
