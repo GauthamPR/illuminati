@@ -29,12 +29,12 @@ module.exports = {
             })
         })
         passport.use(new LocalStrategy({
-            usernameField: 'userID',
+            usernameField: 'admNo',
             passwordField: 'password'
             },
-            (userID, password, done)=>{
-            Users.findOne({admNo: userID},(err, user)=>{
-                console.log('User', userID, 'attempted to login');
+            (admNo, password, done)=>{
+            Users.findOne({admNo: admNo},(err, user)=>{
+                console.log('User', admNo, 'attempted to login');
                 if(err) {return done(err);}
                 if(!user) {return done(null, false, {message: 'User Not Registered'});}
                 if(!bcrypt.compareSync(password, user.password)){

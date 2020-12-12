@@ -6,12 +6,15 @@ const {ObjectID} = require('mongodb');
 module.exports = {
     add: function(userData){
         return new Promise((resolve, reject)=>{
-            function passwordCheck(password, confirmPassword){
+            function checkForInconsitency(userData){
                 return new Promise((resolve, reject)=>{
-                    var regex = new RegExp(/^[\w`~@!#$*%^&*()]*$/);
-                    if(password !== confirmPassword)
+                    var passwordRegex = new RegExp(/^[\w`~@!#$*%^&*()]*$/);
+                    var admNoRegex = new RegExp(/[0-9]{6}/);
+                    if(!admNoRegex.test(userData.admNo))
+                        reject("Admission Number can only have 6 numbers");
+                    else if(userData.password !== userData.confirmPassword)
                         reject("Passwords mismatch");
-                    else if(!regex.test(password))
+                    else if(!passwordRegex.test(userData.password))
                         reject("Passwords can only include letters, alpahbets, `, ~, ! ,@ , #, $, %, ^, &, *, (, )");
                     else
                         resolve("Passwords Check Done");
@@ -61,11 +64,16 @@ module.exports = {
                     })
                 })
             }
+            /*userData.password = userData['new-password'];
+            delete userData['new-password'];
+            userData.confirmPassword = userData['confirm-new-password'];
+            delete userData['confirm-new-password'];
+            */
             var tempUser = new customModel.tempUsers(userData);
             parentAdmNo = parseInt(userData.parent.match(/\((.*)\)/)[1]);
             Promise.all([
                 findParentID(parentAdmNo),
-                passwordCheck(userData.password, userData.confirmPassword),
+                checkForInconsitency(userData),
                 checkIfUserExists(tempUser.admNo), 
                 checkIfUserAppliedBefore(tempUser.admNo),
                 removeUserFromTemp(tempUser.admNo, tempUser.email)
