@@ -4,4 +4,6 @@
 /views/register.html
 /views/verify.html
 /views/manage-users.html
+/views/forgot-password.html
+/views/reset-password.html
 /public/js/manage-users.js

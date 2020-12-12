@@ -12,6 +12,11 @@ const tempUserSchema = new mongoose.Schema({
     parentID: ObjectID,
 });
 
+const resetLinkSchema = new mongoose.Schema({
+    userID: ObjectID,
+    randomValue: String
+})
+
 const unapprovedUserSchema = new mongoose.Schema({
     name: String,
     admNo: Number,
@@ -53,6 +58,7 @@ const hallSchema = new mongoose.Schema({
     in_charge: ObjectID
 });
 var tempUsers = mongoose.model('temp_users', tempUserSchema);
+var resetLinks = mongoose.model('reset_links', resetLinkSchema);
 var unapprovedUsers = mongoose.model('unapproved_users', unapprovedUserSchema);
 var Users = mongoose.model('Users', userSchema);
 var Requests = mongoose.model('Requests', requestSchema);
@@ -60,6 +66,7 @@ var Halls = mongoose.model('Halls', hallSchema);
 
 module.exports = {
     tempUsers: tempUsers,
+    resetLinks: resetLinks,
     unapprovedUsers: unapprovedUsers,
     Users: Users,
     Requests: Requests,

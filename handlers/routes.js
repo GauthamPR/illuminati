@@ -117,6 +117,48 @@ module.exports = function (app) {
                 res.redirect('/error');
             })
         })
+
+    app.route('/forgot-password')
+        .get((req, res)=>{
+            res.sendFile(process.cwd() + '/views/forgot-password.html');
+        })
+        .post((req, res)=>{
+            userService.forgotPassword(req.body.email)
+            .then(message=>{
+                req.flash('success', message);
+                res.redirect('/success');
+            })
+            .catch(err=>{
+                req.flash('error', err);
+                res.redirect('/fail');
+            })
+        })
+    app.route('/reset-password/:randomValue')
+        .get((req, res)=>{
+            userService.verifyResetLink(req.params.randomValue)
+            .then((message)=>{
+                res.sendFile(process.cwd() + '/views/reset-password.html');
+            })
+            .catch((err)=>{
+                req.flash('error', err);
+                res.redirect('/error');
+            })
+        })
+        .post((req, res)=>{
+            userService.resetPassword({
+                randomValue: req.params.randomValue,
+                password: req.body.password,
+                confirmPassword: req.body.confirmPassword
+            })
+            .then((message)=>{
+                req.flash('success', message);
+                res.redirect('/success');
+            })
+            .catch((err)=>{
+                req.flash('error', err);
+                res.redirect('/error')
+            })
+        })
     app.route('/getData/unapproved-users')
         .get(auth.ensureAuthenticated, (req, res)=>{
             getData.unapprovedUsers(req.user)
