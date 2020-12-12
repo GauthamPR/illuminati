@@ -1,5 +1,6 @@
 body{
-	margin:40px 150px;
+	margin:auto;
+    padding:20px 10px;
     
 }
 .accordion {
@@ -7,7 +8,7 @@ body{
   color: #444;
   cursor: pointer;
   padding: 20px;
-  width: 750px;
+  width:99.9%;
   border: none;
   text-align: left;
   font-size: 13px;
@@ -31,14 +32,14 @@ body{
 display:grid;
 background-color:#2F3675;
 padding: 18px;
-width: 713px;
+width: 96.5%;
 border: none;
-text-align: left;
+text-align: center;
 color:white;
 font-size: 15px;
 border:1px solid black;
 outline:none;
-grid-template-columns:120px 190px 160px 100px;
+grid-template-columns:250px 225px 270px 140px;
 grid-gap:50px 53px;
 }
 
@@ -50,7 +51,8 @@ font-style:bold;
 .container1 {
 display:grid;
 color:black;
-grid-template-columns: 100px 200px 180px 100px;
+text-align: center;
+grid-template-columns: 250px 250px 290px 130px;
 grid-gap:50px 40px;
 }
 
@@ -62,26 +64,16 @@ grid-gap:50px 40px;
   grid-template-columns:350px 180px ;
   flex-direction:row;
   grid-gap:100px 100px;
-  align-self:end;
+  align-self:center;
   background-color: white;
   max-height:0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
 .subContainer1{
-margin:10px 10px;
+margin:4px 20px;
 padding:0px;
 font-size:15px;
-
-}
-.subContainer2{
-display:grid;
-margin:30px 10px;
-grid-template-columns:75px 75px;
-grid-template-rows: 20px;
-grid-gap:0px 40px;
-
-
 
 }
 
@@ -97,6 +89,6 @@ box-sizing:border-box;
 border:1px solid black;
 padding:2px;
 text-align:center;
-background-color:	#32CD32;
+background-color:#32CD32;
 box-sizing:border-box;
 }
