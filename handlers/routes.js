@@ -4,12 +4,22 @@ const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const userService = require('./userService.js');
 
-function showError(req, res, err){
+const routeName = {
+    '/login': 'Login Page',
+    '/change-password': 'Changing password',
+    '/register': 'Registering',
+    '/register/verify': 'Entering OTP',
+    '/forgot-password': 'Entering email'
+};
+
+function showError(req, res, err, redirect){
+    req.flash('redirect', redirect);
     req.flash('error', err);
-    res.redirect('/error');
+    res.redirect('/failure');
 }
 
-function showSuccess(req, res, message){
+function showSuccess(req, res, message, redirect){
+    req.flash('redirect', redirect);
     req.flash('success', message);
     res.redirect('/success');
 }
@@ -26,40 +36,58 @@ module.exports = function (app) {
         .then(values => {
             res.send({previous: values[0], upcoming: values[1]})
         })
-        .catch(err => showError(req, res, err));
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
     app.route('/getData/upcoming-events')
     .get((req, res) => {
         getData.upcomingEvents()
         .then(data => res.send(data))
-        .catch(err=>showError(req, res, err))
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
 
     app.route('/getData/previous-events')
     .get((req, res) => {
         getData.previousEvents()
         .then(data => res.send(data))
-        .catch(err=>showError(req, res, err));
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
 
     app.route('/getData/manage-users')
     .get(auth.ensureAuthenticated, (req, res)=>{
         Promise.all([getData.unapprovedUsers(req.user), getData.children(req.user)])
         .then(data=>res.send({unapprovedUsers: data[0], children: data[1]}))
-        .catch(err=>showError(req, res, err))
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
 
     app.route('/getData/user-requests')
     .get(auth.ensureAuthenticated, (req, res) => {
         getData.requests(req.user)
         .then(data => res.send(data))
-        .catch(err=>showError(req, res, err))
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
     app.route('/getData/user-approvals')
     .get(auth.ensureAuthenticated, (req, res) => {
         getData.approvals(req.user)
         .then(data => res.send(data))
-        .catch(err=>showError(req, res, err))
+        .catch(err => {
+            console.error(err);
+            res.send("Error Retrieving Data");
+        });
     })
 
     app.route('/register')
@@ -72,7 +100,7 @@ module.exports = function (app) {
             req.session.email = email;
             res.redirect('/register/verify');
         })
-        .catch(err=>showError(req, res, err))
+        .catch(err=>showError(req, res, err, '/register'))
     })
 
     app.route('/register/verify')
@@ -81,15 +109,15 @@ module.exports = function (app) {
     })
     .post((req, res) => {
         userService.verify(req.session.email, req.body.otp)
-        .then(message=>showSuccess(req, res, message))
-        .catch(err=>showError(req, res, err))
+        .then(message=>showSuccess(req, res, message, ''))
+        .catch(err=>showError(req, res, err, '/register/verify'))
     })
 
     app.route('/login')
     .get((req, res) => {
         res.sendFile(process.cwd() + '/views/login.html');
     })
-    .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
+    .post(passport.authenticate('local', { failureRedirect: '/failure', failureFlash: true }), (req, res) => {
         res.cookie('username', req.user.name);
         res.cookie('role', req.user.role);
         var url = req.session.redirectTo || '/';
@@ -118,9 +146,9 @@ module.exports = function (app) {
         })
         .then(message=>{
             req.logout();
-            showSuccess(req, res, message);
+            showSuccess(req, res, message, '/login');
         })
-        .catch(err=>showError(req, res, err));
+        .catch(err=>showError(req, res, err, '/change-password'));
     })
 
     app.route('/forgot-password')
@@ -129,8 +157,8 @@ module.exports = function (app) {
     })
     .post((req, res)=>{
         userService.forgotPassword(req.body.email)
-        .then(message=>showSuccess(req, res, message))
-        .catch(err=>showError(req, res, err))
+        .then(message=>showSuccess(req, res, message, ''))
+        .catch(err=>showError(req, res, err, '/forgot-password'))
     })
 
     app.route('/reset-password/:randomValue')
@@ -139,7 +167,7 @@ module.exports = function (app) {
         .then(()=>{
             res.sendFile(process.cwd() + '/views/reset-password.html');
         })
-        .catch(err=>showError(req, res, err))
+        .catch(err=>showError(req, res, err, ''))
     })
     .post((req, res)=>{
         userService.resetPassword({
@@ -147,8 +175,8 @@ module.exports = function (app) {
             password: req.body.psw,
             confirmPassword: req.body.confirmPsw
         })
-        .then(message=>showSuccess(req, res, message))
-        .catch(err=>showError(req, res, err))
+        .then(message=>showSuccess(req, res, message, '/login'))
+        .catch(err=>showError(req, res, err, ''))
     })
 
     app.route('/manage-users')
@@ -196,23 +224,38 @@ module.exports = function (app) {
     });
 
     app.route('/success')
-        .get((req, res) => {
-            res.send(req.flash('success')[0])
+    .get((req, res) => {
+        var redirect = false;
+        var redirectLink = req.flash('redirect')[0];
+        if(redirectLink != ""){
+            redirect = true
+        }
+        res.render(process.cwd() + '/views/pug/success.pug', {
+            message: req.flash('success')[0],
+            redirect: redirect,
+            redirectLink: redirectLink,
+            redirectPageName: routeName[redirectLink]
         })
-    app.route('/error')
-        .get((req, res) => {
-            res.send(req.flash('error')[0]);
-        })
+    })
+    app.route('/failure')
+    .get((req, res) => {
+        var redirectLink = req.flash('redirect')[0];
+        res.render(process.cwd() + '/views/pug/failure.pug', {
+            err: req.flash('error')[0],
+            redirectLink: redirectLink,
+            redirectPageName: routeName[redirectLink]
+        });
+    })
 
     app.route('/logout')
-        .get((req, res) => {
-            req.logout();
-            res.redirect('/');
-        })
+    .get((req, res) => {
+        req.logout();
+        res.redirect('/');
+    })
 
     app.use((req, res, next) => {
         res.status(404)
-            .type('txt')
-            .send('Not Found');
+        .type('txt')
+        .send('Not Found');
     });
 }
