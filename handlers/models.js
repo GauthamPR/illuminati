@@ -28,20 +28,18 @@ const unapprovedUserSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-    githubID: String,
     googleID: String,
-    name: String,
     admNo: Number,
-    role: String,
-    password: String,
-    level: String,
+    name: String,
     email: String,
+    role: String,
     designation: String,
+    password: String,
     parentID: ObjectID,
-    parent: String,
     last_login: Date,
     login_count: Number
 });
+
 const requestSchema = new mongoose.Schema({
     hallID: ObjectID,
     eventName: String,
@@ -53,10 +51,12 @@ const requestSchema = new mongoose.Schema({
     next_approver: ObjectID,
     approved_by: [ObjectID]
 });
+
 const hallSchema = new mongoose.Schema({
     name: String,
     in_charge: ObjectID
 });
+
 var tempUsers = mongoose.model('temp_users', tempUserSchema);
 var resetLinks = mongoose.model('reset_links', resetLinkSchema);
 var unapprovedUsers = mongoose.model('unapproved_users', unapprovedUserSchema);

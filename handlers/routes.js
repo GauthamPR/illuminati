@@ -2,240 +2,198 @@ const auth = require('./auth.js');
 const passport = require('passport');
 const requestService = require('./requestService.js');
 const getData = require('./getData.js');
-const user = require('./userService.js');
 const userService = require('./userService.js');
 
-module.exports = function (app) {
+function showError(req, res, err){
+    req.flash('error', err);
+    res.redirect('/error');
+}
 
+function showSuccess(req, res, message){
+    req.flash('succes', message);
+    res.redirect('/success');
+}
+
+module.exports = function (app) {
     app.route('/')
-        .get(auth.ensureAuthenticatedForHome, (req, res) => {
-            res.sendFile(process.cwd() + '/views/home.html');
-        });
-    app.route('/getData/events')
-        .get((req, res) => {
-            Promise.all([getData.previousEvents(4), getData.upcomingEvents(4)])
-                .then(values => {
-                    res.send({
-                        previous: values[0],
-                        upcoming: values[1]
-                    })
-                })
-                .catch(e => console.error(e));
+    .get(auth.ensureAuthenticatedForHome, (req, res) => {
+        res.sendFile(process.cwd() + '/views/home.html');
+    });
+
+    app.route('/getData/events/:number')
+    .get((req, res) => {
+        Promise.all([getData.previousEvents(req.params.number), getData.upcomingEvents(req.params.number)])
+        .then(values => {
+            res.send({previous: values[0], upcoming: values[1]})
         })
+        .catch(err => showError(req, res, err));
+    })
     app.route('/getData/upcoming-events')
-        .get((req, res) => {
-            getData.upcomingEvents()
-                .then(data => res.send(data));
-        });
+    .get((req, res) => {
+        getData.upcomingEvents()
+        .then(data => res.send(data))
+        .catch(err=>showError(req, res, err))
+    })
 
     app.route('/getData/previous-events')
-        .get((req, res) => {
-            getData.previousEvents()
-                .then(data => res.send(data));
-        })
+    .get((req, res) => {
+        getData.previousEvents()
+        .then(data => res.send(data))
+        .catch(err=>showError(req, res, err));
+    })
+
+    app.route('/getData/manage-users')
+    .get(auth.ensureAuthenticated, (req, res)=>{
+        Promise.all([getData.unapprovedUsers(req.user), getData.children(req.user)])
+        .then(data=>res.send({unapprovedUsers: data[0], children: data[1]}))
+        .catch(err=>showError(req, res, err))
+    })
+
+    app.route('/getData/user-requests')
+    .get(auth.ensureAuthenticated, (req, res) => {
+        getData.requests(req.user)
+        .then(data => res.send(data))
+        .catch(err=>showError(req, res, err))
+    })
+    app.route('/getData/user-approvals')
+    .get(auth.ensureAuthenticated, (req, res) => {
+        getData.approvals(req.user)
+        .then(data => res.send(data))
+        .catch(err=>showError(req, res, err))
+    })
+
     app.route('/register')
-        .get((req, res) => {
-            res.sendFile(process.cwd() + '/views/register.html');
+    .get((req, res) => {
+        res.sendFile(process.cwd() + '/views/register.html');
+    })
+    .post((req, res) => {
+        userService.add(req.body)
+        .then(email => {
+            req.session.email = email;
+            res.redirect('/register/verify');
         })
-        .post((req, res) => {
-            user.add(req.body)
-                .then(email => {
-                    console.log(email);
-                    req.session.email = email;
-                    res.redirect('/register/verify');
-                })
-                .catch((err) => {
-                    console.log(err);
-                    req.flash('error', err);
-                    res.redirect('/error');
-                })
-        })
+        .catch(err=>showError(req, res, err))
+    })
+
     app.route('/register/verify')
-        .get((req, res) => {
-            res.sendFile(process.cwd() + '/views/verify.html')
-        })
-        .post((req, res) => {
-            user.verify(req.session.email, req.body.otp)
-                .then(message => {
-                    req.flash('success', message);
-                    res.redirect('/success');
-                })
-                .catch(err => {
-                    req.flash('error', err);
-                    res.redirect('/error')
-                })
-        })
+    .get((req, res) => {
+        res.sendFile(process.cwd() + '/views/verify.html')
+    })
+    .post((req, res) => {
+        userService.verify(req.session.email, req.body.otp)
+        .then(message=>showSuccess(req, res, message))
+        .catch(err=>showError(req, res, err))
+    })
+
     app.route('/login')
-        .get((req, res) => {
-            res.sendFile(process.cwd() + '/views/login.html');
-        })
-        .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
-            res.cookie('User Name', req.user.name);
-            res.cookie('Level', req.user.level);
-            var url = req.session.redirectTo || '/';
-            delete req.session.redirectTo;
-            res.redirect(url);
-        })
-
-    /*app.route('/auth/github')
-        .get(passport.authenticate('github'));
-
-    app.route('/auth/github/callback')
-        .get(passport.authenticate('github',{failureRedirect: "/error", failureFlash: true}), (req, res)=>{
-            req.session.user_id = req.user.id;
-            res.redirect('/my-requests');
-        })
-    */
+    .get((req, res) => {
+        res.sendFile(process.cwd() + '/views/login.html');
+    })
+    .post(passport.authenticate('local', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
+        res.cookie('username', req.user.name);
+        res.cookie('role', req.user.role);
+        var url = req.session.redirectTo || '/';
+        delete req.session.redirectTo;
+        res.redirect(url);
+    })
 
     app.route('/auth/google')
-        .get(passport.authenticate('google', { scope: ["profile", "email"] }));
+    .get(passport.authenticate('google', { scope: ["profile", "email"] }));
 
     app.route('/auth/google/callback')
-        .get(passport.authenticate('google', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
-            res.redirect('/my-requests');
-        });
-
-    app.route('/manage-users')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            res.sendFile(process.cwd() + '/views/manage-users.html');
-        })
-        .post(auth.ensureAuthenticated, (req, res)=>{
-            var userID = Object.getOwnPropertyNames(req.body)[0];
-            userService.updateUnapproved({
-                id: userID,
-                order: req.body[userID]
-            })
-            .then(()=>{
-                res.redirect('/manage-users');
-            })
-            .catch((err)=>{
-                req.flash('error', err);
-                res.redirect('/error');
-            })
-        })
+    .get(passport.authenticate('google', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
+        res.redirect('/my-requests');
+    });
 
     app.route('/change-password')
-        .get(auth.ensureAuthenticated, (req, res)=>{
-            res.sendFile(process.cwd() + '/views/change-password.html');
+    .get(auth.ensureAuthenticated, (req, res)=>{
+        res.sendFile(process.cwd() + '/views/change-password.html');
+    })
+    .post(auth.ensureAuthenticated, (req, res)=>{
+        userService.changePassword({
+            userID: req.user._id,
+            oldPassword: req.body.oldPsw,
+            newPassword: req.body.newPsw,
+            confirmNewPassword: req.body.confirmNewPsw
         })
-        .post(auth.ensureAuthenticated, (req, res)=>{
-            userService.changePassword({
-                userID: req.user._id,
-                oldPassword: req.body.oldPassword,
-                newPassword: req.body.newPassword,
-                confirmNewPassword: req.body.confirmNewPassword
-            })
-            .then(message=>{
-                req.flash('success', message);
-                req.logout();
-                res.redirect('/success');
-            })
-            .catch(err=>{
-                req.flash('error', err);
-                res.redirect('/error');
-            })
+        .then(message=>{
+            req.logout();
+            showSuccess(req, res, message);
         })
+        .catch(err=>showError(req, res, err));
+    })
+
     app.route('/forgot-password')
-        .get((req, res)=>{
-            res.sendFile(process.cwd() + '/views/forgot-password.html');
-        })
-        .post((req, res)=>{
-            userService.forgotPassword(req.body.email)
-            .then(message=>{
-                req.flash('success', message);
-                res.redirect('/success');
-            })
-            .catch(err=>{
-                req.flash('error', err);
-                res.redirect('/fail');
-            })
-        })
+    .get((req, res)=>{
+        res.sendFile(process.cwd() + '/views/forgot-password.html');
+    })
+    .post((req, res)=>{
+        userService.forgotPassword(req.body.email)
+        .then(message=>showSuccess(req, res, message))
+        .catch(err=>showError(req, res, err))
+    })
+
     app.route('/reset-password/:randomValue')
-        .get((req, res)=>{
-            userService.verifyResetLink(req.params.randomValue)
-            .then((message)=>{
-                res.sendFile(process.cwd() + '/views/reset-password.html');
-            })
-            .catch((err)=>{
-                req.flash('error', err);
-                res.redirect('/error');
-            })
+    .get((req, res)=>{
+        userService.verifyResetLink(req.params.randomValue)
+        .then(()=>{
+            res.sendFile(process.cwd() + '/views/reset-password.html');
         })
-        .post((req, res)=>{
-            userService.resetPassword({
-                randomValue: req.params.randomValue,
-                password: req.body.password,
-                confirmPassword: req.body.confirmPassword
-            })
-            .then((message)=>{
-                req.flash('success', message);
-                res.redirect('/success');
-            })
-            .catch((err)=>{
-                req.flash('error', err);
-                res.redirect('/error')
-            })
+        .catch(err=>showError(req, res, err))
+    })
+    .post((req, res)=>{
+        userService.resetPassword({
+            randomValue: req.params.randomValue,
+            password: req.body.psw,
+            confirmPassword: req.body.confirmPsw
         })
-    app.route('/getData/unapproved-users')
-        .get(auth.ensureAuthenticated, (req, res)=>{
-            getData.unapprovedUsers(req.user)
-                .then(data=>res.send(data))
-                .catch(err=>{
-                    console.error(err);
-                    res.send('Error Occured');
-                })
+        .then(message=>showSuccess(req, res, message))
+        .catch(err=>showError(req, res, err))
+    })
+
+    app.route('/manage-users')
+    .get(auth.ensureAuthenticated, (req, res) => {
+        res.sendFile(process.cwd() + '/views/manage-users.html');
+    })
+    .post(auth.ensureAuthenticated, (req, res)=>{
+        var userID = Object.getOwnPropertyNames(req.body)[0];
+        userService.updateUnapproved({id: userID, order: req.body[userID]})
+        .then(()=>{
+            res.redirect('/manage-users');
         })
+        .catch(err=>showError(req, res, err))
+    })
+
     app.route('/my-requests')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            res.sendFile(process.cwd() + '/views/my-requests.html');
-        })
-    app.route('/getData/user-requests')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            getData.requests(req.user)
-                .then(data => res.send(data))
-                .catch(err => {
-                    console.error(err);
-                    res.send("Error Occured");
-                })
-        })
-    app.route('/getData/user-approvals')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            getData.approvals(req.user)
-                .then(data => res.send(data))
-                .catch(err => {
-                    console.error(err);
-                    res.send("Error Occured");
-                })
-        })
+    .get(auth.ensureAuthenticated, (req, res) => {
+        res.sendFile(process.cwd() + '/views/my-requests.html');
+    })
 
     app.route('/new-request')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            res.sendFile(process.cwd() + '/views/new-request.html');
+    .get(auth.ensureAuthenticated, (req, res) => {
+        res.sendFile(process.cwd() + '/views/new-request.html');
+    })
+    .post(auth.ensureAuthenticated, (req, res) => {
+        requestService.saveRequest(req.body, req.user)
+        .then((message) => {
+            res.redirect('/my-requests');
         })
-        .post(auth.ensureAuthenticated, (req, res) => {
-            requestService.saveRequest(req.body, req.user)
-                .then((message) => {
-                    res.redirect('/my-requests');
-                })
-                .catch((err) => {
-                    console.error(err.name + ": " + err.message);
-                    res.send(err.message);
-                })
-        })
+        .catch(err=>showError(req, res, err))
+    })
 
     app.route('/my-approvals')
-        .get(auth.ensureAuthenticated, (req, res) => {
-            res.sendFile(process.cwd() + '/views/my-approvals.html');
+    .get(auth.ensureAuthenticated, (req, res) => {
+        res.sendFile(process.cwd() + '/views/my-approvals.html');
+    })
+    .post(auth.ensureAuthenticated, (req, res) => {
+        var requestID = Object.getOwnPropertyNames(req.body)[0];
+        requestService.update({
+            userID: req.user._id,
+            requestID: requestID,
+            response: req.body[requestID]
         })
-        .post(auth.ensureAuthenticated, async (req, res) => {
-            var requestID = Object.getOwnPropertyNames(req.body)[0];
-            await requestService.update({
-                userID: req.user._id,
-                requestID: requestID,
-                response: req.body[requestID]
-            });
-            res.redirect('/my-approvals');
-        });
+        .then(message=>res.redirect('/my-approvals'))
+    });
 
     app.route('/success')
         .get((req, res) => {
