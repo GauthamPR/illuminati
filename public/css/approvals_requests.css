@@ -1,14 +1,26 @@
 body{
 	margin:auto;
-    padding:20px 10px;
+    padding:0px;
     
 }
+.structure{
+  padding-left: 10px;
+  padding-right:10px;
+}
+#newreq{
+  justify-self:end;
+  background-color:red;
+  padding:3px;
+  margin:10px 50px;
+  text-decoration:underline;
+  cursor:pointer;
+  }
 .accordion {
   background-color:#eee;
   color: #444;
   cursor: pointer;
   padding: 20px;
-  width:99.9%;
+  width:99.6%;
   border: none;
   text-align: left;
   font-size: 13px;
@@ -57,16 +69,15 @@ grid-gap:50px 40px;
 }
 
 .panel {
-  padding: 0px 20px;
+  padding: 86px 6px;
   margin:5px ;
   display:grid;
-  grid-template-rows: 70px;
+  grid-template-rows: 90%;
   grid-template-columns:350px 180px ;
   flex-direction:row;
-  grid-gap:100px 100px;
+  grid-gap:100px 150px;
   align-self:center;
   background-color: white;
-  max-height:0;
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }
@@ -80,6 +91,8 @@ font-size:15px;
 #pending {
 border:1px solid black;
 padding:2px;
+padding-left:7px;
+padding-right:7px;
 text-align:center;
 background-color:#FFFF00;
 box-sizing:border-box;
@@ -88,6 +101,8 @@ box-sizing:border-box;
 #approved {
 border:1px solid black;
 padding:2px;
+padding-left:7px;
+padding-right:7px;
 text-align:center;
 background-color:#32CD32;
 box-sizing:border-box;
