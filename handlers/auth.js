@@ -9,7 +9,14 @@ const customModel = require('./models.js');
 require('dotenv').config();
 
 module.exports = {
-    ensureAuthenticated : function ensureAuthenticated(req, res, next){
+    ensureAuthenticatedForHome: function (req, res, next){
+        if(req.isAuthenticated()){
+            return next();
+        }
+        res.sendFile(process.cwd() + '/views/public-home.html');
+    },
+
+    ensureAuthenticated : function (req, res, next){
         if(req.isAuthenticated()){
             return next();
         }
