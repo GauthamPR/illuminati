@@ -42,10 +42,10 @@ module.exports = function (app) {
         .catch(err=>showError(req, res, err));
     })
 
-    app.route('/getData/unapproved-users')
+    app.route('/getData/manage-users')
     .get(auth.ensureAuthenticated, (req, res)=>{
-        getData.unapprovedUsers(req.user)
-        .then(data=>res.send(data))
+        Promise.all([getData.unapprovedUsers(req.user), getData.children(req.user)])
+        .then(data=>res.send({unapprovedUsers: data[0], children: data[1]}))
         .catch(err=>showError(req, res, err))
     })
 
