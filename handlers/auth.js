@@ -13,7 +13,7 @@ module.exports = {
         if(req.isAuthenticated()){
             return next();
         }
-        res.sendFile(process.cwd() + '/public-home.html');
+        res.sendFile(process.cwd() + '/views/public-home.html');
     },
 
     ensureAuthenticated : function (req, res, next){
