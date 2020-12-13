@@ -7,12 +7,8 @@ const userService = require('./userService.js');
 
 module.exports = function (app) {
 
-    app.get('/', (req, res) => {
-        res.sendFile(process.cwd() + '/views/home.html');
-    })
-
     app.route('/')
-        .get((req, res) => {
+        .get(auth.ensureAuthenticatedForHome, (req, res) => {
             res.sendFile(process.cwd() + '/views/home.html');
         });
     app.route('/getData/events')
