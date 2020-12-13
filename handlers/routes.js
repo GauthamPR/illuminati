@@ -10,7 +10,7 @@ function showError(req, res, err){
 }
 
 function showSuccess(req, res, message){
-    req.flash('succes', message);
+    req.flash('success', message);
     res.redirect('/success');
 }
 
