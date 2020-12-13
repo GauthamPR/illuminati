@@ -1,6 +1,6 @@
 body{
 	margin:auto;
-    padding:20px 10px;
+    padding:0px 10px;
     
 }
 .accordion {
@@ -39,8 +39,8 @@ color:white;
 font-size: 15px;
 border:1px solid black;
 outline:none;
-grid-template-columns:250px 225px 270px 140px;
-grid-gap:50px 53px;
+grid-template-columns:250px 225px 280px 150px;
+grid-gap:50px 80px;
 }
 
 #head {
@@ -52,8 +52,8 @@ font-style:bold;
 display:grid;
 color:black;
 text-align: center;
-grid-template-columns: 250px 250px 290px 130px;
-grid-gap:50px 40px;
+grid-template-columns: 220px 255px 250px 130px;
+grid-gap:50px 90px;
 }
 
 .panel {
