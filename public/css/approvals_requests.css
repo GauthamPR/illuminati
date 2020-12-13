@@ -60,7 +60,7 @@ grid-gap:50px 40px;
   padding: 0px 20px;
   margin:5px ;
   display:grid;
-  grid-template-rows: 70px;
+  grid-template-rows: 90%;
   grid-template-columns:350px 180px ;
   flex-direction:row;
   grid-gap:100px 100px;
