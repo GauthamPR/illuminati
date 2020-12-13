@@ -32,16 +32,15 @@ body{
 display:grid;
 background-color:#2F3675;
 padding: 18px;
-width: 97%;
+width: 96.5%;
 border: none;
 text-align: center;
 color:white;
 font-size: 15px;
-font-style: normal;
 border:1px solid black;
 outline:none;
-grid-template-columns:250px 230px 280px 140px;
-grid-gap:50px 79px;
+grid-template-columns:250px 225px 270px 140px;
+grid-gap:50px 53px;
 }
 
 #head {
@@ -53,20 +52,18 @@ font-style:bold;
 display:grid;
 color:black;
 text-align: center;
-grid-template-columns: 250px 220px 260px 150px;
-grid-gap:50px 85px;
+grid-template-columns: 250px 250px 290px 130px;
+grid-gap:50px 40px;
 }
 
 .panel {
   padding: 0px 20px;
   margin:5px ;
-  font-size:20px;
-font-family: 'Times New Roman', Times, serif;
   display:grid;
   grid-template-rows: 90%;
   grid-template-columns:350px 180px ;
   flex-direction:row;
-  grid-gap:100px 150px;
+  grid-gap:100px 100px;
   align-self:center;
   background-color: white;
   max-height:0;
