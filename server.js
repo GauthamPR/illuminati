@@ -24,9 +24,9 @@ app.use(session({
 app.use(flash());
 app.use(passport.initialize())
 app.use(passport.session());
+app.set('view-engine', 'pug');
 
-
-mongoose.connect(process.env.URI, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(process.env.URI, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     .then(()=>{
         console.log("CONNECTED TO DB");
         //initial();
