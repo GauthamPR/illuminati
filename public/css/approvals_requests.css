@@ -59,7 +59,7 @@ grid-gap:50px 85px;
 .panel {
   padding: 0px 20px;
   margin:5px ;
-  font-size:60px;
+  font-size:30px;
   display:grid;
   grid-template-rows: 90%;
   grid-template-columns:350px 180px ;
