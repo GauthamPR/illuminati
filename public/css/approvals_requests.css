@@ -2,13 +2,12 @@ body{
 	margin:auto;
   padding:0px;
 }
-.structure{
-  padding-left: 10px;
-  padding-right:10px;
-}
+.mainContainer{
+  display:grid;
+    }
+
 #newreq{
   justify-self:end;
-  background-color:red;
   padding:3px;
   margin:10px 50px;
   cursor:pointer;
