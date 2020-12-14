@@ -11,7 +11,6 @@ body{
   background-color:red;
   padding:3px;
   margin:10px 50px;
-  text-decoration:underline;
   cursor:pointer;
   }
 .accordion {
@@ -68,9 +67,8 @@ grid-gap:50px 90px;
 }
 
 .panel {
-  padding: 86px 6px;
   margin:5px ;
-  display:grid;
+  display:none;
   grid-template-rows: 90%;
   grid-template-columns:350px 180px ;
   flex-direction:row;
