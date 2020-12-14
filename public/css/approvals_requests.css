@@ -1,10 +1,14 @@
 body{
 	margin:auto;
   padding:0px;
+  margin-bottom: 50px;
 }
-.structure{
+#structure{
   padding-left: 10px;
   padding-right:10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 #newreq{
   justify-self:end;
@@ -12,13 +16,13 @@ body{
   padding:3px;
   margin:10px 50px;
   cursor:pointer;
-  }
+}
 .accordion {
   background-color:#eee;
   color: #444;
   cursor: pointer;
   padding: 20px;
-  width:99.6%;
+  width:100%;
   border: none;
   text-align: left;
   font-size: 13px;
@@ -33,74 +37,68 @@ body{
 }
 
 .pgdivision {
-    display:flex;
-    flex-direction:column;
-    justify-content:space-evenly;
-    }  
+  margin-top: 25px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-evenly;
+  width: 95vw;
+}  
 
 .headbar {
-display:grid;
-background-color:#2F3675;
-padding: 18px;
-width: 96.5%;
-border: none;
-text-align: center;
-color:white;
-font-size: 15px;
-border:1px solid black;
-outline:none;
-grid-template-columns:250px 225px 280px 150px;
-grid-gap:50px 80px;
+  margin-top: 10px;
+  display:grid;
+  background-color:#2F3675;
+  padding: 18px;
+  max-width: 100%;
+  border: none;
+  justify-items: center;
+  color:white;
+  font-size: 15px;
+  border:1px solid black;
+  outline:none;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap:50px 80px;
 }
 
-#head {
-padding:10px 1px;
-font-style:bold;
+.head {
+  padding:10px 1px;
+  border-bottom : 1px solid black;
 }
 
 .container1 {
-display:grid;
-color:black;
-text-align: center;
-grid-template-columns: 220px 255px 250px 130px;
-grid-gap:50px 90px;
+  display:grid;
+  color:black;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap:50px 90px;
 }
 
 .panel {
   margin:5px ;
   display:none;
-  grid-template-rows: 90%;
-  grid-template-columns:350px 180px ;
-  flex-direction:row;
-  grid-gap:100px 150px;
-  align-self:center;
+  grid-template-columns: 1fr 1fr;
   background-color: white;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
 }
 .subContainer1{
-margin:4px 20px;
-padding:0px;
-font-size:15px;
-
+  margin:4px 20px;
+  padding:0px;
+  font-size:15px;
 }
-
-#pending {
-border:1px solid black;
-padding:2px;
-padding-left:7px;
-padding-right:7px;
-text-align:center;
-background-color:#FFFF00;
-box-sizing:border-box;
+.subContainer2{
+  justify-self: center;
+  align-self: center;
 }
-
-#approved {
-border:1px solid black;
-padding:2px;
-padding-left:7px;
-padding-right:7px;
-text-align:center;
-background-color:#32CD32;
-box-sizing:border-box;
+.status {
+  border:1px solid black;
+  padding:2px 7px;
+  text-align:center;
+  box-sizing:border-box;
+  height: min-content;
+}
+#pending{
+  background-color:#FFFF00;
+}
+#approved{
+  background-color:#32CD32;
 }
