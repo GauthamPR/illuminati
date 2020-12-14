@@ -1,4 +1,3 @@
-const { request } = require('express');
 const customModel = require('./models.js');
 
 module.exports = {
@@ -181,20 +180,34 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             customModel.unapprovedUsers.find({parentID: user._id},(err, users)=>{
                 if(err) console.error(err);
-                var returnData = [];
-                var jsonObject;
-                users.forEach((user)=>{
-                    jsonObject = {
+                resolve(users.map(user=>{
+                    return({
                         id: user._id.toString(),
                         admNo: user.admNo,
                         name: user.name,
                         email: user.email,
                         role: user.role,
                         designation: user.designation
-                    };
-                    returnData.push(jsonObject);
-                })
-                resolve(returnData);
+                    })
+                }));
+            })
+        })
+    },
+
+    children: function(user){
+        return new Promise((resolve, reject)=>{
+            customModel.Users.find({parentID: user._id}, (err, children)=>{
+                if(err) console.error(err);
+                resolve(children.map(child=>{
+                    return({
+                        id: child._id.toString(),
+                        admNo: child.admNo,
+                        name: child.name,
+                        email: child.email,
+                        role: child.role,
+                        designation: child.designation
+                    })
+                }));
             })
         })
     }
