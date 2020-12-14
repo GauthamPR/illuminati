@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const customModel = require('./models.js');
-const { update } = require('./requestService.js');
 
 var Users = customModel.Users;
 var Requests = customModel.Requests;
@@ -18,16 +17,25 @@ const inChargeOf = {
     "101": "Rejimoan",
     "301": "Binu Rajan"
 }
+const DATABASE_ADMIN = "DATABASE_ADMIN";
 const TEACHER = "TEACHER";
 const STUDENT = "STUDENT";
 const HALL_ADMIN = "HALL_ADMIN";
 
 var arrayOfUserData = [
     {
+        name: "Administrator",
+        admNo: 123456,
+        password: "Admin3456",
+        role: [DATABASE_ADMIN],
+        email: "dbadmin@gmail.com",
+        designation: "Database Admin"
+    },
+    {
         name: "Soniya",
         admNo: 181001,
         password: "Soniya1001",
-        role: TEACHER,
+        role: [TEACHER],
         email: "soniya@gmail.com",
         designation: "IEEE Regional Head",
         parentID: null
@@ -36,7 +44,7 @@ var arrayOfUserData = [
         name: "Arundhathi",
         admNo: 181002,
         password: "Arundhathi1002",
-        role: STUDENT,
+        role: [STUDENT],
         email: "arundhathi@gmail.com",
         designation: "IEEE Student Head",
         parentID: null
@@ -45,7 +53,7 @@ var arrayOfUserData = [
         name: "Subbu",
         admNo: 182001,
         password: "Subbu2001",
-        role: TEACHER,
+        role: [TEACHER],
         email: "subbu@gmail.com",
         designation: "CS HOD",
         parentID: null
@@ -54,7 +62,7 @@ var arrayOfUserData = [
         name: "Kuttymalu",
         admNo: 182002,
         password: "Kuttymalu2002",
-        role: TEACHER,
+        role: [TEACHER],
         email: "kuttymalu@gmail.com",
         designation: "Lanscape Faculty Head",
         parentID: null
@@ -63,7 +71,7 @@ var arrayOfUserData = [
         name: "Sreehari",
         admNo: 182003,
         password: "Sreehari2003",
-        role: STUDENT,
+        role: [STUDENT],
         email: "sreehari@gmail.com",
         designation: "Lanscape Student Head",
         parentID: null
@@ -72,7 +80,7 @@ var arrayOfUserData = [
         name: "Rejimoan",
         admNo: 180001,
         password: "Rejimoan0001",
-        role: HALL_ADMIN,
+        role: [HALL_ADMIN],
         email: "rejimoan@gmail.com",
         designation: "Lab In Charge",
         parentID: null
@@ -81,7 +89,7 @@ var arrayOfUserData = [
         name: "Binu Rajan",
         admNo: 180002,
         password: "Binu00002",
-        role: HALL_ADMIN,
+        role: [HALL_ADMIN],
         email: "binuRajan@gmail.com",
         designation: "Class Advisor",
         parentID: null
@@ -90,12 +98,12 @@ var arrayOfUserData = [
 
 var arrayOfHallsData = [
     {
-        name: "101",
-        in_charge: null,
+        hallID: "101",
+        name: "101"
     },
     {
-        name: "301",
-        in_charge: null,
+        hallID: "301",
+        name: "301"
     }
 ];
 
@@ -156,6 +164,7 @@ function updateHalls() {
             if(!hallAdmin) console.log(inChargeOf[hallNo])
             Halls.findOneAndUpdate({name: hallNo}, {parentID: hallAdmin._id}, (err, updatedHall)=>{
                 if(err) console.error(err);
+                console.log(updatedHall);
                 console.log(hallAdmin.name, "is set as the hall admin of", updatedHall.name);
             })
         })

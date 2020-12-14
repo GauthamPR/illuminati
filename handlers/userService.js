@@ -110,6 +110,7 @@ module.exports = {
                 mail.sendOTP(tempUser.email)
                 .then(otp=>{
                     tempUser.otp = otp;
+                    tempUser.createdAt = Date.now();
                     tempUser.save((err, doc)=>{
                         if(err) console.error(err);
                         resolve(tempUser.email);

@@ -4,13 +4,15 @@ const {ObjectID} = require('mongodb');
 const tempUserSchema = new mongoose.Schema({
     name: String,
     admNo: Number,
-    role: String,
+    role: [String],
     password: String,
     otp: String,
     email: String,
     designation: String,
     parentID: ObjectID,
+    createdAt: Date
 });
+tempUserSchema.index({createdAt: 1}, {expires: '30s'});
 
 const resetLinkSchema = new mongoose.Schema({
     userID: ObjectID,
@@ -20,7 +22,7 @@ const resetLinkSchema = new mongoose.Schema({
 const unapprovedUserSchema = new mongoose.Schema({
     name: String,
     admNo: Number,
-    role: String,
+    role: [String],
     password: String,
     email: String,
     designation: String,
@@ -32,7 +34,7 @@ const userSchema = new mongoose.Schema({
     admNo: Number,
     name: String,
     email: String,
-    role: String,
+    role: [String],
     designation: String,
     password: String,
     parentID: ObjectID,
