@@ -29,7 +29,7 @@
   </nav>
 <div class ="structure">  
   <div id="pendingApproval" class= "pgdivision">
-  <form action ="/my-appovals" method="post">  
+  <form action ="/my-approvals" method="post">  
     <div id="head"> Pending Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -38,7 +38,7 @@
             <div> Status </div>
     </div>
     <div class="section">     
-      <button class="accordion">
+      <button type="button" class="accordion">
           <div class="container1">
             <div> Seminar Hall 1 </div>
             <div> 12/10/20 (12:00 - 14:00) </div>
@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="section">
-      <button class="accordion">
+      <button type="button" class="accordion">
           <div class="container1">
               <div> Seminar Hall 2 </div>
               <div> 12/10/20 (12:00 - 14:00) </div>
@@ -80,7 +80,7 @@
       </div>  
     </div> 
     <div class="section">      
-      <button class="accordion">
+      <button type="button" class="accordion">
         <div class="container1">
             <div> CCF LAB</div>
             <div> 11/10/20 (10:00 - 11:00) </div>
@@ -103,7 +103,7 @@
   </form>   
   </div>  
   <div id="myApproval" class="pgdivision">
-  <form action ="/my-appovals" method="post">    
+  <form action ="/my-approvals" method="post">    
     <div id="head"> My Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -112,7 +112,7 @@
             <div> Status </div>
     </div>
     <div class="section"> 
-      <button class="accordion">
+      <button type="button" class="accordion">
           <div class="container1">
             <div> Seminar Hall 1 </div>
             <div> 12/10/20 (12:00 - 14:00) </div>
@@ -133,7 +133,7 @@
       </div>  
     </div>
     <div class="section">     
-      <button class="accordion">
+      <button type="button" class="accordion">
           <div class="container1">
               <div> Seminar Hall 2 </div>
               <div> 12/10/20 (12:00 - 14:00) </div>
@@ -154,7 +154,7 @@
       </div>  
     </div> 
     <div class="section"> 
-      <button class="accordion">
+      <button type="button" class="accordion">
           <div class="container1">
               <div> CCF LAB</div>
               <div> 11/10/20 (10:00 - 11:00) </div>
@@ -173,10 +173,8 @@
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
       </div>
-    </form>  
-    </div>
-  </div>  
-<div>
+  </form>  
+</div>  
     <script>
     var acc = document.getElementsByClassName("accordion");
 var i;
