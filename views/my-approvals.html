@@ -11,8 +11,7 @@
     <title>My Approvals</title>
     
 </head>
-<body>
-    
+<body>    
     <nav class="navbar">
       <a href="/">Home</a>
       <a href="/my-requests">My Requests</a> 
@@ -29,7 +28,7 @@
       </div> 
   </nav>
 <div class ="structure">  
-  <div class= "pgdivision">
+  <div id="pendingApproval" class= "pgdivision">
     <div id="head"> Pending Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -47,12 +46,12 @@
           </div>    
       </button>
       <div class="panel">
+        <form action ="/my-appovals" method="post"></form>
           <div class="subContainer1">
               <div>Description :Introductory course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
           </div>
-        <form action ="/my-appovals" method="post">
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -70,12 +69,12 @@
           </div>    
       </button>
       <div class="panel">
+        <form action ="/my-appovals" method="post"></form>
           <div class="subContainer1">										
               <div>Description :Python course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
           </div>
-        <form action ="/my-appovals" method="post">
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -93,12 +92,12 @@
         </div>    
       </button>
       <div class="panel">
-        <div class="subContainer1">
-          <div>Description :PHP course for freshers</div>
-          <div id="approveid">Approved By ID    : 100122</div>
-          <div id="napproveid">Next Approved By ID    : 100122</div>
-       </div>
         <form action ="/my-appovals" method="post">
+          <div class="subContainer1">
+              <div>Description :PHP course for freshers</div>
+              <div id="approveid">Approved By ID    : 100122</div>
+              <div id="napproveid">Next Approved By ID    : 100122</div>
+          </div>
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -107,7 +106,7 @@
       </div>
     </div>  
   </div>  
-  <div class= "pgdivision">
+  <div id="myApproval" class="pgdivision">
     <div id="head"> My Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -125,12 +124,12 @@
           </div>    
       </button>
       <div class="panel">
+        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
             <div>Description :Introductory course for freshers</div>
             <div id="approveid">Approved By ID    : 100122</div>
             <div id="napproveid">Next Approved By ID    : 100122</div>
           </div>
-        <form action ="/my-appovals" method="post">
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -148,12 +147,12 @@
           </div>    
       </button>
       <div class="panel">
+        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :Python course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
           </div>
-        <form action ="/my-appovals" method="post">
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -171,12 +170,12 @@
           </div>    
       </button>
       <div class="panel">
+        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :PHP course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
               <div id="napproveid">Next Approved By ID    : 100122</div>
           </div>
-        <form action ="/my-appovals" method="post">
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
@@ -185,7 +184,7 @@
       </div>
     </div>
   </div>  
-/<div>
+ <div>
     <script>
     var acc = document.getElementsByClassName("accordion");
 var i;
@@ -194,10 +193,10 @@ for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
     this.classList.toggle("active");
     var panel = this.nextElementSibling;
-    if (panel.style.display === "block") {
+    if (panel.style.display === "grid") {
       panel.style.display = "none";
     } else {
-      panel.style.display = "block";
+      panel.style.display = "grid";
     }
   });
 }
