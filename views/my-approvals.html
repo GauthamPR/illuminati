@@ -29,6 +29,7 @@
   </nav>
 <div class ="structure">  
   <div id="pendingApproval" class= "pgdivision">
+  <form action ="/my-appovals" method="post">  
     <div id="head"> Pending Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -46,7 +47,6 @@
           </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :Introductory course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
@@ -55,8 +55,7 @@
           <div class="subContainer2">  
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
-          </div>
-        </form>  
+          </div> 
       </div>
     </div>
     <div class="section">
@@ -69,7 +68,6 @@
           </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">										
               <div>Description :Python course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
@@ -79,7 +77,6 @@
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
-        </form>
       </div>  
     </div> 
     <div class="section">      
@@ -92,7 +89,6 @@
         </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :PHP course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
@@ -102,11 +98,12 @@
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
-        </form>
       </div>
     </div>  
+  </form>   
   </div>  
   <div id="myApproval" class="pgdivision">
+  <form action ="/my-appovals" method="post">    
     <div id="head"> My Approval </div>
     <div class="headbar">
             <div> Hall Name </div>
@@ -124,7 +121,6 @@
           </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
             <div>Description :Introductory course for freshers</div>
             <div id="approveid">Approved By ID    : 100122</div>
@@ -134,7 +130,6 @@
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
-        </form>
       </div>  
     </div>
     <div class="section">     
@@ -147,7 +142,6 @@
           </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :Python course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
@@ -157,7 +151,6 @@
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
-        </form>
       </div>  
     </div> 
     <div class="section"> 
@@ -170,7 +163,6 @@
           </div>    
       </button>
       <div class="panel">
-        <form action ="/my-appovals" method="post">
           <div class="subContainer1">
               <div>Description :PHP course for freshers</div>
               <div id="approveid">Approved By ID    : 100122</div>
@@ -180,11 +172,11 @@
               <button type="submit" name="subject" value="approve"> Accept </button>
               <button type="submit" name="subject" value="decline"> Decline </button>  
           </div>
-        </form>
       </div>
+    </form>  
     </div>
   </div>  
- <div>
+<div>
     <script>
     var acc = document.getElementsByClassName("accordion");
 var i;
