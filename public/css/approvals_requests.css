@@ -124,7 +124,7 @@ box-sizing:border-box;
     grid-template-columns: 190px 10px;
     grid-gap: 55px 50px;
   }
-  #pending,#approved {
+  .pending,.approved {
     width:90px;
     margin-top: 5px;
     padding-top: 4px; 
