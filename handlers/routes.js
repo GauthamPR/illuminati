@@ -124,7 +124,6 @@ module.exports = function (app) {
         delete req.session.redirectTo;
         res.redirect(url);
     })
-    .catch(err=>console.error(err))
 
     app.route('/auth/google')
     .get(passport.authenticate('google', { scope: ["profile", "email"] }));
