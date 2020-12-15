@@ -42,7 +42,46 @@ module.exports = {
         })
     },
 
-    approvals: function approvals(userData){
+    allApprovals: function(userData){
+        return new Promise((resolve, reject)=>{
+            var requiredApprovals = [];
+            customModel.Requests.aggregate([
+                { $match: {approved_by: {$in: [userData._id]}}
+                },
+                { $lookup: { from: 'users', localField: 'requestor', foreignField: '_id', as: 'user'}},
+                { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails'}},
+                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }}
+            ], (err, data)=>{
+                if(err) reject(err);
+                data.forEach(request=>{
+                    var jsonObject = {
+                        id: request._id.toString(),
+                        requestorAdmNo: request.user[0].admNo,
+                        requestorName: request.user[0].name,
+                        hallName: request.hallDetails[0].name,
+                        startTime: request.from,
+                        endTime: request.to,
+                        eventName: request.eventName,
+                        eventDesc: request.eventDesc,
+                        status: request.status,
+                        approved_by: []
+                    }
+                    if(request.historyOfApproval.length != 0){
+                        request.historyOfApproval.forEach(personInHistory=>{
+                            jsonObject.approved_by.push({
+                                admNo: personInHistory.admNo,
+                                name: personInHistory.name
+                            });
+                        })
+                    }
+                    requiredApprovals.push(jsonObject);
+                })
+                resolve(requiredApprovals);
+            })
+        })
+    },
+
+    pendingApprovals: function (userData){
         return new Promise((resolve, reject)=>{
             var requiredApprovals = [];
             customModel.Requests.aggregate([
