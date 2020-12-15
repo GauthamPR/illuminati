@@ -119,7 +119,7 @@ module.exports = function (app) {
     })
     .post(passport.authenticate('local', { failureRedirect: '/failure', failureFlash: true }), (req, res) => {
         res.cookie('username', req.user.name);
-        res.cookie('role', req.user.role);
+        res.cookie('role', req.user.role.join(','));
         var url = req.session.redirectTo || '/';
         delete req.session.redirectTo;
         res.redirect(url);

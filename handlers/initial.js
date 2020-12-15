@@ -88,7 +88,7 @@ var arrayOfUserData = [
     {
         name: "Binu Rajan",
         admNo: 180002,
-        password: "Binu00002",
+        password: "Binu0002",
         role: [HALL_ADMIN],
         email: "binuRajan@gmail.com",
         designation: "Class Advisor",

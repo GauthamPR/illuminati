@@ -46,7 +46,8 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             var requiredApprovals = [];
             customModel.Requests.aggregate([
-                { $match: { next_approver: userData._id}},
+                { $match: { $and: [{next_approver: userData._id}, {status: "PENDING"}]}
+                },
                 { $lookup: { from: 'users', localField: 'requestor', foreignField: '_id', as: 'user'}},
                 { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails'}},
                 { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }}

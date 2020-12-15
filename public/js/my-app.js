@@ -18,9 +18,8 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 .then(jsonArray=>{
     var form=document.getElementById("pending-holder")
     jsonArray.forEach(jsonData=>{
-
-        var subcontainer2=document.createElement("div")
-        subcontainer2.setAttribute("class","subContainer2")
+        var subContainer2=document.createElement("div")
+        subContainer2.setAttribute("class","subContainer2")
 
         var appButton=document.createElement("button")
         appButton.setAttribute("type","submit")
@@ -39,7 +38,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         desc.innerText="Description: "+ jsonData.eventDesc
         var appby=document.createElement("div")
         var approverdata
-        if (jsonData.approved_by==[])
+        if (jsonData.approved_by.length==0)
              approverdata="None"
        else
         {
@@ -51,8 +50,8 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         }
         appby.innerText="Approved By: " + approverdata
 
-        var subcontainer1=document.createElement("div")
-        subcontainer1.setAttribute("class","subContainer1")
+        var subContainer1=document.createElement("div")
+        subContainer1.setAttribute("class","subContainer1")
 
         var panel=document.createElement("div")
         panel.setAttribute("class","panel")
@@ -82,12 +81,12 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var section=document.createElement("div")
         section.setAttribute("class","section")
 
-        subcontainer2.appendChild(appButton)
-        subcontainer2.appendChild(denyButton)
-        subcontainer1.appendChild(desc)
-        subcontainer1.appendChild(appby)
-        panel.appendChild(subcontainer1)
-        panel.appendChild(subcontainer2)
+        subContainer2.appendChild(appButton)
+        subContainer2.appendChild(denyButton)
+        subContainer1.appendChild(desc)
+        subContainer1.appendChild(appby)
+        panel.appendChild(subContainer1)
+        panel.appendChild(subContainer2)
         container1.appendChild(hallName)
         container1.appendChild(dateAndTime)
         container1.appendChild(eventName)
@@ -96,7 +95,6 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         section.appendChild(button)
         section.appendChild(panel)
         form.appendChild(section)
-        console.log(jsonData)
     })
 
     var acc = document.getElementsByClassName("accordion");

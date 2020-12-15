@@ -71,11 +71,16 @@ module.exports = {
                     { $lookup: {from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hall'}}
                 ], (err, requests)=>{
                     if(err) console.error(err);
+                    var regex = new RegExp(/.*HALL_ADMIN.*/);
                     requests.forEach(request=>{
-                        if(request.user[0].parentID == null)
-                            request.next_approver = request.hall[0].in_charge;
-                        else
-                            request.next_approver = request.user[0].parentID;
+                        if(regex.test(request.user[0].role.join()))
+                            request.status="APPROVED";
+                        else{
+                            if(request.user[0].parentID == null)
+                                request.next_approver = request.hall[0].in_charge;
+                            else
+                                request.next_approver = request.user[0].parentID;
+                        }
                         request.approved_by.push(values.userID);
                         customModel.Requests.findByIdAndUpdate(request._id, request, (err, updatedDoc)=>{
                             if(err) console.error(err);
