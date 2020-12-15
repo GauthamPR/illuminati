@@ -6,10 +6,12 @@
 </head>
 <body>
 
-
+  <div class="header">
+    <h2>Registration Form</h2>
+    </div>
 
 <div class="container">
-  <form action="/new-request" method="post">
+  <form action="/register" method="post"  autocomplete="on">
 
 
 <div class="row">
@@ -17,7 +19,7 @@
         <label for="admNo">Admission No:</label>
     </div>
     <div class="col-75">
-        <input type="text"  name="admNo" required>
+        <input type="text"  name="admNo" autocomplete="off" required>
     </div>
 </div>
 
@@ -26,7 +28,7 @@
         <label for="admNo">Email</label>
     </div>
     <div class="col-75">
-        <input type="email"  name="email" required>
+        <input type="email"  name="email" autocomplete="off" required>
     </div>
 </div>	
 
@@ -35,7 +37,7 @@
         <label for="role">Role</label>
       </div>
       <div class="col-75">
-        <select  name="role" required>
+        <select  name="role" autocomplete="off" required>
           <option value="teacher">Teacher</option>
           <option value="student">Student</option>
         </select>
@@ -47,10 +49,13 @@
         <label for="supervisor">Supervisor</label>
       </div>
       <div class="col-75">
-        <select  name="supervisor" required>
+        <select  name="supervisor" autocomplete="off" required>
           <option value="noSupervisor">No Supervisor</option>
-          <option value="soniyaB">Soniya B</option>
-          <option value="kuttymaluVK">Kuttymalu VK</option>
+          <option value="soniyaB">Soniya B(181001)</option>
+          <option value="subbuSurendran">Subbu Surendran(182001)</option>
+          <option value="kuttymaluVK">Kuttymalu VK(182002)</option>
+          <option value="rejimoan">Rejimoan(180001)</option>
+          <option value="binuRajan">Binu Rajan(180002)</option>
         </select>
       </div>
 </div>
@@ -60,7 +65,7 @@
         <label for="designation">Designation</label>
     </div>
     <div class="col-75">
-        <input type="text"  name="designation" required>
+        <input type="text"  name="designation" autocomplete="off" required>
     </div>
 </div>
 
@@ -69,7 +74,7 @@
         <label for="psw">Password</label>
       </div>
       <div class="col-75">
-        <input type="password" name="psw" required>
+        <input type="password" name="psw" autocomplete="new-password" required>
       </div>
 </div>
 
@@ -78,7 +83,7 @@
         <label for="psw">Confirm Password</label>
       </div>
       <div class="col-75">
-        <input type="password" name="confirmPsw" required>
+        <input type="password" name="confirmPsw" autocomplete="new-password" required>
       </div>
 </div>
 
