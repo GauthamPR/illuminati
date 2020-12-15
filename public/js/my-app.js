@@ -13,6 +13,15 @@ function getData(url){
     })
 }
 
+function parseTime(start, end){
+    var start = new Date(start);
+    var end = new Date(end);
+    var date = start.toLocaleDateString();
+    var startTime = start.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    var endTime = end.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+    return(date + " (" + startTime + " - " + endTime + ")");
+}
+
 Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 .then(data=>data[1])
 .then(jsonArray=>{
@@ -59,7 +68,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var hallName=document.createElement("div")
         hallName.innerText=jsonData.hallName
         var dateAndTime=document.createElement("div")
-        dateAndTime.innerText=jsonData.startTime
+        dateAndTime.innerText=parseTime(jsonData.startTime, jsonData.endTime);
         var eventName=document.createElement("div")
         eventName.innerText=jsonData.eventName
         var status=document.createElement("div")
