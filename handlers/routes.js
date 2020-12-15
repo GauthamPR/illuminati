@@ -3,6 +3,7 @@ const passport = require('passport');
 const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const userService = require('./userService.js');
+const { allApprovals } = require('./getData.js');
 
 const routeName = {
     '/login': 'Login Page',
@@ -82,8 +83,11 @@ module.exports = function (app) {
     })
     app.route('/getData/user-approvals')
     .get(auth.ensureAuthenticated, (req, res) => {
-        getData.approvals(req.user)
-        .then(data => res.send(data))
+        Promise.all([getData.pendingApprovals(req.user), getData.allApprovals(req.user)])
+        .then(data => res.send({
+            pendingApprovals: data[0],
+            allApprovals: data[1]
+        }))
         .catch(err => {
             console.error(err);
             res.send("Error Retrieving Data");
