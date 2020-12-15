@@ -100,16 +100,17 @@ module.exports = {
             .then(messages=>{
                 tempUser.password = bcrypt.hashSync(userData.password, 12);
                 tempUser.parentID = messages[0];
-                if(tempUser.role === "Student"){
-                    tempUser.role = "STUDENT";
-                }else if(tempUser.role === "Teacher"){
-                    tempUser.role = "TEACHER";
+                if(tempUser.role[0] === "Student"){
+                    tempUser.role[0] = "STUDENT";
+                }else if(tempUser.role[0] === "Teacher"){
+                    tempUser.role[0] = "TEACHER";
                 }else{
                     tempUser.role = null;
                 }
                 mail.sendOTP(tempUser.email)
                 .then(otp=>{
                     tempUser.otp = otp;
+                    tempUser.createdAt = Date.now();
                     tempUser.save((err, doc)=>{
                         if(err) console.error(err);
                         resolve(tempUser.email);
