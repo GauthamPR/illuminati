@@ -105,7 +105,7 @@ module.exports = function (app) {
 
     app.route('/register/verify')
     .get((req, res) => {
-        res.sendFile(process.cwd() + '/views/verify.html')
+        res.sendFile(process.cwd() + '/views/verification.html')
     })
     .post((req, res) => {
         userService.verify(req.session.email, req.body.otp)
