@@ -12,12 +12,14 @@ const tempUserSchema = new mongoose.Schema({
     parentID: ObjectID,
     createdAt: Date
 });
-tempUserSchema.index({createdAt: 1}, {expires: '30s'});
+tempUserSchema.index({createdAt: 1}, {expires: '15m'});
 
 const resetLinkSchema = new mongoose.Schema({
     userID: ObjectID,
-    randomValue: String
+    randomValue: String,
+    createdAt: Date
 })
+resetLinkSchema.index({createdAt: 1}, {expires: '15m'});
 
 const unapprovedUserSchema = new mongoose.Schema({
     name: String,

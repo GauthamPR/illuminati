@@ -162,9 +162,8 @@ function updateHalls() {
                 }
             }
             if(!hallAdmin) console.log(inChargeOf[hallNo])
-            Halls.findOneAndUpdate({name: hallNo}, {parentID: hallAdmin._id}, (err, updatedHall)=>{
+            Halls.findOneAndUpdate({name: hallNo}, {in_charge: hallAdmin._id}, (err, updatedHall)=>{
                 if(err) console.error(err);
-                console.log(updatedHall);
                 console.log(hallAdmin.name, "is set as the hall admin of", updatedHall.name);
             })
         })

@@ -6,9 +6,9 @@ module.exports = {
             var returnData = [];
             customModel.Requests.aggregate([
                 { $match: { requestor: userData._id } },
-                { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails' } },
-                { $lookup: { from: 'users', localField: 'next_approver', foreignField: '_id', as:'user'}},
-                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as:'historyOfApproval' }}
+                { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails' }},
+                { $lookup: { from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user' }},
+                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }}
             ], (err, data)=>{
                     if(err) reject(err);
                     data.forEach((request)=>{
@@ -178,7 +178,8 @@ module.exports = {
     
     unapprovedUsers: function(user){
         return new Promise((resolve, reject)=>{
-            customModel.unapprovedUsers.find({parentID: user._id},(err, users)=>{
+            var parentID = user.role[0]=="DATABASE_ADMIN"? null : user._id;
+            customModel.unapprovedUsers.find({parentID: parentID},(err, users)=>{
                 if(err) console.error(err);
                 resolve(users.map(user=>{
                     return({
@@ -196,7 +197,8 @@ module.exports = {
 
     children: function(user){
         return new Promise((resolve, reject)=>{
-            customModel.Users.find({parentID: user._id}, (err, children)=>{
+            var parentID = user.role[0]=="DATABASE_ADMIN"? null : user._id;
+            customModel.Users.find({parentID: parentID}, (err, children)=>{
                 if(err) console.error(err);
                 resolve(children.map(child=>{
                     return({
