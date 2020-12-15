@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/myreq.css">
     <link rel="stylesheet" href="css/approvals_requests.css">
+    <script src="js/dropdown.js"></script>
+    <script src="js/testCookie.js"></script>
     <title>My Request</title>
 </head>   
 <body>
@@ -19,13 +21,13 @@
           </button>
           <div class="dropdown-content" id="myDropdown">
             <a href="#addordelete">ADD OR DELETE MEMBERS</a>
-            <a href="#changeuserpass">CHANGE USERNAME OR PASSWORD</a>
+            <a href="/change-password">CHANGE PASSWORD</a>
             <a href="/logout"><u>SIGN OUT</u></a>
           </div>
         </div> 
     </nav>
 <div class="mainContainer">
-        <a id="newreq">New request </a>
+        <a href="/new-request" id="newreq">New request </a>
 </div>
 <div class="structure">
     <div class="mainContainer">
