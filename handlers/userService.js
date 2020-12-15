@@ -59,8 +59,8 @@ function checkIfUserAppliedBefore(admNo){
 
 function findParentID(admNo){
     return new Promise((resolve, reject)=>{
-        if(admNo == null)
-            resolve(admNo);
+        if(admNo == "none")
+            resolve(null);
         else{
             customModel.Users.findOne({admNo: admNo}, (err, user)=>{
                 if(err) console.error(err);
@@ -88,9 +88,8 @@ module.exports = {
     add: function(userData){
         return new Promise((resolve, reject)=>{
             var tempUser = new customModel.tempUsers(userData);
-            parentAdmNo = parseInt(userData.parent.match(/\((.*)\)/)[1]);
             Promise.all([
-                findParentID(parentAdmNo),
+                findParentID(userData.supervisor),
                 checkAdmNoConsistency(userData.admNo),
                 checkPasswordsConsistency(userData.password, userData.confirmPassword),
                 checkIfActiveUserExists(tempUser.admNo), 
@@ -98,14 +97,14 @@ module.exports = {
                 removeUserFromTemp(tempUser.admNo, tempUser.email)
             ])
             .then(messages=>{
-                tempUser.password = bcrypt.hashSync(userData.password, 12);
+                tempUser.password = bcrypt.hashSync(userData.psw, 12);
                 tempUser.parentID = messages[0];
                 if(tempUser.role[0] === "Student"){
                     tempUser.role[0] = "STUDENT";
                 }else if(tempUser.role[0] === "Teacher"){
                     tempUser.role[0] = "TEACHER";
                 }else{
-                    tempUser.role = null;
+                    tempUser.role[0] = null;
                 }
                 mail.sendOTP(tempUser.email)
                 .then(otp=>{
@@ -117,7 +116,10 @@ module.exports = {
                     })
                 })
             })
-            .catch(err=>reject(err));
+            .catch(err=>{
+                console.error(err)
+                reject(err)
+            });
         })
     },
 

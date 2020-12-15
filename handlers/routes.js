@@ -61,7 +61,7 @@ module.exports = function (app) {
         });
     })
 
-    app.route('/getData/manage-users')
+    app.route('/getData/manage')
     .get(auth.ensureAuthenticated, (req, res)=>{
         Promise.all([getData.unapprovedUsers(req.user), getData.children(req.user)])
         .then(data=>res.send({unapprovedUsers: data[0], children: data[1]}))
@@ -109,7 +109,7 @@ module.exports = function (app) {
     })
     .post((req, res) => {
         userService.verify(req.session.email, req.body.otp)
-        .then(message=>showSuccess(req, res, message, ''))
+        .then(message=>showSuccess(req, res, message, '/'))
         .catch(err=>showError(req, res, err, '/register/verify'))
     })
 
@@ -124,6 +124,7 @@ module.exports = function (app) {
         delete req.session.redirectTo;
         res.redirect(url);
     })
+    .catch(err=>console.error(err))
 
     app.route('/auth/google')
     .get(passport.authenticate('google', { scope: ["profile", "email"] }));
@@ -179,15 +180,16 @@ module.exports = function (app) {
         .catch(err=>showError(req, res, err, ''))
     })
 
-    app.route('/manage-users')
+    app.route('/manage')
     .get(auth.ensureAuthenticated, (req, res) => {
-        res.sendFile(process.cwd() + '/views/manage-users.html');
+        res.sendFile(process.cwd() + '/views/manage.html');
     })
+    app.route('/manage/unapproved')
     .post(auth.ensureAuthenticated, (req, res)=>{
         var userID = Object.getOwnPropertyNames(req.body)[0];
         userService.updateUnapproved({id: userID, order: req.body[userID]})
         .then(()=>{
-            res.redirect('/manage-users');
+            res.redirect('/manage');
         })
         .catch(err=>showError(req, res, err))
     })
