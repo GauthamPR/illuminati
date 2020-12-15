@@ -96,12 +96,14 @@ body{
   box-sizing:border-box;
   height: min-content;
 }
-#pending{
+.pending{
   background-color:#FFFF00;
 }
-#approved{
+.approved{
   background-color:#32CD32;
 }
+.denied{
+  background-color:#c5240f;
 
 /* Responsive columns */
 @media screen and (max-width: 600px) {
