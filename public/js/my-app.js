@@ -42,10 +42,14 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         if (jsonData.approved_by==[])
              approverdata="None"
        else
-            approverdata=jsonData.approved_by.reduce(elem=>{
-
-            },[])
-        appby.innerText="Approved By:" + approverdata
+        {
+            approverdata=jsonData.approved_by.reduce((total,elem)=>{
+                var temp=elem.name+" ("+elem.admNo +")"
+                total.push(temp);
+                return total
+            },[]).join(", ")
+        }
+        appby.innerText="Approved By: " + approverdata
 
         var subcontainer1=document.createElement("div")
         subcontainer1.setAttribute("class","subContainer1")
