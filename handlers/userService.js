@@ -99,9 +99,9 @@ module.exports = {
             .then(messages=>{
                 tempUser.password = bcrypt.hashSync(userData.psw, 12);
                 tempUser.parentID = messages[0];
-                if(tempUser.role[0] === "Student"){
-                    tempUser.role[0] = "STUDENT";
-                }else if(tempUser.role[0] === "Teacher"){
+                if(tempUser.role[0] === "student"){
+                    tempUser.role[0]= "STUDENT";
+                }else if(tempUser.role[0] === "teacher"){
                     tempUser.role[0] = "TEACHER";
                 }else{
                     tempUser.role[0] = null;
