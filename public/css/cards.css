@@ -2,7 +2,9 @@
  *{
   box-sizing: border-box;
 }
-
+section{
+  margin: 20px 10px;
+}
 body {
   font-family: Verdana;
 }
