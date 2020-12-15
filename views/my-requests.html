@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/myreq.css">
     <link rel="stylesheet" href="css/approvals_requests.css">
+    <script src="js/dropdown.js"></script>
+    <script src="js/testCookie.js"></script>
     <title>My Request</title>
 </head>   
 <body>
@@ -19,13 +21,13 @@
           </button>
           <div class="dropdown-content" id="myDropdown">
             <a href="#addordelete">ADD OR DELETE MEMBERS</a>
-            <a href="#changeuserpass">CHANGE USERNAME OR PASSWORD</a>
+            <a href="/change-password">CHANGE PASSWORD</a>
             <a href="/logout"><u>SIGN OUT</u></a>
           </div>
         </div> 
     </nav>
 <div class="mainContainer">
-        <a id="newreq">New request </a>
+        <a href="/new-request" id="newreq">New request </a>
 </div>
 <div class="structure">
     <div class="mainContainer">
@@ -89,19 +91,19 @@
     </div> 
 </div>     
     <script>
-     var acc = document.getElementsByClassName("accordion");
-     var i;
-     
-     for (i = 0; i < acc.length; i++) {
-       acc[i].addEventListener("click", function() {
-         this.classList.toggle("active");
-         var panel = this.nextElementSibling;
-         if (panel.style.maxHeight) {
-           panel.style.maxHeight = null;
-         } else {
-           panel.style.maxHeight = panel.scrollHeight + "px";
-         } 
-       });
+      var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "grid") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "grid";
+    }
+  });
      }
     </script>  
   </body>
