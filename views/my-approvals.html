@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/myapp.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/approvals_requests.css">
   <script src="js/dropdown.js"></script>
   <script src="js/testCookie.js"></script>
+  <script src="js/my-app.js"></script>
   <title>My Approvals</title>
 
 </head>
@@ -31,7 +31,7 @@
   </nav>
   <div id="structure">
     <div class="pgdivision">
-      <form action="/my-approvals" method="post">
+      <form id="pending-holder"  action="/my-approvals" method="post">
         <div class="head"> Pending Approval </div>
         <div class="headbar">
           <div> Hall Name </div>
@@ -39,69 +39,8 @@
           <div> Event Name </div>
           <div> Status </div>
         </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> Seminar Hall 1 </div>
-              <div> 12/10/20 (12:00 - 14:00) </div>
-              <div> IEEE Freshers Course </div>
-              <div class="status pending"> Pending </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :Introductory course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
-        </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> Seminar Hall 2 </div>
-              <div> 12/10/20 (12:00 - 14:00) </div>
-              <div> Lanscape Freshers Course </div>
-              <div class="status pending"> Pending </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :Python course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
-        </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> CCF LAB</div>
-              <div> 11/10/20 (10:00 - 11:00) </div>
-              <div> Lanscape Freshers Course </div>
-              <div class="status pending"> Pending </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :PHP course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
-        </div>
+
+
       </form>
     </div>
     <div id="my-approval" class="pgdivision">
@@ -113,88 +52,25 @@
           <div> Event Name </div>
           <div> Status </div>
         </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> Seminar Hall 1 </div>
-              <div> 12/10/20 (12:00 - 14:00) </div>
-              <div> IEEE Freshers Course </div>
-              <div class="status approved"> Approved </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :Introductory course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
-        </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> Seminar Hall 2 </div>
-              <div> 12/10/20 (12:00 - 14:00) </div>
-              <div> Lanscape Freshers Course </div>
-              <div class="status pending"> Not approved </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :Python course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
-        </div>
-        <div class="section">
-          <button type="button" class="accordion">
-            <div class="container1">
-              <div> CCF LAB</div>
-              <div> 11/10/20 (10:00 - 11:00) </div>
-              <div> Lanscape Freshers Course </div>
-              <div class="status approved"> Approved </div>
-            </div>
-          </button>
-          <div class="panel">
-            <div class="subContainer1">
-              <div>Description :PHP course for freshers</div>
-              <div>Approved By ID : 100122</div>
-              <div>Next Approved By ID : 100122</div>
-            </div>
-            <div class="subContainer2">
-              <button type="submit" name="subject" value="approve"> Accept </button>
-              <button type="submit" name="subject" value="decline"> Decline </button>
-            </div>
-          </div>
       </form>
-    </div>
-    <script>
-      var acc = document.getElementsByClassName("accordion");
-      var i;
+      <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-      for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-          this.classList.toggle("active");
-          var panel = this.nextElementSibling;
-          if (panel.style.display === "grid") {
-            this.parentNode.style.border = "1px solid #ccc";
-            panel.style.display = "none";
-          } else {
-            this.parentNode.style.border = "1px solid #ccc";
-            panel.style.display = "grid";
-          }
-        });
-      }
-    </script>
+        for (i = 0; i < acc.length; i++) {
+          acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "grid") {
+              this.parentNode.style.border = "1px solid #ccc";
+              panel.style.display = "none";
+            } else {
+              this.parentNode.style.border = "1px solid #ccc";
+              panel.style.display = "grid";
+            }
+          });
+        }
+      </script>
 </body>
 
 </html>

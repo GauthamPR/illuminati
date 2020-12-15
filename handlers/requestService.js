@@ -83,7 +83,7 @@ module.exports = {
                         })
                     })
                 })
-            }else if(values.response == "decline"){
+            }else if(values.response == "deny"){
                 customModel.Requests.findByIdAndUpdate(values.requestID, { status: "DENIED"}, (err, doc)=>{
                     if(err) console.error(err);
                     resolve("Denied Request")
