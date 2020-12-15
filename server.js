@@ -29,7 +29,7 @@ app.set('view-engine', 'pug');
 mongoose.connect(process.env.URI, {useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     .then(()=>{
         console.log("CONNECTED TO DB");
-        initial();
+        //initial();
         routes(app);
         auth.setStrategies(app);
     })

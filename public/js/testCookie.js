@@ -1,11 +1,10 @@
 window.addEventListener("DOMContentLoaded", (event)=>{
-    var userName, level;
+    var userName, role;
     document.cookie.split('; ').forEach((elem)=>{
-        if(elem.split('=')[0] == "User Name"){
+        if(elem.split('=')[0] == "username"){
             userName = elem.split('=')[1];
-        }else if(elem.split('=')[0] == "Level"){
-            level = elem.split('=')[1];
+        }else if(elem.split('=')[0] == "role"){
+            role = elem.split('=')[1];
         }
     })
-    console.log(userName, level);
 })
