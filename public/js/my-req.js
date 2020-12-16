@@ -22,25 +22,21 @@ function parseTime(start, end){
     return(date + " (" + startTime + " - " + endTime + ")");
 }
 
-Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
+Promise.all([initialContentLoaded(), getData('/getData/user-requests')])
 .then(data=>data[1])
 .then(jsonArray=>{
-    var form=document.getElementById("pending-holder")
-    jsonArray.pendingApprovals.forEach(jsonData=>{
+    var form = document.getElementById("new")
+    jsonArray.forEach(jsonData=>{
         var subContainer2=document.createElement("div")
         subContainer2.setAttribute("class","subContainer2")
 
-        var appButton=document.createElement("button")
-        appButton.setAttribute("type","submit")
-        appButton.setAttribute("name",jsonData.id)
-        appButton.innerText="Approve"
-        appButton.setAttribute("value","approve")
+       
 
-        var denyButton=document.createElement("button")
-        denyButton.setAttribute("type","submit")
-        denyButton.setAttribute("name",jsonData.id)
-        denyButton.innerText="Deny"
-        denyButton.setAttribute("value","deny")
+        var deleteButton=document.createElement("button")
+        deleteButton.setAttribute("type","submit")
+        deleteButton.setAttribute("name",jsonData.id)
+        deleteButton.innerText="Delete"
+        deleteButton.setAttribute("value","delete")
        
 
         var desc=document.createElement("div")
@@ -90,8 +86,8 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var section=document.createElement("div")
         section.setAttribute("class","section")
 
-        subContainer2.appendChild(appButton)
-        subContainer2.appendChild(denyButton)
+       
+        subContainer2.appendChild(deleteButton)
         subContainer1.appendChild(desc)
         subContainer1.appendChild(appby)
         panel.appendChild(subContainer1)

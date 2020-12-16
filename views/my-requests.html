@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/myreq.css">
     <link rel="stylesheet" href="css/approvals_requests.css">
     <script src="js/dropdown.js"></script>
-    <script src="js/testCookie.js"></script>
+    <script src="js/my-req.js"></script>
     <title>My Request</title>
 </head>
 
@@ -32,82 +31,16 @@
         <a href="/new-request" id="newreq">New request </a>
     </div>
     <div class="structure">
-        <div class="mainContainer">
+        <form action="/my-requests" method="POST" id="new" class="mainContainer">
             <div class="headbar">
                 <div> Hall Name </div>
                 <div> Date and Time </div>
                 <div> Event Name </div>
                 <div> Status </div>
             </div>
-            <div class="section">
-                <button class="accordion">
-                    <div class="container1">
-                        <div> Seminar Hall 1 </div>
-                        <div> 12/10/20 (12:00 - 14:00) </div>
-                        <div> IEEE Freshers Course </div>
-                        <div id="approved"> Approved </div>
-                    </div>
-                </button>
-                <div class="panel">
-                    <div class="subContainer1">
-                        <div>Description :Introductory course for freshers</div>
-                        <div id="approveid">Approved By ID : 100122</div>
-                        <div id="napproveid">Next Approved By ID : 100122</div>
-                    </div>
-                </div>
-            </div>
-            <div class="section">
-                <button class="accordion">
-                    <div class="container1">
-                        <div> Seminar Hall 2 </div>
-                        <div> 12/10/20 (12:00 - 14:00) </div>
-                        <div> Lanscape Freshers Course </div>
-                        <div id="pending"> Pending </div>
-                    </div>
-                </button>
-                <div class="panel">
-                    <div class="subContainer1">
-                        <div>Description :Python course for freshers</div>
-                        <div id="approveid">Approved By ID : 100122</div>
-                        <div id="napproveid">Next Approved By ID : 100122</div>
-                    </div>
-                </div>
-            </div>
-            <div class="section"></div>
-            <button class="accordion">
-                <div class="container1">
-                    <div> CCF LAB</div>
-                    <div> 11/10/20 (10:00 - 11:00) </div>
-                    <div> Lanscape Freshers Course </div>
-                    <div id="pending"> Not Approved </div>
-                </div>
-            </button>
-            <div class="panel">
-                <div class="subContainer1">
-                    <div>Description :PHP course for freshers</div>
-                    <div id="approveid">Approved By ID : 100122</div>
-                    <div id="napproveid">Next Approved By ID : 100122</div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-    </div>
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
-
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "grid") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "grid";
-                }
-            });
-        }
-    </script>
+ 
 </body>
 
 </html>
