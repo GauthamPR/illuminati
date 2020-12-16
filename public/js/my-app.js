@@ -26,7 +26,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 .then(data=>data[1])
 .then(jsonArray=>{
     var form=document.getElementById("pending-holder")
-    jsonArray.forEach(jsonData=>{
+    jsonArray.pendingApprovals.forEach(jsonData=>{
         var subContainer2=document.createElement("div")
         subContainer2.setAttribute("class","subContainer2")
 
