@@ -23,7 +23,7 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             var newRequest = new customModel.Requests(requestData);
             Promise.all([
-                searchHall({name: requestData.hallName}),
+                searchHall({number: requestData.hallNumber}),
                 searchRequests({hallID: newRequest.hallID, status: "APPROVED"})
             ])
             .then(data=>{

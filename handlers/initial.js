@@ -98,11 +98,11 @@ var arrayOfUserData = [
 
 var arrayOfHallsData = [
     {
-        hallID: "101",
+        number: "101",
         name: "101"
     },
     {
-        hallID: "301",
+        number: "301",
         name: "301"
     }
 ];
