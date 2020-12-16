@@ -2,8 +2,11 @@
  *{
   box-sizing: border-box;
 }
+main{
+  margin: 30px 30px;
+}
 section{
-  margin: 20px 10px;
+  margin-bottom: 70px;
 }
 .row-holder{
   display:grid;

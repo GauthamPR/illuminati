@@ -32,29 +32,6 @@ body {
   color:black;
 }
 
-
-
-
-
-.column {
-  float: left;
-  width: 25%;
-  padding: 15px 15px;
-}
-
-.time{
-float: right;
-
-}
-
-.row {margin: 0 -5px;}
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
 /* Responsive columns */
 @media screen and (max-width: 600px) {
   .column {
@@ -62,13 +39,4 @@ float: right;
     display: block;
     margin-bottom: 20px;
   }
-}
-
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: 25px;
-  text-align: left;
-  letter-spacing :1px;
-  background-color: #f1f1f1;
 }
