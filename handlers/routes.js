@@ -31,6 +31,16 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/home.html');
     });
 
+    app.route('/getData/supervisors')
+    .get((req, res)=>{
+        getData.supervisors()
+        .then(data=>res.send(data));
+    })
+    app.route('/getData/halls')
+    .get((req, res)=>{
+        getData.halls()
+        .then(data=>res.send(data));
+    })
     app.route('/getData/events/:number')
     .get((req, res) => {
         Promise.all([getData.previousEvents(req.params.number), getData.upcomingEvents(req.params.number)])
