@@ -206,6 +206,15 @@ module.exports = function (app) {
         })
         .catch(err=>showError(req, res, err))
     })
+    app.route('/manage/subordinates')
+    .post(auth.ensureAuthenticated, (req, res)=>{
+        var userID = Object.getOwnPropertyNames(req.body)[0];
+        userService.delete({id:userID, order: req.body[userID]})
+        .then(()=>{
+            res.redirect('/manage');
+        })
+        .catch(err=>showError(req, res, err))
+    })
 
     app.route('/my-requests')
     .get(auth.ensureAuthenticated, (req, res) => {

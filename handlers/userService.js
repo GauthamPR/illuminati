@@ -4,6 +4,42 @@ const mail = require('./mailer.js');
 const {ObjectID} = require('mongodb');
 const mailer = require('./mailer.js');
 
+function updateChildrensOf(user){
+    return new Promise((resolve, reject)=>{
+        customModel.Users.update({parentID: user._id}, {$set:{parentID: user.parentID}}, (err, updatedUsers)=>{
+            if(err) console.error(err);
+            if(updatedUsers){
+                console.log("Updated parents of :");
+                updatedUsers.map(user=>{
+                    console.log(user.name);
+                })
+            }
+            resolve("Updated Parents");
+        })
+    })
+}
+function updateRequestsAssociatedWith(user){
+    return new Promise((resolve, reject)=>{
+        customModel.Requests.update({next_approver: user._id}, {$set:{next_approver: user.parentID}}, (err, updatedRequests)=>{
+            if(err) console.log(err);
+            console.log("Updated next approvers of:");
+            updatedRequests.forEach(request=>{
+                console.log(request.name);
+            })
+        })
+        customModel.Requests.find({requestor: user._id}, (err, requests)=>{
+            if(err) console.error(err);
+            console.log("Removed Requests");
+            requests.forEach(request=>{
+                console.log(request.name);
+            })
+            requests.forEach(request=>{
+                request.remove();
+            })
+        })
+    })
+}
+
 function changePassword(userID, newPassword){
     return new Promise((resolve, reject)=>{
         newPassword = bcrypt.hashSync(newPassword, 12);
@@ -234,6 +270,29 @@ module.exports = {
                 })
             })
             .catch((err)=>reject(err))
+        })
+    },
+
+    delete: function(response){
+        return new Promise((resolve, reject)=>{
+            var userID = new ObjectID(response.id);
+            if(response.order === "delete"){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    Promise.all([
+                        updateChildrensOf(user),
+                        updateRequestsAssociatedWith(user)
+                    ])  
+                })
+            }else if(response.order === ""){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    user.remove();
+                    resolve("User Removed");
+                })
+            }else{
+                reject("Undefined response");
+            }
         })
     }
 }
