@@ -146,7 +146,7 @@ module.exports = {
     updateUnapproved: function(response){
         return new Promise((resolve, reject)=>{
             var userID = new ObjectID(response.id);
-            if(response.order === "approve"){
+            if(response.order === "accept"){
                 customModel.unapprovedUsers.findById(userID, (err, user)=>{
                     if(err) console.error(err);
                     var newUser = customModel.Users(user.toJSON());
