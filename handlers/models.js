@@ -57,6 +57,7 @@ const requestSchema = new mongoose.Schema({
 });
 
 const hallSchema = new mongoose.Schema({
+    number: Number,
     name: String,
     in_charge: ObjectID
 });
