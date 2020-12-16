@@ -14,19 +14,19 @@
 <body>
     <nav class="navbar">
         <a href="/">Home</a>
-        <a href="/my-requests">My Requests</a>
-        <a href="/my-approvals">My Approvals</a>
+        <a id="request-link" href="/my-requests">My Requests</a>
+        <a id="approval-link" href="/my-approvals">My Approvals</a>
         <div class="dropdown">
-            <button class="dropbtn" onclick="myFunction()">#userName
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content" id="myDropdown">
-                <a href="/manage">ADD OR DELETE MEMBERS</a>
-                <a href="/change-password">CHANGE PASSWORD</a>
-                <a href="/logout"><u>SIGN OUT</u></a>
-            </div>
+          <button id="drop" class="dropbtn" onclick="myFunction()">#userName
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content" id="myDropdown">
+            <a id="add-or-delete" href="/manage">ADD OR DELETE MEMBERS</a>
+            <a href="/change-password">CHANGE PASSWORD</a>
+            <a href="/logout"><u>SIGN OUT</u></a>
+          </div>
         </div>
-    </nav>
+      </nav>
     <div class="mainContainer">
         <a href="/new-request" id="newreq">New request </a>
     </div>
