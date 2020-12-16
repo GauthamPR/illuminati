@@ -252,5 +252,23 @@ module.exports = {
                 }));
             })
         })
+    },
+
+    supervisors: function(){
+        return new Promise((resolve, reject)=>{
+            customModel.Users.find({role: "TEACHER"}, (err, supervisors)=>{
+                if(err) console.error(err);
+                resolve(supervisors.map(supervisor=>supervisor.name));
+            })
+        })
+    },
+
+    halls: function(){
+        return new Promise((resolve, reject)=>{
+            customModel.Halls.find({}, (err, halls)=>{
+                if(err) console.error(err);
+                resolve(halls.map(hall=>hall.name))
+            })
+        })
     }
 }
