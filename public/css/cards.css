@@ -5,14 +5,20 @@
 section{
   margin: 20px 10px;
 }
+.row-holder{
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
+  
+}
+.headbar{
+  border-bottom:1px solid black;
+}
 body {
   font-family: Verdana;
 }
 
 /* Float four columns side by side */
 .column {
-  float: left;
-  width: 25%;
   padding: 15px 15px;
 }
 
@@ -47,4 +53,5 @@ float: right;
   text-align: left;
   letter-spacing :1px;
   background-color: #f1f1f1;
+  min-height: 250px;
 }
