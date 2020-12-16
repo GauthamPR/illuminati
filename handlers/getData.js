@@ -267,7 +267,12 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             customModel.Halls.find({}, (err, halls)=>{
                 if(err) console.error(err);
-                resolve(halls.map(hall=>hall.name))
+                resolve(halls.map(hall=>{
+                    return{
+                        number: hall.number,
+                        name: hall.name
+                    }
+                }))
             })
         })
     }
