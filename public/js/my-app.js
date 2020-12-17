@@ -106,6 +106,69 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         form.appendChild(section)
     })
 
+    var form=document.getElementById("my-approval")
+    jsonArray.forEach(jsonData=>{
+
+        var desc=document.createElement("div")
+        desc.innerText="Description: "+ jsonData.eventDesc
+        var appby=document.createElement("div")
+        var approverdata
+        if (jsonData.approved_by==[])
+             approverdata="None"
+       else
+        {
+            approverdata=jsonData.approved_by.reduce((total,elem)=>{
+                var temp=elem.name+" ("+elem.admNo +")"
+                total.push(temp);
+                return total
+            },[]).join(", ")
+        }
+        appby.innerText="Approved By: " + approverdata
+
+        var subcontainer1=document.createElement("div")
+        subcontainer1.setAttribute("class","subContainer1")
+
+        var panel=document.createElement("div")
+        panel.setAttribute("class","panel")
+
+        var hallName=document.createElement("div")
+        hallName.innerText=jsonData.hallName
+        var dateAndTime=document.createElement("div")
+        dateAndTime.innerText=jsonData.startTime
+        var eventName=document.createElement("div")
+        eventName.innerText=jsonData.eventName
+        var status=document.createElement("div")
+        status.innerText=jsonData.status
+        if (jsonData.status=="PENDING")
+            status.setAttribute("class","status pending")
+        else if (jsonData.status=="APPROVED")
+            status.setAttribute("class","status approved")
+        else if (jsonData.status=="DENIED")
+            status.setAttribute("class","status denied")
+    
+        var container1=document.createElement("div")
+        container1.setAttribute("class","container1")
+        
+        var button=document.createElement("button") 
+        button.setAttribute("type","button")
+        button.setAttribute("class","accordion")
+      
+        var section=document.createElement("div")
+        section.setAttribute("class","section")
+
+        subcontainer1.appendChild(desc)
+        subcontainer1.appendChild(appby)
+        panel.appendChild(subcontainer1)
+        container1.appendChild(hallName)
+        container1.appendChild(dateAndTime)
+        container1.appendChild(eventName)
+        container1.appendChild(status)
+        button.appendChild(container1)
+        section.appendChild(button)
+        section.appendChild(panel)
+        form.appendChild(section)
+
+    })
     var acc = document.getElementsByClassName("accordion");
     var i;
 
