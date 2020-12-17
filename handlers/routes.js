@@ -222,8 +222,9 @@ module.exports = function (app) {
     })
     .post(auth.ensureAuthenticated, (req, res)=>{
         var requestID = Object.getOwnPropertyNames(req.body)[0];
-        if(req.body.response == "delete"){
-            requestService.del(requestID);
+        if(req.body[requestID] == "delete"){
+            requestService.del(requestID)
+            .then(()=>res.redirect('/my-requests'))
         }
     })
 
