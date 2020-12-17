@@ -1,3 +1,6 @@
+body{
+    font-family: 'Playfair Display', serif;
+}
 .row{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
