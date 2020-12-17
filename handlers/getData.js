@@ -8,7 +8,8 @@ module.exports = {
                 { $match: { requestor: userData._id } },
                 { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails' }},
                 { $lookup: { from: 'users', localField: 'next_approver', foreignField: '_id', as: 'user' }},
-                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }}
+                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }},
+                { $lookup: { from: 'users', localField: 'denied_by', foreignField: '_id', as: 'deniedUser' }}
             ], (err, data)=>{
                     if(err) reject(err);
                     data.forEach((request)=>{
@@ -20,7 +21,8 @@ module.exports = {
                             eventName: request.eventName,
                             eventDesc: request.eventDesc,
                             status: request.status,
-                            approved_by: []
+                            approved_by: [],
+                            denied_by: request.deniedUser[0].name
                         }
                         if(request.user.length != 0){
                             jsonObject.nextApproverAdmNo= request.user[0].admNo;
@@ -50,7 +52,8 @@ module.exports = {
                 },
                 { $lookup: { from: 'users', localField: 'requestor', foreignField: '_id', as: 'user'}},
                 { $lookup: { from: 'halls', localField: 'hallID', foreignField: '_id', as: 'hallDetails'}},
-                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }}
+                { $lookup: { from: 'users', localField: 'approved_by', foreignField: '_id', as: 'historyOfApproval' }},
+                { $lookup: { from: 'users', localField: 'denied_by', foreignField: '_id', as: 'deniedUser' }}
             ], (err, data)=>{
                 if(err) reject(err);
                 data.forEach(request=>{
@@ -64,7 +67,8 @@ module.exports = {
                         eventName: request.eventName,
                         eventDesc: request.eventDesc,
                         status: request.status,
-                        approved_by: []
+                        approved_by: [],
+                        denied_by: request.deniedUser[0].name
                     }
                     if(request.historyOfApproval.length != 0){
                         request.historyOfApproval.forEach(personInHistory=>{
