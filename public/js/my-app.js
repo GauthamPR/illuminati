@@ -134,7 +134,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var hallName=document.createElement("div")
         hallName.innerText=jsonData.hallName
         var dateAndTime=document.createElement("div")
-        dateAndTime.innerText=jsonData.startTime
+        dateAndTime.innerText=parseTime(jsonData.startTime, jsonData.endTime);
         var eventName=document.createElement("div")
         eventName.innerText=jsonData.eventName
         var status=document.createElement("div")
