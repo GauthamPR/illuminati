@@ -25,7 +25,10 @@ module.exports = {
                             denied_by: null
                         }
                         if(request.deniedUser.length != 0){
-                            jsonObject.denied_by = request.deniedUser[0].name;
+                            jsonObject.denied_by = {
+                                admNo: request.deniedUser[0].admNo,
+                                name: request.deniedUser[0].name
+                            };
                         }
                         if(request.user.length != 0){
                             jsonObject.nextApproverAdmNo= request.user[0].admNo;
@@ -72,9 +75,13 @@ module.exports = {
                         status: request.status,
                         approved_by: [],
                         denied_by: null
+
                         }
                     if(request.deniedUser.length != 0){
-                        jsonObject.denied_by = request.deniedUser[0].name;
+                        jsonObject.denied_by = {
+                            admNo: request.deniedUser[0].admNo,
+                            name: request.deniedUser[0].name
+                        };
                     }
                     if(request.historyOfApproval.length != 0){
                         request.historyOfApproval.forEach(personInHistory=>{

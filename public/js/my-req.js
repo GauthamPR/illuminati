@@ -54,6 +54,11 @@ Promise.all([initialContentLoaded(), getData('/getData/user-requests')])
             },[]).join(", ")
         }
         appby.innerText="Approved By: " + approverdata
+        if(jsonData.denied_by!=null)
+            {
+                var denyData = document.createElement("div")
+                denyData.innerText="Denied By: " + jsonData.denied_by.name + " (" +jsonData.denied_by.admNo +")"
+            }
 
         var subContainer1=document.createElement("div")
         subContainer1.setAttribute("class","subContainer1")
@@ -90,6 +95,10 @@ Promise.all([initialContentLoaded(), getData('/getData/user-requests')])
         subContainer2.appendChild(deleteButton)
         subContainer1.appendChild(desc)
         subContainer1.appendChild(appby)
+        if (jsonData.denied_by!=null)
+        {
+            subContainer1.appendChild(denyData)
+        }
         panel.appendChild(subContainer1)
         panel.appendChild(subContainer2)
         container1.appendChild(hallName)
