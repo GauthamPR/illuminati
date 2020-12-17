@@ -53,7 +53,8 @@ const requestSchema = new mongoose.Schema({
     requestor: ObjectID,
     status: String,
     next_approver: ObjectID,
-    approved_by: [ObjectID]
+    approved_by: [ObjectID],
+    denied_by: ObjectID
 });
 
 const hallSchema = new mongoose.Schema({
