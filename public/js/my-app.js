@@ -24,9 +24,9 @@ function parseTime(start, end){
 
 Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 .then(data=>data[1])
-.then(jsonArray=>{
+.then(jsonObject=>{
     var form=document.getElementById("pending-holder")
-    jsonArray.pendingApprovals.forEach(jsonData=>{
+    jsonObject.pendingApprovals.forEach(jsonData=>{
         var subContainer2=document.createElement("div")
         subContainer2.setAttribute("class","subContainer2")
 
@@ -107,7 +107,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
     })
 
     var form=document.getElementById("my-approval")
-    jsonArray.forEach(jsonData=>{
+    jsonObject.allApprovals.forEach(jsonData=>{
 
         var desc=document.createElement("div")
         desc.innerText="Description: "+ jsonData.eventDesc

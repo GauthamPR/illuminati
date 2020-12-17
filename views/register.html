@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/inputFormatter.css">
+    <link rel="stylesheet" href="css/register.css">
+    <script src="js/register.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - #website Name</title>
 </head>
@@ -48,8 +50,8 @@
       </div>
       <div class="col-75">
         <select  name="role" autocomplete="off" required>
-          <option value="teacher">Teacher</option>
           <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
         </select>
       </div>
 </div>
@@ -59,13 +61,7 @@
         <label for="supervisor">Supervisor</label>
       </div>
       <div class="col-75">
-        <select  name="supervisor" autocomplete="off" required>
-          <option value="none">No Supervisor</option>
-          <option value="181001">Soniya B(181001)</option>
-          <option value="182001">Subbu Surendran(182001)</option>
-          <option value="182002">Kuttymalu VK(182002)</option>
-          <option value="180001">Rejimoan(180001)</option>
-          <option value="180002">Binu Rajan(180002)</option>
+        <select  id="supervisor" name="supervisor" autocomplete="off" required>
         </select>
       </div>
 </div>
