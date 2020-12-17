@@ -95,5 +95,15 @@ module.exports = {
                 })
             }
         })
+    },
+
+    del: function(requestID){
+        return new Promise((resolve, reject)=>{
+            customModel.Requests.findById(requestID, (err, result)=>{
+                if(err) console.error(err);
+                result.remove();
+                resolve("Deleted Request")
+            })
+        })
     }
 }

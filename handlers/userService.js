@@ -19,24 +19,40 @@ function updateChildrensOf(user){
     })
 }
 function updateRequestsAssociatedWith(user){
+    function updateNextApprover(user){
+        return new Promise((resolve, reject)=>{
+            customModel.Requests.update({next_approver: user._id}, {$set:{next_approver: user.parentID}}, (err, updatedRequests)=>{
+                if(err) console.log(err);
+                console.log("Updated next approvers of:");
+                updatedRequests.forEach(request=>{
+                    console.log(request.name);
+                })
+                resolve("Updated Next Approvers");
+            })
+        })
+    }
+    function deleteRequestsCreatedBy(user){
+        return new Promise((resolve, reject)=>{
+            customModel.Requests.find({requestor: user._id}, (err, requests)=>{
+                if(err) console.error(err);
+                console.log("Removed Requests");
+                requests.forEach(request=>{
+                    console.log(request.name);
+                })
+                requests.forEach(request=>{
+                    request.remove();
+                })
+                resolve("Deleted Requests");
+            })
+        })
+    }
     return new Promise((resolve, reject)=>{
-        customModel.Requests.update({next_approver: user._id}, {$set:{next_approver: user.parentID}}, (err, updatedRequests)=>{
-            if(err) console.log(err);
-            console.log("Updated next approvers of:");
-            updatedRequests.forEach(request=>{
-                console.log(request.name);
-            })
-        })
-        customModel.Requests.find({requestor: user._id}, (err, requests)=>{
-            if(err) console.error(err);
-            console.log("Removed Requests");
-            requests.forEach(request=>{
-                console.log(request.name);
-            })
-            requests.forEach(request=>{
-                request.remove();
-            })
-        })
+        
+        Promise.all([
+            updateNextApprover(user),
+            deleteRequestsCreatedBy(user)
+        ])
+        .then(()=>resolve("Requests Service done"))
     })
 }
 
@@ -273,7 +289,7 @@ module.exports = {
         })
     },
 
-    delete: function(response){
+    del: function(response){
         return new Promise((resolve, reject)=>{
             var userID = new ObjectID(response.id);
             if(response.order === "delete"){
@@ -282,7 +298,11 @@ module.exports = {
                     Promise.all([
                         updateChildrensOf(user),
                         updateRequestsAssociatedWith(user)
-                    ])  
+                    ])
+                    .then(()=>{
+                        user.remove();
+                        resolve("Deleted User");
+                    })
                 })
             }else if(response.order === ""){
                 customModel.unapprovedUsers.findById(userID, (err, user)=>{
