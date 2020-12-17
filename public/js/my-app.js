@@ -100,6 +100,10 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         subContainer2.appendChild(denyButton)
         subContainer1.appendChild(desc)
         subContainer1.appendChild(appby)
+        if (jsonData.denied_by!=null)
+        {
+            subContainer1.appendChild(denyData)
+        }
         panel.appendChild(subContainer1)
         panel.appendChild(subContainer2)
         container1.appendChild(hallName)
@@ -171,6 +175,10 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 
         subcontainer1.appendChild(desc)
         subcontainer1.appendChild(appby)
+        if (jsonData.denied_by!=null)
+        {
+            subContainer1.appendChild(denyData)
+        }
         panel.appendChild(subcontainer1)
         container1.appendChild(hallName)
         container1.appendChild(dateAndTime)
