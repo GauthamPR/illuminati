@@ -11,10 +11,13 @@ body{
   justify-content: center;
 }
 #newreq{
-  justify-self:end;
-  padding-left:950px;
-  margin:10px 50px;
-  cursor:pointer;
+  padding: 6px;
+  display: inline-block;
+  padding-right: 50px;
+  margin-top: 10px;
+}
+#newreq-holder{
+  text-align: right;
 }
 .accordion {
   background-color:#eee;
