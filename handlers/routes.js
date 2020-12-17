@@ -3,14 +3,14 @@ const passport = require('passport');
 const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const userService = require('./userService.js');
-const { allApprovals } = require('./getData.js');
 
 const routeName = {
     '/login': 'Login Page',
     '/change-password': 'Changing password',
     '/register': 'Registering',
     '/register/verify': 'Entering OTP',
-    '/forgot-password': 'Entering email'
+    '/forgot-password': 'Entering email',
+    '/': 'Home'
 };
 
 function showError(req, res, err, redirect){
@@ -171,7 +171,7 @@ module.exports = function (app) {
     })
     .post((req, res)=>{
         userService.forgotPassword(req.body.email)
-        .then(message=>showSuccess(req, res, message, ''))
+        .then(message=>showSuccess(req, res, message, '/'))
         .catch(err=>showError(req, res, err, '/forgot-password'))
     })
 
@@ -186,8 +186,8 @@ module.exports = function (app) {
     .post((req, res)=>{
         userService.resetPassword({
             randomValue: req.params.randomValue,
-            password: req.body.psw,
-            confirmPassword: req.body.confirmPsw
+            password: req.body.newPsw,
+            confirmPassword: req.body.confirmNewPsw
         })
         .then(message=>showSuccess(req, res, message, '/login'))
         .catch(err=>showError(req, res, err, ''))
