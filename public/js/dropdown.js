@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", (event)=>{
 
     document.cookie.split('; ').forEach((elem)=>{
         if(elem.split('=')[0] == "username"){
-            userName = elem.split('=')[1];
+            userName = elem.split('=')[1].split("%20").join(" ");
         }else if(elem.split('=')[0] == "role"){
             role = elem.split('=')[1];
         }
@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", (event)=>{
         approvelink.remove()
     
     }
-    else if (role=="TEACHER"){
+    else if (role=="TEACHER" || role=="HALL_ADMIN"){
         var myreq =document.getElementById("request-link")
         myreq.remove()
     }

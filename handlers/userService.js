@@ -6,13 +6,15 @@ const mailer = require('./mailer.js');
 
 function updateChildrensOf(user){
     return new Promise((resolve, reject)=>{
-        customModel.Users.update({parentID: user._id}, {$set:{parentID: user.parentID}}, (err, updatedUsers)=>{
+        customModel.Users.updateMany({parentID: user._id}, {parentID: user.parentID}, (err, updatedUsers)=>{
             if(err) console.error(err);
-            if(updatedUsers){
+            if(updatedUsers.n != 0){
                 console.log("Updated parents of :");
-                updatedUsers.map(user=>{
-                    console.log(user.name);
-                })
+                if(updatedUsers){
+                    updatedUsers.map(user=>{
+                        console.log(user.name);
+                    })
+                }
             }
             resolve("Updated Parents");
         })
@@ -21,12 +23,14 @@ function updateChildrensOf(user){
 function updateRequestsAssociatedWith(user){
     function updateNextApprover(user){
         return new Promise((resolve, reject)=>{
-            customModel.Requests.update({next_approver: user._id}, {$set:{next_approver: user.parentID}}, (err, updatedRequests)=>{
+            customModel.Requests.updateMany({next_approver: user._id}, {next_approver: user.parentID}, (err, updatedRequests)=>{
                 if(err) console.log(err);
-                console.log("Updated next approvers of:");
-                updatedRequests.forEach(request=>{
-                    console.log(request.name);
-                })
+                if(updatedRequests.n != 0){
+                    console.log("Updated next approvers of:");
+                    updatedRequests.forEach(request=>{
+                        console.log(request.name);
+                    })
+                }
                 resolve("Updated Next Approvers");
             })
         })
@@ -293,7 +297,7 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             var userID = new ObjectID(response.id);
             if(response.order === "delete"){
-                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                customModel.Users.findById(userID, (err, user)=>{
                     if(err) console.error(err);
                     Promise.all([
                         updateChildrensOf(user),
