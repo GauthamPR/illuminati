@@ -258,7 +258,10 @@ module.exports = {
         return new Promise((resolve, reject)=>{
             customModel.Users.find({role: "TEACHER"}, (err, supervisors)=>{
                 if(err) console.error(err);
-                resolve(supervisors.map(supervisor=>supervisor.name));
+                resolve(supervisors.map(supervisor=>{
+                   return({id:supervisor.admNo,name:supervisor.name})
+                }
+                ));
             })
         })
     },
