@@ -12,7 +12,7 @@ body{
 }
 #newreq{
   justify-self:end;
-  padding:3px;
+  padding-left:950px;
   margin:10px 50px;
   cursor:pointer;
 }
@@ -104,34 +104,39 @@ body{
 }
 .denied{
   background-color:#c5240f;
-
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  div.container1 {  
-    width: 100%;
-    display: block;
-    float: left;
-    text-align: left;
-    font-size:12px;
-      }
-  div.headbar  {  
-    display: none;
-  }
-  .subContainer1 {
-    font-size:10px;
 }
-  .panel{
-    margin:5px;
-    grid-template-columns: 190px 10px;
-    grid-gap: 55px 50px;
-  }
-  .pending,.approved {
-    width:90px;
-    margin-top: 5px;
-    padding-top: 4px; 
-    padding-bottom: 6px ;
-    text-align:center;
-    align-self:center;
+/* Responsive columns */
+@media screen and (max-width: 600px)
+ {
+    div.container1 {  
+       width: 100%;
+      display: block;
+      float: left;
+      text-align: left;
+      font-size:12px;
+      }
+    div.headbar  {  
+    display: none;
+     }
+    .subContainer1 {
+    font-size:10px;
+    }
+    .panel{
+     margin:5px;
+      grid-template-columns: 190px 10px;
+      grid-gap: 55px 50px;
+     }
+    .pending .approved {
+      width:90px;
+      margin-top: 5px;
+      padding-top: 4px; 
+      padding-bottom: 6px ;
+      text-align:center;
+      align-self:center;
            }
+    #newreq{
+        padding-left:158px;
+        }        
+  } 
 
-} 
+         
