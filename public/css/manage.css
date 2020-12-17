@@ -1,0 +1,26 @@
+body{
+    font-family: 'Playfair Display', serif;
+}
+.row{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    padding:10px 0px;
+}
+.headbar{
+    color: white;
+   background-color:#2F3675;
+}
+main{
+    padding:30px 45px;
+}
+.heading{
+    border-bottom: 1px solid black;
+    padding-bottom: 10px ;
+}
+.user{
+    background-color: silver;
+}
+section{
+    margin-bottom: 90px;
+}
