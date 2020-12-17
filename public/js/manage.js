@@ -24,8 +24,8 @@ Promise.all([initialContentLoaded(), getData('/getData/manage')])
         var approveButton = document.createElement("button");
         approveButton.setAttribute("type", "submit");
         approveButton.setAttribute("name", user.id);
-        approveButton.setAttribute("value", "approve");
-        approveButton.innerText = "Approve";
+        approveButton.setAttribute("value", "accept");
+        approveButton.innerText = "Accept";
         
         var denyButton = document.createElement("button");
         denyButton.setAttribute("type", "submit");

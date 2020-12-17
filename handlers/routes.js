@@ -206,10 +206,25 @@ module.exports = function (app) {
         })
         .catch(err=>showError(req, res, err))
     })
+    app.route('/manage/subordinates')
+    .post(auth.ensureAuthenticated, (req, res)=>{
+        var userID = Object.getOwnPropertyNames(req.body)[0];
+        userService.del({id:userID, order: req.body[userID]})
+        .then(()=>{
+            res.redirect('/manage');
+        })
+        .catch(err=>showError(req, res, err))
+    })
 
     app.route('/my-requests')
     .get(auth.ensureAuthenticated, (req, res) => {
         res.sendFile(process.cwd() + '/views/my-requests.html');
+    })
+    .post(auth.ensureAuthenticated, (req, res)=>{
+        var requestID = Object.getOwnPropertyNames(req.body)[0];
+        if(req.body.response == "delete"){
+            requestService.del(requestID);
+        }
     })
 
     app.route('/new-request')

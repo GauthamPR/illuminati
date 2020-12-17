@@ -4,6 +4,58 @@ const mail = require('./mailer.js');
 const {ObjectID} = require('mongodb');
 const mailer = require('./mailer.js');
 
+function updateChildrensOf(user){
+    return new Promise((resolve, reject)=>{
+        customModel.Users.update({parentID: user._id}, {$set:{parentID: user.parentID}}, (err, updatedUsers)=>{
+            if(err) console.error(err);
+            if(updatedUsers){
+                console.log("Updated parents of :");
+                updatedUsers.map(user=>{
+                    console.log(user.name);
+                })
+            }
+            resolve("Updated Parents");
+        })
+    })
+}
+function updateRequestsAssociatedWith(user){
+    function updateNextApprover(user){
+        return new Promise((resolve, reject)=>{
+            customModel.Requests.update({next_approver: user._id}, {$set:{next_approver: user.parentID}}, (err, updatedRequests)=>{
+                if(err) console.log(err);
+                console.log("Updated next approvers of:");
+                updatedRequests.forEach(request=>{
+                    console.log(request.name);
+                })
+                resolve("Updated Next Approvers");
+            })
+        })
+    }
+    function deleteRequestsCreatedBy(user){
+        return new Promise((resolve, reject)=>{
+            customModel.Requests.find({requestor: user._id}, (err, requests)=>{
+                if(err) console.error(err);
+                console.log("Removed Requests");
+                requests.forEach(request=>{
+                    console.log(request.name);
+                })
+                requests.forEach(request=>{
+                    request.remove();
+                })
+                resolve("Deleted Requests");
+            })
+        })
+    }
+    return new Promise((resolve, reject)=>{
+        
+        Promise.all([
+            updateNextApprover(user),
+            deleteRequestsCreatedBy(user)
+        ])
+        .then(()=>resolve("Requests Service done"))
+    })
+}
+
 function changePassword(userID, newPassword){
     return new Promise((resolve, reject)=>{
         newPassword = bcrypt.hashSync(newPassword, 12);
@@ -146,7 +198,7 @@ module.exports = {
     updateUnapproved: function(response){
         return new Promise((resolve, reject)=>{
             var userID = new ObjectID(response.id);
-            if(response.order === "approve"){
+            if(response.order === "accept"){
                 customModel.unapprovedUsers.findById(userID, (err, user)=>{
                     if(err) console.error(err);
                     var newUser = customModel.Users(user.toJSON());
@@ -234,6 +286,33 @@ module.exports = {
                 })
             })
             .catch((err)=>reject(err))
+        })
+    },
+
+    del: function(response){
+        return new Promise((resolve, reject)=>{
+            var userID = new ObjectID(response.id);
+            if(response.order === "delete"){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    Promise.all([
+                        updateChildrensOf(user),
+                        updateRequestsAssociatedWith(user)
+                    ])
+                    .then(()=>{
+                        user.remove();
+                        resolve("Deleted User");
+                    })
+                })
+            }else if(response.order === ""){
+                customModel.unapprovedUsers.findById(userID, (err, user)=>{
+                    if(err) console.error(err);
+                    user.remove();
+                    resolve("User Removed");
+                })
+            }else{
+                reject("Undefined response");
+            }
         })
     }
 }
