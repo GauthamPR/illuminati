@@ -22,7 +22,10 @@ module.exports = {
                             eventDesc: request.eventDesc,
                             status: request.status,
                             approved_by: [],
-                            denied_by: request.deniedUser[0].name
+                            denied_by: null
+                        }
+                        if(request.deniedUser.length != 0){
+                            jsonObject.denied_by = request.deniedUser[0].name;
                         }
                         if(request.user.length != 0){
                             jsonObject.nextApproverAdmNo= request.user[0].admNo;
