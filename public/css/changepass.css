@@ -25,9 +25,13 @@ body {
     cursor: pointer;
     width: 100%;
   }
+
+  .header {
+    padding: 15px;
+  }
   
   .container {
-    padding: 16px;
+    padding: 50px;
   }
   
   span.psw {
