@@ -168,7 +168,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         subcontainer1.appendChild(appby)
         if (jsonData.denied_by!=null)
         {
-            subContainer1.appendChild(denyData)
+            subcontainer1.appendChild(denyData)
         }
         panel.appendChild(subcontainer1)
         container1.appendChild(hallName)
