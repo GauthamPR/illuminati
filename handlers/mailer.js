@@ -7,6 +7,9 @@ const transporterData = {
     auth: {
         user: "alexandrea60@ethereal.email",
         pass: "TYyn4h39zEFzNZAKCk"
+    },
+    tls:{
+        rejectUnauthorized:false
     }
 };
 
@@ -22,7 +25,8 @@ module.exports= {
                 to: emailID,
                 subject: "Verification Email",
                 html: "<span>OTP: <b>" + rand + "</b>",
-            });
+            })
+            .catch((err)=>console.error(err))
         
             console.log("Message sent: %s", info.messageId);
             console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
