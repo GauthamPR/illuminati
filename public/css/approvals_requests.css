@@ -10,7 +10,7 @@ body{
   flex-wrap: wrap;
   justify-content: center;
 }
-#newreq{
+.newreq{
   justify-self:end;
   padding-left:950px;
   margin:10px 50px;
@@ -134,7 +134,7 @@ body{
       text-align:center;
       align-self:center;
            }
-    #newreq{
+    .newreq{
         padding-left:158px;
         }        
   } 
