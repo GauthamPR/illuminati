@@ -12,8 +12,9 @@ body{
 }
 .newreq{
   justify-self:end;
-  padding-left:950px;
-  margin:10px 50px;
+  margin-left: 995px;
+  margin-top: 10px;
+  padding-left: 10px;
   cursor:pointer;
 }
 .accordion {
