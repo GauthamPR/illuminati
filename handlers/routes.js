@@ -5,11 +5,12 @@ const getData = require('./getData.js');
 const userService = require('./userService.js');
 
 const routeName = {
-    '/login': 'Login Page',
-    '/change-password': 'Changing password',
-    '/register': 'Registering',
-    '/register/verify': 'Entering OTP',
-    '/forgot-password': 'Entering email',
+    '/login'            : 'Login Page',
+    '/change-password'  : 'Changing password',
+    '/register'         : 'Registering',
+    '/register/verify'  : 'Entering OTP',
+    '/forgot-password'  : 'Entering email',
+    'javascript:history.back()'      : 'Creating New Request',
     '/': 'Home'
 };
 
@@ -237,7 +238,7 @@ module.exports = function (app) {
         .then((message) => {
             res.redirect('/my-requests');
         })
-        .catch(err=>showError(req, res, err))
+        .catch(err=>showError(req, res, err, 'javascript:history.back()'))
     })
 
     app.route('/my-approvals')
