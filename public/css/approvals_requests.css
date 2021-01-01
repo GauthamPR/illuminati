@@ -53,7 +53,7 @@ body{
   padding: 18px;
   max-width: 100%;
   border: none;
-  justify-items: center;
+  justify-items: left;
   color:white;
   font-size: 15px;
   border:1px solid black;
@@ -71,9 +71,9 @@ body{
   width: 100%;
   display:grid;
   color:black;
-  justify-items: center;
+  justify-items: left;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap:50px 90px;
+  grid-gap:50px 75px;
 }
 
 .panel {
@@ -137,7 +137,7 @@ body{
       text-align:center;
       align-self:center;
            }
-    #newreq{
+    .newreq{
         padding-left:158px;
         }        
   } 

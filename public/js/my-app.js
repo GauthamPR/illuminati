@@ -139,6 +139,8 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var panel=document.createElement("div")
         panel.setAttribute("class","panel")
 
+        var eventName=document.createElement("div")
+        eventName.innerText=jsonData.eventName
         var hallName=document.createElement("div")
         hallName.innerText=jsonData.hallName
         var dateAndTime=document.createElement("div")
@@ -171,9 +173,9 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
             subcontainer1.appendChild(denyData)
         }
         panel.appendChild(subcontainer1)
+        container1.appendChild(eventName)
         container1.appendChild(hallName)
         container1.appendChild(dateAndTime)
-        container1.appendChild(eventName)
         container1.appendChild(status)
         button.appendChild(container1)
         section.appendChild(button)
