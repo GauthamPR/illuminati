@@ -71,9 +71,7 @@ console.log(jsonData)
         var buttonHolder = document.createElement("div")
         var replace= document.createElement("button")
         replace.setAttribute("type","button")
-        replace.setAttribute("name",user.id)
-        replace.setAttribute("value","replace")
-        replace.innerText="Approve"
+        replace.innerText="Replace"
 
         var del= document.createElement("button")
         del.setAttribute("type","submit")

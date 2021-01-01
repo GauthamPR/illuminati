@@ -59,6 +59,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         }
         appby.innerText="Approved By: " + approverdata
 
+
         var subContainer1=document.createElement("div")
         subContainer1.setAttribute("class","subContainer1")
 
@@ -125,6 +126,13 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         }
         appby.innerText="Approved By: " + approverdata
 
+        if(jsonData.denied_by!=null)
+        {
+            var denyData = document.createElement("div")
+            denyData.innerText="Denied By: " + jsonData.denied_by.name + " (" +jsonData.denied_by.admNo +")"
+        }
+
+
         var subcontainer1=document.createElement("div")
         subcontainer1.setAttribute("class","subContainer1")
 
@@ -136,7 +144,9 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var hallName=document.createElement("div")
         hallName.innerText=jsonData.hallName
         var dateAndTime=document.createElement("div")
-        dateAndTime.innerText=jsonData.startTime
+        dateAndTime.innerText=parseTime(jsonData.startTime, jsonData.endTime);
+        var eventName=document.createElement("div")
+        eventName.innerText=jsonData.eventName
         var status=document.createElement("div")
         status.innerText=jsonData.status
         if (jsonData.status=="PENDING")
@@ -158,6 +168,10 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 
         subcontainer1.appendChild(desc)
         subcontainer1.appendChild(appby)
+        if (jsonData.denied_by!=null)
+        {
+            subcontainer1.appendChild(denyData)
+        }
         panel.appendChild(subcontainer1)
         container1.appendChild(eventName)
         container1.appendChild(hallName)

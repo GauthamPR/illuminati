@@ -10,12 +10,14 @@ body{
   flex-wrap: wrap;
   justify-content: center;
 }
-.newreq{
-  justify-self:end;
-  margin-left: 995px;
+#newreq{
+  padding: 6px;
+  display: inline-block;
+  padding-right: 50px;
   margin-top: 10px;
-  padding-left: 10px;
-  cursor:pointer;
+}
+#newreq-holder{
+  text-align: right;
 }
 .accordion {
   background-color:#eee;
