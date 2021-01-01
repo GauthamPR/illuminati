@@ -22,12 +22,15 @@ module.exports = {
     saveRequest: function saveRequest(requestData, userData){
         return new Promise((resolve, reject)=>{
             var newRequest = new customModel.Requests(requestData);
-            Promise.all([
-                searchHall({number: requestData.hallNumber}),
-                searchRequests({hallID: newRequest.hallID, status: "APPROVED"})
-            ])
+            searchHall({number: requestData.hallNumber})
+            .then(hall=>{
+                return new Promise((resolve, reject)=>{
+                    searchRequests({hallID: hall._id, status: "APPROVED"})
+                    .then(existingRequests=>resolve({hall: hall, existingRequests: existingRequests}))
+                })
+            })
             .then(data=>{
-                var hall = data[0];
+                var hall = data.hall;
                 newRequest.hallID = hall._id;
                 newRequest.from = new Date(requestData.eventDate + " " + requestData.startTime);
                 newRequest.to = new Date(requestData.eventDate + " " + requestData.endTime);
@@ -35,29 +38,24 @@ module.exports = {
                 newRequest.status = "PENDING";
                 newRequest.next_approver = userData.parentID;
 
-                var existingRequests = data[1];
-                var available = true;
+                var existingRequests = data.existingRequests;
                 existingRequests.forEach((existingRequest)=>{
                     if(existingRequest.from <= newRequest.from && newRequest.from < existingRequest.to){
-                        available = false;
+                        throw new Error("Time Slot Not available");
                     }else if(existingRequest.from < newRequest.to && newRequest.to <= existingRequest.to){
-                        available = false;
+                        throw new Error("Time Slot Not available");
                     }else if(newRequest.from <= existingRequest.from && existingRequest.to < newRequest.from){
-                        available = false;
+                        throw new Error("Time Slot Not available");
                     }
                 })
-                if(!available){
-                    reject(new Error("Time Slot Not available"));
-                }else{
-                    newRequest.save((err, data)=>{
-                        if(err) console.error (err);
-                        console.log("SUCCESSFUL");
-                        resolve("Successful");
-                    })
-                }
-
+                
+                newRequest.save((err, data)=>{
+                    if(err) console.error (err);
+                    console.log("SUCCESSFUL");
+                    resolve("Successful");
+                })
             })
-            .catch(err=>reject(err));
+            .catch(err=>reject(err.message));
         })
     },
 
