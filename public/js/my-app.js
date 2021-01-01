@@ -131,12 +131,12 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         var panel=document.createElement("div")
         panel.setAttribute("class","panel")
 
+        var eventName=document.createElement("div")
+        eventName.innerText=jsonData.eventName
         var hallName=document.createElement("div")
         hallName.innerText=jsonData.hallName
         var dateAndTime=document.createElement("div")
         dateAndTime.innerText=jsonData.startTime
-        var eventName=document.createElement("div")
-        eventName.innerText=jsonData.eventName
         var status=document.createElement("div")
         status.innerText=jsonData.status
         if (jsonData.status=="PENDING")
@@ -159,9 +159,9 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         subcontainer1.appendChild(desc)
         subcontainer1.appendChild(appby)
         panel.appendChild(subcontainer1)
+        container1.appendChild(eventName)
         container1.appendChild(hallName)
         container1.appendChild(dateAndTime)
-        container1.appendChild(eventName)
         container1.appendChild(status)
         button.appendChild(container1)
         section.appendChild(button)
