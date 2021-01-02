@@ -281,7 +281,7 @@ module.exports = function (app) {
 
     app.route('/altFailure')
     .get((req, res)=>{
-        res.status(400).json({error: req.flash('error')[0]})
+        res.status(401).json({error: req.flash('error')[0]})
     })
 
     app.route('/logout')
