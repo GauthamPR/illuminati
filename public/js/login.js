@@ -1,3 +1,10 @@
+function showPassword(elem){
+    password = document.getElementById("password");
+    if(elem.checked === true)
+        password.type = "text";
+    else
+        password.type = "password";
+}
 function showPopup(info){
     var timeOut;
     var popupHolder = document.getElementById("popup-holder");
@@ -53,6 +60,8 @@ function postRequest(reqInfo){
 }
 
 document.addEventListener("DOMContentLoaded", ()=>{
+    if(document.getElementById("show-password").checked === true)
+        document.getElementById("password").type = "text";
     var loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", event=>{
         event.preventDefault();

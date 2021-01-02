@@ -64,7 +64,7 @@ body{
     align-items: center;
 }
 input:focus{
-    outline: 1px solid rgb(94, 158, 214);
+    outline: 2px solid rgb(39, 142, 231);
     border-radius: 0px;
 }
 input:invalid{
@@ -84,7 +84,13 @@ input{
     row-gap: 8px;
     width: 100%;
 }
-
+#show-password-label{
+    color: black;
+    display: flex;
+    
+    margin-top: 10px;
+    align-items: center;
+}
 #signin-button{
     cursor: pointer;
     font-size: 16px;
@@ -130,9 +136,18 @@ input{
         margin-top: 100px;
     }
     #input-form{
+        font-size: 18px;
         margin: 50px 20px;
+    }
+    input{
+
+        padding: 18px 15px;
+        font-size: 18px;
     }
     body{
         height: auto;
+    }
+    #show-password-label{
+        font-size: 16px;
     }
  }
