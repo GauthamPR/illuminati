@@ -1,11 +1,24 @@
 body{ 
     /*background-color: #e6e6e6;*/
-    height: 97vh;
+    min-height: 99vh;
+    margin: 0;
     display: grid;
     place-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
+#popup{
+    position: absolute;
+    top: 5px;
+    width: 500px;
+    color: black;
+    padding: 7px 1px;
+    background-color: #7cff7c;
+    border-radius: 5px;
+    border: 1px solid black;
+    text-align: center;
+    font-size: 24px;
+    display: none;
+}
 #vis-holder{
     background-color: white;
     display: grid;

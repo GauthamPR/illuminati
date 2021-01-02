@@ -137,7 +137,7 @@ module.exports = function (app) {
         res.cookie('role', req.user.role.join(','));
         var url = req.session.redirectTo || '/';
         delete req.session.redirectTo;
-        res.redirect(url);
+        res.status(200).redirect(url);
     })
 
     app.route('/auth/google')
@@ -272,7 +272,7 @@ module.exports = function (app) {
     app.route('/failure')
     .get((req, res) => {
         var redirectLink = req.flash('redirect')[0];
-        res.render(process.cwd() + '/views/pug/failure.pug', {
+        res.status(400).render(process.cwd() + '/views/pug/failure.pug', {
             err: req.flash('error')[0],
             redirectLink: redirectLink,
             redirectPageName: routeName[redirectLink]
