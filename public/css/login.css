@@ -8,16 +8,21 @@ body{
 }
 #popup{
     position: absolute;
-    top: 5px;
+    top: 10px;
     width: 500px;
     color: black;
     padding: 7px 1px;
-    background-color: #7cff7c;
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
     font-size: 24px;
     display: none;
+}
+.success{
+    background-color: #7cff7c;
+}
+.fail{
+    background-color:#ff4c4ced;
 }
 #vis-holder{
     background-color: white;
@@ -91,3 +96,19 @@ input{
 #forgot-password:hover a{
     color: black;
 }
+
+@-webkit-keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ }
+ 
+ @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ }
+ 
+ .fadeIn {
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+    animation-duration: 250ms;
+ }
