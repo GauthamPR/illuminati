@@ -28,9 +28,11 @@ function postRequest(reqInfo){
         if(xhr.status === 200){
             var response = JSON.parse(xhr.response);
             showPopup({success: true, message: response.message, url: response.redirectLink})
-        }else if(xhr.status === 400){
+        }else if(xhr.status === 401){
             var response = JSON.parse(xhr.response);
             showPopup({success: false, error: response.error})
+        }else{
+            showPopup({success: false, error: "Unrecognised Error"})
         }
     }
     var body = (reqInfo.body.map(e=>e.join("=")).join("&"));
