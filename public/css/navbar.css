@@ -65,3 +65,6 @@ body {
 .show {
   display: block;
 }
+.warning{
+  color: red !important;
+}

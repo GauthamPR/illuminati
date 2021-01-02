@@ -6,17 +6,26 @@ body{
     place-items: center;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.loading{
+    opacity: 0.7;
+}
+#popup-holder{
+    position: fixed;
+    top: 20px;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    display: none;
+}
 #popup{
-    position: absolute;
-    top: 10px;
-    width: 500px;
+    width: 30vw;
+    min-width: 350px;
     color: black;
     padding: 7px 1px;
     border-radius: 5px;
     border: 1px solid black;
     text-align: center;
-    font-size: 24px;
-    display: none;
+    font-size: 20px;
 }
 .success{
     background-color: #7cff7c;
@@ -42,7 +51,7 @@ body{
 }
 
 #input-form{
-    margin: 75px 0;
+    margin: 75px 40px;
     display: grid;
     justify-items: center;
     row-gap: 30px;
@@ -67,13 +76,13 @@ input{
     border-radius: 4px;
     border: 1px solid #00000061;
     padding: 10px;
-    width: 100%;
+    width: auto;
     color: black;
 }
 .containers{
     display: grid;
     row-gap: 8px;
-    width: 75%;
+    width: 100%;
 }
 
 #signin-button{
@@ -111,4 +120,19 @@ input{
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
     animation-duration: 250ms;
+ }
+ @media(max-width: 600px){
+    #vis-holder{
+        align-content: start;
+        height: 100vh;
+    }
+    #header-form{
+        margin-top: 100px;
+    }
+    #input-form{
+        margin: 50px 20px;
+    }
+    body{
+        height: auto;
+    }
  }
