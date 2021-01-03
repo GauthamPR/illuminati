@@ -27,7 +27,13 @@
   </nav>
     
 <div class="container">
-<form action="/new-request" method="post">
+  <div id="popup-container">
+    <div id="popup">
+      Request submitted successfully
+    </div>
+  </div>
+<form id="newreq-form" action="/new-request" method="post">
+
 
 
    <div class="row">
@@ -45,11 +51,11 @@
           <label for="time">TIME</label>
         </div>
         <div class="col-25">
-          <input type="time" id="time" name="startTime" 
+          <input type="time" id="startTime" name="startTime" 
           value="09:00" max="16:15" required>
         </div>
         <div class="col-25">
-          <input type="time" id="time" name="endTime" 
+          <input type="time" id="endTime" name="endTime" 
           value="09:45" max="16:30" required>
         </div>
    </div>
