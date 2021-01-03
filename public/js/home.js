@@ -12,6 +12,12 @@ function getData(url){
         .then(response => resolve(response.json()))
     })
 }
+
+function toggleCollapse()
+{
+    console.log("called")
+}
+
 function parseDate(time){
     time = new Date(time);
     var date = time.toLocaleDateString();
@@ -28,6 +34,7 @@ function parseTime(start, end){
 Promise.all([initialContentLoaded(), getData('/getData/events/5')])
 .then(data=>data[1])
 .then(jsonObject=>{
+    console.log(jsonObject)
     var upcomingEvents=document.getElementById("upcoming-events")
     var previousEvents=document.getElementById("previous-events")
     jsonObject.upcoming.forEach(event=>{
@@ -35,30 +42,43 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
         var column=document.createElement("div")
         column.setAttribute("class","column")
 
+        var cardHolder=document.createElement("div")
+        cardHolder.setAttribute("class","card-holder")
+
         var card=document.createElement("div")
         card.setAttribute("class","card")
+        card.setAttribute("onclick","toggleCollapse()")
 
         var eventName=document.createElement("h4")
         eventName.innerText=event.eventName
 
         var hr=document.createElement("hr")
         var hallName=document.createElement("p")
-        hallName.innerText=event.hallName
+    hallName.innerText="Hall :" + event.hallName
 
-        var date=document.createElement("b")
-        date.innerText = parseDate(event.startTime)
+    var date=document.createElement("div")
+    date.innerText = "Date :"+ parseDate(event.startTime)
 
-        var time= document.createElement("div")
-        time.setAttribute("class","time")
-        time.innerText = parseTime(event.startTime,event.endTime)
-        
+    var time= document.createElement("div")
+    time.setAttribute("class","time")
+    time.innerText = "Time: " + parseTime(event.startTime,event.endTime)
+    
+    
+    var cardFlip=document.createElement("div")
+    cardFlip.classList.add("card","collapse")
+
+        var eventDesc=document.createElement("div")
+        eventDesc.innerText="Event Description :" + event.eventDesc        
 
         card.appendChild(eventName)
         card.appendChild(hr)
         card.appendChild(hallName)
         card.appendChild(date)
-        card.appendChild(time)  
-        column.appendChild(card)
+        card.appendChild(time) 
+        cardFlip.appendChild(eventDesc) 
+        cardHolder.appendChild(cardFlip)
+        cardHolder.appendChild(card)
+        column.appendChild(cardHolder)
         upcomingEvents.appendChild(column)
 
 })
@@ -68,30 +88,41 @@ jsonObject.previous.forEach(event=>{
     var column=document.createElement("div")
     column.setAttribute("class","column")
 
+    var cardHolder=document.createElement("div")
+    
     var card=document.createElement("div")
     card.setAttribute("class","card")
+    card.setAttribute("onclick","toggleCollapse()")
 
     var eventName=document.createElement("h4")
     eventName.innerText=event.eventName
 
     var hr=document.createElement("hr")
     var hallName=document.createElement("p")
-    hallName.innerText=event.hallName
+    hallName.innerText="Hall :" + event.hallName
 
-    var date=document.createElement("b")
-    date.innerText = parseDate(event.startTime)
+    var date=document.createElement("div")
+    date.innerText = "Date :"+ parseDate(event.startTime)
 
     var time= document.createElement("div")
     time.setAttribute("class","time")
-    time.innerText = parseTime(event.startTime,event.endTime)
+    time.innerText = "Time: " + parseTime(event.startTime,event.endTime)
     
+    var cardFlip=document.createElement("div")
+    cardFlip.setAttribute("class","card")
+
+    var eventDesc=document.createElement("div")
+    eventDesc.innerText=event.eventDesc 
 
     card.appendChild(eventName)
     card.appendChild(hr)
     card.appendChild(hallName)
     card.appendChild(date)
     card.appendChild(time)  
-    column.appendChild(card)
+    cardHolder.appendChild(card)
+    cardFlip.appendChild(eventDesc)
+    cardHolder.appendChild(cardFlip)
+    column.appendChild(cardHolder)
     previousEvents.appendChild(column)
 
     })
