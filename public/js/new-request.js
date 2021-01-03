@@ -45,7 +45,7 @@ function showPopup(info){
         timeOut = 3000;
     }
     popup.classList.add("fadeIn");
-    popupHolder.style.display = "grid";
+    popupHolder.style.display = "block";
     setTimeout(()=>{
         popupHolder.style.display = "none";
         popup.classList.remove("fail");
@@ -58,9 +58,9 @@ function toggleBlock(){
     var submitButton = document.getElementById("submit-button");
     submitButton.classList.toggle("loading");
     if(!submitButton.disabled)
-        submitButton.innerText = "Submitting...";
+        submitButton.setAttribute("value","Submitting...");
     else
-        submitButton.innerText = "Submit";
+    submitButton.setAttribute("value","Submit");
     submitButton.disabled = !submitButton.disabled;
 }
 
@@ -73,7 +73,7 @@ function postRequest(reqInfo){
             if(xhr.status === 200){
                 var response = JSON.parse(xhr.response);
                 resolve({success: true, message: response.message, url: response.redirectLink})
-            }else if(xhr.status === 401){
+            }else if(xhr.status === 406){
                 var response = JSON.parse(xhr.response);
                 resolve({success: false, error: response.error})
             }else{

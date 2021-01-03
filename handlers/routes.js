@@ -236,9 +236,12 @@ module.exports = function (app) {
     .post(auth.ensureAuthenticated, (req, res) => {
         requestService.saveRequest(req.body, req.user)
         .then((message) => {
-            res.status(200).json({redirectLink: '/my-approvals', message: "Requested message submitted successfully"});
+            res.status(200).json({redirectLink: '/my-requests', message: "Requested message submitted successfully"});
         })
-        .catch(err=>res.status(406).json({error: err.message}))
+        .catch(err=>{
+            console.log(err)
+            res.status(406).json({error: err})
+        })
     })
 
     app.route('/my-approvals')

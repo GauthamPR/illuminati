@@ -55,10 +55,12 @@ input[type=text], select, textarea {
   margin : .4rem 0;
   }
 
-  #popup-container{
+  #popup-holder{
     text-align: center;
-    position: sticky;
-    top:5px;
+    position: fixed;
+    display: none;
+    top:50px;
+    width: 100%;
   }
   
   #popup{
