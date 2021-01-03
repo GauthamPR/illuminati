@@ -1,5 +1,5 @@
 body{
-    font-family: 'Playfair Display', serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .row{
     display: grid;
@@ -9,14 +9,16 @@ body{
 }
 .headbar{
     color: white;
-   background-color:#2F3675;
+    background-color:#2F3675;
 }
 main{
     padding:30px 45px;
 }
 .heading{
+    margin-bottom: 20px;
     border-bottom: 1px solid black;
-    padding-bottom: 10px ;
+    padding-bottom: 10px;
+    font-size: 20px;
 }
 .user{
     background-color: silver;

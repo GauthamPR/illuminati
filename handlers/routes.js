@@ -132,19 +132,19 @@ module.exports = function (app) {
     .get((req, res) => {
         res.sendFile(process.cwd() + '/views/login.html');
     })
-    .post(passport.authenticate('local', { failureRedirect: '/failure', failureFlash: true }), (req, res) => {
+    .post(passport.authenticate('local', { failureRedirect: '/altFailure', failureFlash: true }), (req, res) => {
         res.cookie('username', req.user.name);
         res.cookie('role', req.user.role.join(','));
         var url = req.session.redirectTo || '/';
         delete req.session.redirectTo;
-        res.redirect(url);
+        res.status(200).json({redirectLink: url, message: "Login Successful!"});
     })
 
     app.route('/auth/google')
     .get(passport.authenticate('google', { scope: ["profile", "email"] }));
 
     app.route('/auth/google/callback')
-    .get(passport.authenticate('google', { failureRedirect: '/error', failureFlash: true }), (req, res) => {
+    .get(passport.authenticate('google', { failureRedirect: '/failure', failureFlash: true }), (req, res) => {
         res.redirect('/my-requests');
     });
 
@@ -272,11 +272,16 @@ module.exports = function (app) {
     app.route('/failure')
     .get((req, res) => {
         var redirectLink = req.flash('redirect')[0];
-        res.render(process.cwd() + '/views/pug/failure.pug', {
+        res.status(400).render(process.cwd() + '/views/pug/failure.pug', {
             err: req.flash('error')[0],
             redirectLink: redirectLink,
             redirectPageName: routeName[redirectLink]
         });
+    })
+
+    app.route('/altFailure')
+    .get((req, res)=>{
+        res.status(401).json({error: req.flash('error')[0]})
     })
 
     app.route('/logout')

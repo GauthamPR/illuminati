@@ -255,7 +255,7 @@ module.exports = {
     children: function(user){
         return new Promise((resolve, reject)=>{
             var parentID = user.role[0]=="DATABASE_ADMIN"? null : user._id;
-            customModel.Users.find({parentID: parentID, role : {$nin: ["DATABASE_ADMIN"]}}, (err, children)=>{
+            customModel.Users.find({parentID: parentID, role : {$nin: ["DATABASE_ADMIN", "HALL_ADMIN"]}}, (err, children)=>{
                 if(err) console.error(err);
                 resolve(children.map(child=>{
                     return({

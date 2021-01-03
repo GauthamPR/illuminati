@@ -31,7 +31,7 @@
   </nav>
   <div id="structure">
     <div class="pgdivision">
-      <form id="pending-holder"  action="/my-approvals" method="post">
+      <form id="pending-holder" action="/my-approvals" method="post">
         <div class="head"> Pending Approval </div>
         <div class="headbar">
           <div> Event Name </div>
@@ -39,38 +39,38 @@
           <div> Date and Time </div>
           <div> Status </div>
         </div>
-
-
       </form>
     </div>
-    <div id="my-approval" class="pgdivision">
-      <form action="/my-approvals" method="post">
-        <div class="head"> My Approval </div>
-        <div class="headbar">
-          <div> Event Name </div>
-          <div> Hall Name </div>
-          <div> Date and Time </div>
-          <div> Status </div>
-        </div>
-      </form>
-      <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
+  </div>
+  <div id="my-approval" class="pgdivision">
+    <form action="/my-approvals" method="post">
+      <div class="head"> My Approval </div>
+      <div class="headbar">
+        <div> Event Name </div>
+        <div> Hall Name </div>
+        <div> Date and Time </div>
+        <div> Status </div>
+      </div>
+    </form>
+  </div>
+  <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
 
-        for (i = 0; i < acc.length; i++) {
-          acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "grid") {
-              this.parentNode.style.border = "1px solid #ccc";
-              panel.style.display = "none";
-            } else {
-              this.parentNode.style.border = "1px solid #ccc";
-              panel.style.display = "grid";
-            }
-          });
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "grid") {
+          this.parentNode.style.border = "1px solid #ccc";
+          panel.style.display = "none";
+        } else {
+          this.parentNode.style.border = "1px solid #ccc";
+          panel.style.display = "grid";
         }
-      </script>
+      });
+    }
+  </script>
 </body>
 
 </html>
