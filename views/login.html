@@ -6,14 +6,18 @@
     <link rel="stylesheet" href="css/inputFormatter.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/login.js"></script>
     <title>Sign In - #website Name</title>
 </head>
 <body>
+    <div id="popup-holder">
+        <div id="popup">Login Successful!</div>
+    </div>
     <div id="vis-holder">
         <div id="header-form">
             <div>Sign In</div>
         </div>
-        <form action="/login" method="POST">
+        <form id="login-form" action="/login" method="POST">
             <div id="input-form">
                 <section class="containers">
                     <label for="admNo">Admission No</label>
@@ -21,7 +25,10 @@
                 </section>
                 <section class="containers">
                     <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password">
+                    <input id="password" type="password" name="password" placeholder="Enter Password" autocomplete="current-password">
+                    <label id="show-password-label" for="show-password">
+                        <input id="show-password" type="checkbox" name="show-password" onclick="showPassword(this)">Show Password
+                    </label>
                 </section>
             </div>
             <div id="submit-form">
