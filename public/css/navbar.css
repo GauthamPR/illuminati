@@ -8,6 +8,16 @@ body {
   font-family: Verdana;
 }
 
+.loading{
+  opacity:0.7;
+}
+
+.success{
+  background-color:#32CD32;
+}
+.fail{
+  background-color:#c5240f;
+}
 .navbar a {
   float: left;
   font-size: 16px;

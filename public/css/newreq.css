@@ -54,7 +54,20 @@ input[type=text], select, textarea {
   input,label{
   margin : .4rem 0;
   }
+
+  #popup-holder{
+    text-align: center;
+    position: fixed;
+    display: none;
+    top:50px;
+    width: 100%;
+  }
   
+  #popup{
+    border: 1px solid black;
+    display: inline-block;
+    padding: 10px;
+  }
   /* Responsive layout  */
   @media screen and (max-width: 600px) {
     .col-25, .col-75, input[type=submit] {
