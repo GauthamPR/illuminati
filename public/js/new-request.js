@@ -55,12 +55,12 @@ function showPopup(info){
 }
 
 function toggleBlock(){
-    var submitButton = document.getElementById("signin-button");
+    var submitButton = document.getElementById("submit-button");
     submitButton.classList.toggle("loading");
     if(!submitButton.disabled)
-        submitButton.innerText = "Signing In...";
+        submitButton.innerText = "Submitting...";
     else
-        submitButton.innerText = "Sign In";
+        submitButton.innerText = "Submit";
     submitButton.disabled = !submitButton.disabled;
 }
 
