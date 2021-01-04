@@ -15,7 +15,7 @@ const parentOf = {
 
 const inChargeOf = {
     "101": "Rejimoan",
-    "301": "Binu Rajan"
+    "CCF": "Binu Rajan"
 }
 const DATABASE_ADMIN = "DATABASE_ADMIN";
 const TEACHER = "TEACHER";
@@ -103,7 +103,7 @@ var arrayOfHallsData = [
     },
     {
         number: "301",
-        name: "301"
+        name: "CCF"
     }
 ];
 
@@ -181,7 +181,7 @@ module.exports= function(){
     })
 
     var arrayOfHalls = arrayOfHallsData.map(hallData=>new Halls(hallData));
-    Halls.insertMany(arrayOfHalls, (err)=>{
+    Halls.insertMany(arrayOfHalls, (err, data)=>{
         if(err) console.error(err);
         updateHalls();
         console.log("HALLS INSERTED");

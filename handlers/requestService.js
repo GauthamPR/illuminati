@@ -82,14 +82,14 @@ module.exports = {
                         request.approved_by.push(values.userID);
                         customModel.Requests.findByIdAndUpdate(request._id, request, (err, updatedDoc)=>{
                             if(err) console.error(err);
-                            resolve("Approved Request");
+                            resolve("approved");
                         })
                     })
                 })
             }else if(values.response == "deny"){
                 customModel.Requests.findByIdAndUpdate(values.requestID, { status: "DENIED", denied_by: values.userID}, (err, doc)=>{
                     if(err) console.error(err);
-                    resolve("Denied Request")
+                    resolve("denied")
                 })
             }
         })
