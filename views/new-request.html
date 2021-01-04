@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/newreq.css">
-    <script src="js/dropdown.js"></script>
-    <script src="js/new-request.js"></script>
-    <title>New Request</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/newreq.css">
+  <script src="js/dropdown.js"></script>
+  <script src="js/new-request.js"></script>
+  <title>New Request</title>
 </head>
+
 <body>
   <nav class="navbar">
     <a href="/">Home</a>
@@ -25,84 +27,80 @@
       </div>
     </div>
   </nav>
-    
-<div class="container">
-  <div id="popup-holder">
-    <div id="popup">
-      Request submitted successfully
+
+  <div class="container">
+    <div id="popup-holder">
+      <div id="popup">
+        Request submitted successfully
+      </div>
     </div>
-  </div>
-<form id="newreq-form" action="/new-request" method="post">
+    <form id="newreq-form" action="/new-request" method="post">
 
-
-
-   <div class="row">
+      <div class="row">
         <div class="col-25">
           <label for="date">DATE</label>
         </div>
         <div class="col-25">
-          <input type="date" id="date" name="eventDate" 
-          value="2020-01-01" max="2025-12-31">
+          <input type="date" id="date" name="eventDate" value="2020-01-01" max="2025-12-31" required>
         </div>
-    </div>
-    
-  <div class="row">
+      </div>
+
+      <div class="row">
         <div class="col-25">
           <label for="time">TIME</label>
         </div>
         <div class="col-25">
-          <input type="time" id="startTime" name="startTime" 
-          value="09:00" max="16:15" required>
+          <input type="time" id="startTime" name="startTime" value="09:00" max="16:15" required>
         </div>
         <div class="col-25">
-          <input type="time" id="endTime" name="endTime" 
-          value="09:45" max="16:30" required>
+          <input type="time" id="endTime" name="endTime" value="10:00" max="16:30" required>
         </div>
-   </div>
-    
-  <div class="row">
+      </div>
+
+      <div class="row">
         <div class="col-25">
           <label for="hallid">HALL NO</label>
         </div>
         <div class="col-75">
-          <select id="hallno" name="hallNumber">
+          <select id="hallno" name="hallNumber" required>
           </select>
         </div>
-   </div>
-       
-  <div class="row">
+      </div>
+
+      <div class="row">
         <div class="col-25">
           <label for="eventname">NAME OF THE EVENT</label>
         </div>
 
         <div class="col-75">
-          <input type="text" id="eventname" name="eventName" >
+          <input type="text" id="eventname" name="eventName" required>
         </div>
-  </div>
-  <div class="row">
-    <div class="col-25">
-      <label for="organizer">ORGANIZER</label>
-    </div>
+      </div>
+      <div class="row">
+        <div class="col-25">
+          <label for="organizer">ORGANIZER</label>
+        </div>
 
-    <div class="col-75">
-      <input type="text" id="organizer" name="organizer" >
-    </div>
-</div>
-  <div class="row">
+        <div class="col-75">
+          <input type="text" id="organizer" name="organizer" required>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-25">
           <label for="eventdesc">DESCRIPTION OF THE EVENT</label>
         </div>
         <div class="col-75">
-          <textarea id="eventdesc" name="eventDesc" style="height:200px"></textarea>
+          <textarea id="eventdesc" name="eventDesc" style="height:200px" required></textarea>
         </div>
-  </div>
+      </div>
 
-    <div class="row">
-        <input  id="submit-button" type="submit" value="Submit">
-    </div>
+      <div class="row">
+        <input id="submit-button" type="submit" value="Submit">
+      </div>
 
     </form>
   </div>
-  
-  </body>
-  </html>
+
+</body>
+
+</html>
