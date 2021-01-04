@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet"href ="css/manage.css">
-    <title>Manage Users - #websiteName</title>
-    <script src="js/manage.js"></script>
-    <script src="js/dropdown.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/manage.css">
+  <title>Manage Users - #websiteName</title>
+  <script src="js/manage.js"></script>
+  <script src="js/dropdown.js"></script>
 </head>
 
 <body>
@@ -27,12 +27,15 @@
       </div>
     </div>
   </nav>
-    
+
   <main>
+    <div id="popup-holder">
+      <div id="popup"> Your Request is submitted ! </div>
+    </div>
     <section>
       <div class="heading"> Unapproved Users </div>
-      <form id="unapprove" action = "/manage/unapproved" method="POST">
-        <div class="headbar row" > 
+      <form id="unapprove" action="/manage/unapproved" method="POST">
+        <div class="headbar row">
           <div> User Name</div>
           <div> Email </div>
           <div> Designation </div>
@@ -42,8 +45,8 @@
     </section>
     <section>
       <div class="heading"> Subordinates</div>
-      <form id="subordinates" action = "/manage/subordinates" method="POST">
-        <div class="headbar row" > 
+      <form id="subordinates" action="/manage/subordinates" method="POST">
+        <div class="headbar row">
           <div> User Name</div>
           <div> Email </div>
           <div> Designation </div>
