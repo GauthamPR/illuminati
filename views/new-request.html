@@ -19,9 +19,9 @@
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content" id="myDropdown">
-        <a id="add-or-delete" href="/manage">ADD OR DELETE MEMBERS</a>
-        <a href="/change-password">CHANGE PASSWORD</a>
-        <a href="/logout"><u>SIGN OUT</u></a>
+        <a id="add-or-delete" href="/manage">Manage Users</a>
+        <a href="/change-password">Change Password</a>
+        <a class="warning" href="/logout">Sign Out</a>
       </div>
     </div>
   </nav>
@@ -79,7 +79,15 @@
           <input type="text" id="eventname" name="eventName" >
         </div>
   </div>
+  <div class="row">
+    <div class="col-25">
+      <label for="organizer">ORGANIZER</label>
+    </div>
 
+    <div class="col-75">
+      <input type="text" id="organizer" name="organizer" >
+    </div>
+</div>
   <div class="row">
         <div class="col-25">
           <label for="eventdesc">DESCRIPTION OF THE EVENT</label>

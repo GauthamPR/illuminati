@@ -92,10 +92,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
         toggleBlock();
         var date         = document.getElementById("date").value;
         var startTime    = document.getElementById("startTime").value;
-        var endTime    = document.getElementById("endTime").value;
+        var endTime      = document.getElementById("endTime").value;
         var hallNo       = document.getElementById("hallno").value;
         var eventName    = document.getElementById("eventname").value;
         var eventDesc    = document.getElementById("eventdesc").value;
+        var organizer    = document.getElementById("organizer").value;
         var reqInfo     = {
             url: "/new-request",
             body: [
@@ -104,7 +105,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 ["endTime", endTime],
                 ["hallNumber", hallNo],
                 ["eventName", eventName],
-                ["eventDesc", eventDesc]
+                ["eventDesc", eventDesc],
+                ["organizer", organizer]
             ]
         } 
         postRequest(reqInfo)

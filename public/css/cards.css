@@ -11,7 +11,8 @@ section{
 .row-holder{
   display:grid;
   grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-  
+  column-gap: 20px;
+  row-gap: 30px;
 }
 .headbar{
   border-bottom:1px solid black;
@@ -21,31 +22,11 @@ body {
   font-family: Verdana;
 }
 
-/* Float four columns side by side */
-.column {
-  padding: 15px 15px;
-}
-/* Remove extra left and right margins, due to padding */
-.row {margin: 0 -5px;}
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
 
 .card-holder{
   position: relative;
+  overflow: hidden;
 }
 .collapse{
   z-index: -100;
@@ -58,6 +39,49 @@ body {
   padding: 25px;
   text-align: left;
   letter-spacing :1px;
-  background-color: #f1f1f1;
+  background-color: #db4141;
   min-height: 250px;
 }
+
+.desc{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  text-align: left;
+  letter-spacing :1px;
+  background-color: #db4141;
+  min-height: 250px;
+  position: absolute;
+  top:0;
+  width: 100%;
+  left: 100%;
+  z-index: -100;
+  transition: left 0.3s ease;
+  transform: translate(-100%);
+  box-sizing: border-box;
+}
+
+.card-holder:hover .desc{
+  z-index: 100;
+  left: 0;
+  transform: translate(0);
+
+}
+/*
+@media screen and (max-width: 600px) {
+  .card-holder , .card-holder:hover {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .card{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .desc{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+*/

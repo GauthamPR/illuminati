@@ -1,134 +1,134 @@
-function initialContentLoaded(){
-    return new Promise((resolve)=>{
-        window.addEventListener("DOMContentLoaded", ()=>{
+function initialContentLoaded() {
+    return new Promise((resolve) => {
+        window.addEventListener("DOMContentLoaded", () => {
             resolve("CONTENT LOADED");
         })
     })
 }
 
-function getData(url){
-    return new Promise((resolve)=>{
+function getData(url) {
+    return new Promise((resolve) => {
         fetch(url)
-        .then(response => resolve(response.json()))
+            .then(response => resolve(response.json()))
     })
 }
 
-function toggleCollapse()
-{
-    console.log("called")
-}
 
-function parseDate(time){
+
+function parseDate(time) {
     time = new Date(time);
     var date = time.toLocaleDateString();
-    return(date);
+    return (date);
 }
-function parseTime(start, end){
+function parseTime(start, end) {
     var start = new Date(start);
     var end = new Date(end);
-    var startTime = start.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-    var endTime = end.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-    return(startTime + " - " + endTime );
+    var startTime = start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    var endTime = end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return (startTime + " - " + endTime);
 }
 
 Promise.all([initialContentLoaded(), getData('/getData/events/5')])
-.then(data=>data[1])
-.then(jsonObject=>{
-    console.log(jsonObject)
-    var upcomingEvents=document.getElementById("upcoming-events")
-    var previousEvents=document.getElementById("previous-events")
-    jsonObject.upcoming.forEach(event=>{
+    .then(data => data[1])
+    .then(jsonObject => {
+        console.log(jsonObject)
+        var upcomingEvents = document.getElementById("upcoming-events")
+        var previousEvents = document.getElementById("previous-events")
+        jsonObject.upcoming.forEach(event => {
 
-        var column=document.createElement("div")
-        column.setAttribute("class","column")
 
-        var cardHolder=document.createElement("div")
-        cardHolder.setAttribute("class","card-holder")
+            var cardHolder = document.createElement("div")
+            cardHolder.setAttribute("class", "card-holder")
 
-        var card=document.createElement("div")
-        card.setAttribute("class","card")
-        card.setAttribute("onclick","toggleCollapse()")
+            var card = document.createElement("div")
+            card.setAttribute("class", "card")
 
-        var eventName=document.createElement("h4")
-        eventName.innerText=event.eventName
 
-        var hr=document.createElement("hr")
-        var hallName=document.createElement("p")
-    hallName.innerText="Hall :" + event.hallName
+            var eventName = document.createElement("h4")
+            eventName.innerText = event.eventName
 
-    var date=document.createElement("div")
-    date.innerText = "Date :"+ parseDate(event.startTime)
+            var hr = document.createElement("hr")
+            var hallName = document.createElement("p")
+            hallName.innerText = "Hall :" + event.hallName
 
-    var time= document.createElement("div")
-    time.setAttribute("class","time")
-    time.innerText = "Time: " + parseTime(event.startTime,event.endTime)
-    
-    
-    var cardFlip=document.createElement("div")
-    cardFlip.classList.add("card","collapse")
+            var date = document.createElement("div")
+            date.innerText = "Date :" + parseDate(event.startTime)
 
-        var eventDesc=document.createElement("div")
-        eventDesc.innerText="Event Description :" + event.eventDesc        
+            var time = document.createElement("div")
+            time.setAttribute("class", "time")
+            time.innerText = "Time: " + parseTime(event.startTime, event.endTime)
 
-        card.appendChild(eventName)
-        card.appendChild(hr)
-        card.appendChild(hallName)
-        card.appendChild(date)
-        card.appendChild(time) 
-        cardFlip.appendChild(eventDesc) 
-        cardHolder.appendChild(cardFlip)
-        cardHolder.appendChild(card)
-        column.appendChild(cardHolder)
-        upcomingEvents.appendChild(column)
 
-})
+            var desc = document.createElement("div")
+            desc.classList.add("desc")
 
-jsonObject.previous.forEach(event=>{
 
-    var column=document.createElement("div")
-    column.setAttribute("class","column")
+            var eventDesc = document.createElement("div")
+            eventDesc.innerText = "Event Description :" + event.eventDesc
 
-    var cardHolder=document.createElement("div")
-    
-    var card=document.createElement("div")
-    card.setAttribute("class","card")
-    card.setAttribute("onclick","toggleCollapse()")
+            var organizer = document.createElement("div")
+            organizer.innerText = "Organizer: " + event.organizer
 
-    var eventName=document.createElement("h4")
-    eventName.innerText=event.eventName
+            card.appendChild(eventName)
+            card.appendChild(hr)
+            card.appendChild(hallName)
+            card.appendChild(date)
+            card.appendChild(time)
+            cardHolder.appendChild(card)
+            desc.appendChild(eventDesc)
+            desc.appendChild(organizer)
+            cardHolder.appendChild(desc)
+            upcomingEvents.appendChild(cardHolder)
 
-    var hr=document.createElement("hr")
-    var hallName=document.createElement("p")
-    hallName.innerText="Hall :" + event.hallName
+        })
 
-    var date=document.createElement("div")
-    date.innerText = "Date :"+ parseDate(event.startTime)
+        jsonObject.previous.forEach(event => {
 
-    var time= document.createElement("div")
-    time.setAttribute("class","time")
-    time.innerText = "Time: " + parseTime(event.startTime,event.endTime)
-    
-    var cardFlip=document.createElement("div")
-    cardFlip.setAttribute("class","card")
 
-    var eventDesc=document.createElement("div")
-    eventDesc.innerText=event.eventDesc 
+            var cardHolder = document.createElement("div")
+            cardHolder.setAttribute("class", "card-holder")
 
-    card.appendChild(eventName)
-    card.appendChild(hr)
-    card.appendChild(hallName)
-    card.appendChild(date)
-    card.appendChild(time)  
-    cardHolder.appendChild(card)
-    cardFlip.appendChild(eventDesc)
-    cardHolder.appendChild(cardFlip)
-    column.appendChild(cardHolder)
-    previousEvents.appendChild(column)
+            var card = document.createElement("div")
+            card.setAttribute("class", "card")
+
+            var eventName = document.createElement("h4")
+            eventName.innerText = event.eventName
+
+            var hr = document.createElement("hr")
+            var hallName = document.createElement("p")
+            hallName.innerText = "Hall :" + event.hallName
+
+            var date = document.createElement("div")
+            date.innerText = "Date :" + parseDate(event.startTime)
+
+            var time = document.createElement("div")
+            time.setAttribute("class", "time")
+            time.innerText = "Time: " + parseTime(event.startTime, event.endTime)
+
+            var desc = document.createElement("div")
+            desc.setAttribute("class", "desc")
+
+            var eventDesc = document.createElement("div")
+            eventDesc.innerText = "Event Description :" + event.eventDesc
+            
+            var organizer = document.createElement("div")
+            organizer.innerText = "Organizer: " + event.organizer
+
+            card.appendChild(eventName)
+            card.appendChild(hr)
+            card.appendChild(hallName)
+            card.appendChild(date)
+            card.appendChild(time)
+            cardHolder.appendChild(card)
+            desc.appendChild(eventDesc)
+            desc.appendChild(organizer)
+            cardHolder.appendChild(desc)
+            previousEvents.appendChild(cardHolder)
+
+        })
+
 
     })
-    
-
-})
-.catch((err)=>{
-    console.log(err);
-})
+    .catch((err) => {
+        console.log(err);
+    })
