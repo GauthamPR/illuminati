@@ -250,14 +250,13 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/my-approvals.html');
     })
     .post(auth.ensureAuthenticated, (req, res) => {
-        console.log(req.body);
         var requestID = req.body.name;
         requestService.update({
             userID: req.user._id,
             requestID: requestID,
             response: req.body.value
         })
-        .then(message=>res.status(200).json({message: "Approved"}))
+        .then(message=>res.status(200).json({redirectLink: "/my-approvals", message: "Approved"}))
     });
 
     app.route('/success')
