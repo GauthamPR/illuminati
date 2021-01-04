@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: Verdana;
+  background-color: #b3b3b3;
 }
 .navbar {
   overflow: hidden;
