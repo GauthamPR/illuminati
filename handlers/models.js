@@ -51,6 +51,7 @@ const requestSchema = new mongoose.Schema({
     from: Date,
     to: Date,
     requestor: ObjectID,
+    organizer: String,
     status: String,
     next_approver: ObjectID,
     approved_by: [ObjectID],
