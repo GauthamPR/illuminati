@@ -13,11 +13,21 @@ body{
 #newreq{
   padding: 6px;
   display: inline-block;
-  padding-right: 50px;
+  margin-right: 50px;
   margin-top: 10px;
+  background-color: orange;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black;
+}
+#newreq:hover{
+  background-color: darkgoldenrod;
+  color: black;
 }
 #newreq-holder{
   text-align: right;
+  margin-top: 15px;
+  margin-bottom: 20px;
 }
 .accordion {
   background-color:#eee;

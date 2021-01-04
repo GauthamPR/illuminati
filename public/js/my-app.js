@@ -215,16 +215,9 @@ function showPopup(info){
     var popupHolder = document.getElementById("popup-holder");
     var popup = document.getElementById("popup");
     if(info.success){
-        if(info.order=="approve") {
-            popup.innerText = info.message;
-            popup.classList.add("success");
-            timeOut = 1000;
-        }
-        else if (info.order=="deny"){
-            popup.innerText = info.message;
-            popup.classList.add("color");
-            timeOut = 1000;
-        }
+        popup.innerText = info.message;
+        popup.classList.add("success");
+        timeOut = 2000;
     }
     else{
         popup.innerText = info.error;
@@ -282,8 +275,6 @@ function postRequest(reqInfo){
 }
 function pRequest(element) {
     toggleBlock(element);
-    
-    
     var reqInfo = {
         url: "/my-approvals",
         body: [
@@ -310,5 +301,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
     myapprovalForm.addEventListener("submit", event=>{
         event.preventDefault();
     })
-   
 })
