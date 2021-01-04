@@ -153,17 +153,13 @@ function showPopup(info) {
 }
 
 function toggleBlock(element) {
-    console.log(element.innerText);
     element.classList.toggle("loading");
-
-    
     if (!element.disabled)
         element.innerText = "Deleting...";
     else {
         element.innerText = "Delete"
     }
     element.disabled=!element.disabled
-    console.log(element);
 }
 
 function postRequest(reqInfo) {
@@ -206,7 +202,6 @@ function pRequest(element) {
         .catch((response) => {
             showPopup({ success: false, error: "Unrecognised Response" })
         })
-    console.log(element);
 }
 
 

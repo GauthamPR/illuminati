@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: Verdana;
-  background-color: #b3b3b3;
+  background-color: #e1e1e1;
 }
 .navbar {
   overflow: hidden;
@@ -17,7 +17,7 @@ body {
   background-color:#32CD32;
 }
 .fail{
-  background-color:#c5240f;
+  background-color:#ff6753;
 }
 .color{
   background-color:skyblue;

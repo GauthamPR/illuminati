@@ -51,7 +51,6 @@ module.exports = {
                 
                 newRequest.save((err, data)=>{
                     if(err) console.error (err);
-                    console.log("SUCCESSFUL");
                     resolve("Successful");
                 })
             })

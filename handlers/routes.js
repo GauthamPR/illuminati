@@ -224,7 +224,6 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/my-requests.html');
     })
     .post(auth.ensureAuthenticated, (req, res)=>{
-        console.log(req.body);
         var requestID = req.body.name;
         if(req.body.value == "delete"){
             requestService.del(requestID)
@@ -242,7 +241,7 @@ module.exports = function (app) {
             res.status(200).json({redirectLink: '/my-requests', message: "Request Created!"});
         })
         .catch(err=>{
-            console.log(err)
+            console.error(err)
             res.status(406).json({error: err})
         })
     })

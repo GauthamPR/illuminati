@@ -9,12 +9,7 @@ function updateChildrensOf(user){
         customModel.Users.updateMany({parentID: user._id}, {parentID: user.parentID}, (err, updatedUsers)=>{
             if(err) console.error(err);
             if(updatedUsers.n != 0){
-                console.log("Updated parents of :");
-                if(updatedUsers){
-                    updatedUsers.map(user=>{
-                        console.log(user.name);
-                    })
-                }
+                console.log("Updated Users:", updatedUsers.n);
             }
             resolve("Updated Parents");
         })
@@ -24,12 +19,9 @@ function updateRequestsAssociatedWith(user){
     function updateNextApprover(user){
         return new Promise((resolve, reject)=>{
             customModel.Requests.updateMany({next_approver: user._id}, {next_approver: user.parentID}, (err, updatedRequests)=>{
-                if(err) console.log(err);
+                if(err) console.error(err);
                 if(updatedRequests.n != 0){
-                    console.log("Updated next approvers of:");
-                    updatedRequests.forEach(request=>{
-                        console.log(request.name);
-                    })
+                    console.log("Updated Requests:", updatedRequests.n);
                 }
                 resolve("Updated Next Approvers");
             })
@@ -39,10 +31,6 @@ function updateRequestsAssociatedWith(user){
         return new Promise((resolve, reject)=>{
             customModel.Requests.find({requestor: user._id}, (err, requests)=>{
                 if(err) console.error(err);
-                console.log("Removed Requests");
-                requests.forEach(request=>{
-                    console.log(request.name);
-                })
                 requests.forEach(request=>{
                     request.remove();
                 })
