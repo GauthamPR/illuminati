@@ -215,10 +215,18 @@ function showPopup(info){
     var popupHolder = document.getElementById("popup-holder");
     var popup = document.getElementById("popup");
     if(info.success){
-        popup.innerText = info.message;
-        popup.classList.add("success");
-        timeOut = 1000;
-    }else{
+        if(info.order=="approve") {
+            popup.innerText = info.message;
+            popup.classList.add("success");
+            timeOut = 1000;
+        }
+        else if (info.order=="deny"){
+            popup.innerText = info.message;
+            popup.classList.add("color");
+            timeOut = 1000;
+        }
+    }
+    else{
         popup.innerText = info.error;
         popup.classList.add("fail");
         timeOut = 3000;

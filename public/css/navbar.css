@@ -18,6 +18,9 @@ body {
 .fail{
   background-color:#c5240f;
 }
+.color{
+  background-color:skyblue;
+}
 .navbar a {
   float: left;
   font-size: 16px;
