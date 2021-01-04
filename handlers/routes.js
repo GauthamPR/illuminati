@@ -3,7 +3,6 @@ const passport = require('passport');
 const requestService = require('./requestService.js');
 const getData = require('./getData.js');
 const userService = require('./userService.js');
-const { request } = require('express');
 
 const routeName = {
     '/login'            : 'Login Page',
