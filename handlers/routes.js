@@ -222,6 +222,7 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/my-requests.html');
     })
     .post(auth.ensureAuthenticated, (req, res)=>{
+        console.log(req.body);
         var requestID = Object.getOwnPropertyNames(req.body)[0];
         if(req.body[requestID] == "delete"){
             requestService.del(requestID)
@@ -249,11 +250,12 @@ module.exports = function (app) {
         res.sendFile(process.cwd() + '/views/my-approvals.html');
     })
     .post(auth.ensureAuthenticated, (req, res) => {
-        var requestID = Object.getOwnPropertyNames(req.body)[0];
+        console.log(req.body);
+        var requestID = req.body.name;
         requestService.update({
             userID: req.user._id,
             requestID: requestID,
-            response: req.body[requestID]
+            response: req.body.value
         })
         .then(message=>res.status(200).json({message: "Approved"}))
     });
