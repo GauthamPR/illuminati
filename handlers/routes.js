@@ -226,7 +226,7 @@ module.exports = function (app) {
         var requestID = Object.getOwnPropertyNames(req.body)[0];
         if(req.body[requestID] == "delete"){
             requestService.del(requestID)
-            .then(()=>res.redirect('/my-requests'))
+            .then(()=>res.status(200).json({redirectLink: '/my-requests', message: "Message deleted successfully"}))
         }
     })
 
