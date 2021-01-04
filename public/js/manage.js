@@ -36,19 +36,17 @@ console.log(jsonData)
         var approve= document.createElement("button")
         approve.setAttribute("type","submit")
         approve.setAttribute("name",user.id)
-        approve.setAttribute("value","accept")
         approve.innerText="Approve"
-        approve.setAttribute("value","approve")
-        approve.setAttribute("onclick","pSubordinates(this)")
+        approve.setAttribute("value","accept")
+        approve.setAttribute("onclick","pUnapproved(this)")
         approve.classList.add("permissionButton")
 
         var deny= document.createElement("button")
         deny.setAttribute("type","submit")
         deny.setAttribute("name",user.id)
-        deny.setAttribute("value","deny")
         deny.innerText="Deny"
-        deny.setAttribute("value","approve")
-        deny.setAttribute("onclick","pSubordinates(this)")
+        deny.setAttribute("value","deny")
+        deny.setAttribute("onclick","pUnapproved(this)")
         deny.classList.add("permissionButton")
 
         buttonHolder.appendChild(approve)
@@ -78,12 +76,16 @@ console.log(jsonData)
         var replace= document.createElement("button")
         replace.setAttribute("type","button")
         replace.innerText="Replace"
+        replace.setAttribute("onclick","pSubordinates(this)")
+        replace.classList.add("permissionButton")
 
         var del= document.createElement("button")
         del.setAttribute("type","submit")
         del.setAttribute("name",user.id)
         del.setAttribute("value","delete")
         del.innerText="Delete"
+        del.setAttribute("onclick","pSubordinates(this)")
+        del.classList.add("permissionButton")
 
         buttonHolder.appendChild(replace)
         buttonHolder.appendChild(del)
