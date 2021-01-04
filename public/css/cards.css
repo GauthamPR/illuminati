@@ -39,7 +39,7 @@ body {
   padding: 25px;
   text-align: left;
   letter-spacing :1px;
-  background-color: #f1f1f1;
+  background-color: #db4141;
   min-height: 250px;
 }
 
@@ -48,14 +48,16 @@ body {
   padding: 25px;
   text-align: left;
   letter-spacing :1px;
-  background-color: #c42929;
+  background-color: #db4141;
   min-height: 250px;
   position: absolute;
   top:0;
+  width: 100%;
   left: 100%;
   z-index: -100;
   transition: left 0.3s ease;
   transform: translate(-100%);
+  box-sizing: border-box;
 }
 
 .card-holder:hover .desc{
@@ -64,3 +66,22 @@ body {
   transform: translate(0);
 
 }
+/*
+@media screen and (max-width: 600px) {
+  .card-holder , .card-holder:hover {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .card{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+  .desc{
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+*/

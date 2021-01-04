@@ -62,8 +62,12 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
             var desc = document.createElement("div")
             desc.classList.add("desc")
 
+
             var eventDesc = document.createElement("div")
             eventDesc.innerText = "Event Description :" + event.eventDesc
+
+            var organizer = document.createElement("div")
+            organizer.innerText = "Organizer: " + event.organizer
 
             card.appendChild(eventName)
             card.appendChild(hr)
@@ -72,6 +76,7 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
             card.appendChild(time)
             cardHolder.appendChild(card)
             desc.appendChild(eventDesc)
+            desc.appendChild(organizer)
             cardHolder.appendChild(desc)
             upcomingEvents.appendChild(cardHolder)
 
@@ -81,7 +86,7 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
 
 
             var cardHolder = document.createElement("div")
-            cardHolder.setAttribute("class","card-holder")
+            cardHolder.setAttribute("class", "card-holder")
 
             var card = document.createElement("div")
             card.setAttribute("class", "card")
@@ -101,10 +106,13 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
             time.innerText = "Time: " + parseTime(event.startTime, event.endTime)
 
             var desc = document.createElement("div")
-            desc.setAttribute("class","desc")
+            desc.setAttribute("class", "desc")
 
             var eventDesc = document.createElement("div")
-            eventDesc.innerText = event.eventDesc
+            eventDesc.innerText = "Event Description :" + event.eventDesc
+            
+            var organizer = document.createElement("div")
+            organizer.innerText = "Organizer: " + event.organizer
 
             card.appendChild(eventName)
             card.appendChild(hr)
@@ -113,6 +121,7 @@ Promise.all([initialContentLoaded(), getData('/getData/events/5')])
             card.appendChild(time)
             cardHolder.appendChild(card)
             desc.appendChild(eventDesc)
+            desc.appendChild(organizer)
             cardHolder.appendChild(desc)
             previousEvents.appendChild(cardHolder)
 

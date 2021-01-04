@@ -12,21 +12,21 @@
 </head>
 
 <body>
-    <nav class="navbar">
-        <a href="/">Home</a>
-        <a id="request-link" href="/my-requests">My Requests</a>
-        <a id="approval-link" href="/my-approvals">My Approvals</a>
-        <div class="dropdown">
-          <button id="drop" class="dropbtn" onclick="myFunction()">#userName
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content" id="myDropdown">
-            <a id="add-or-delete" href="/manage">ADD OR DELETE MEMBERS</a>
-            <a href="/change-password">CHANGE PASSWORD</a>
-            <a href="/logout"><u>SIGN OUT</u></a>
-          </div>
-        </div>
-      </nav>
+  <nav class="navbar">
+    <a href="/">Home</a>
+    <a id="request-link" href="/my-requests">My Requests</a>
+    <a id="approval-link" href="/my-approvals">My Approvals</a>
+    <div class="dropdown">
+      <button id="drop" class="dropbtn" onclick="myFunction()">#userName
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content" id="myDropdown">
+        <a id="add-or-delete" href="/manage">Manage Users</a>
+        <a href="/change-password">Change Password</a>
+        <a class="warning" href="/logout">Sign Out</a>
+      </div>
+    </div>
+  </nav>
     <div class="mainContainer">
       <div id="newreq-holder">
         <a href="/new-request" id="newreq">New request </a>
