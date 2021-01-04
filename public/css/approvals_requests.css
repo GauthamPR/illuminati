@@ -108,6 +108,20 @@ body{
 .denied{
   background-color:#c5240f;
 }
+
+#popup-holder{
+  position:fixed;
+  display: none;
+  text-align: center;
+  width: 100%;
+  top: 50px;
+}
+#popup{
+  border:1px solid black;
+  display: inline-block;
+  padding:10px;
+
+}
 /* Responsive columns */
 @media screen and (max-width: 600px)
  {
