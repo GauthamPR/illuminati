@@ -255,7 +255,7 @@ module.exports = function (app) {
             requestID: requestID,
             response: req.body[requestID]
         })
-        .then(message=>res.redirect('/my-approvals'))
+        .then(message=>res.status(200).json({message: "Approved"}))
     });
 
     app.route('/success')
