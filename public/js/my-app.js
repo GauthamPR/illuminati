@@ -236,14 +236,14 @@ function showPopup(info){
 function toggleBlock(element){  
     
     element.classList.toggle("loading");
-    if(element.value == "Approve") {
+    if(element.innerText == "Approve") {
         if(!element.disabled)
             element.innerText = "Approving...";
         else
             element.innerText = "Approve";
         element.disabled = !element.disabled; 
 
-    } else if(element.value=="Deny") {
+    } else if(element.innerText == "Deny") {
         if(!element.disabled)
             element.innerText = "Denying..." ;
         else
