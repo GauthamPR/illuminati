@@ -215,10 +215,18 @@ function showPopup(info){
     var popupHolder = document.getElementById("popup-holder");
     var popup = document.getElementById("popup");
     if(info.success){
-        popup.innerText = info.message;
-        popup.classList.add("success");
-        timeOut = 1000;
-    }else{
+        if(info.order=="approve") {
+            popup.innerText = info.message;
+            popup.classList.add("success");
+            timeOut = 1000;
+        }
+        else if (info.order=="deny"){
+            popup.innerText = info.message;
+            popup.classList.add("color");
+            timeOut = 1000;
+        }
+    }
+    else{
         popup.innerText = info.error;
         popup.classList.add("fail");
         timeOut = 3000;
@@ -236,14 +244,14 @@ function showPopup(info){
 function toggleBlock(element){  
     
     element.classList.toggle("loading");
-    if(element.value == "Approve") {
+    if(element.innerText == "Approve") {
         if(!element.disabled)
             element.innerText = "Approving...";
         else
             element.innerText = "Approve";
         element.disabled = !element.disabled; 
 
-    } else if(element.value=="Deny") {
+    } else if(element.innerText == "Deny") {
         if(!element.disabled)
             element.innerText = "Denying..." ;
         else

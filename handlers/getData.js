@@ -21,6 +21,7 @@ module.exports = {
                             eventName: request.eventName,
                             eventDesc: request.eventDesc,
                             status: request.status,
+                            organizer: request.organizer,
                             approved_by: [],
                             denied_by: null
                         }
@@ -73,6 +74,7 @@ module.exports = {
                         eventName: request.eventName,
                         eventDesc: request.eventDesc,
                         status: request.status,
+                        organizer: request.organizer,
                         approved_by: [],
                         denied_by: null
 
@@ -120,6 +122,7 @@ module.exports = {
                         eventName: request.eventName,
                         eventDesc: request.eventDesc,
                         status: request.status,
+                        organizer: request.organizer,
                         approved_by: []
                     }
                     if(request.historyOfApproval.length != 0){
@@ -163,6 +166,7 @@ module.exports = {
                         eventName: request.eventName,
                         eventDesc: request.eventDesc,
                         status: request.status,
+                        organizer: request.organizer,
                         approved_by: []
                     };
                     if(request.historyOfApproval.length != 0){
@@ -211,6 +215,7 @@ module.exports = {
                         eventName: request.eventName,
                         eventDesc: request.eventDesc,
                         status: request.status,
+                        organizer: request.organizer,
                         approved_by: []
                     }
                     if(request.historyOfApproval.length != 0){
