@@ -1,5 +1,5 @@
 body{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:sans-serif;
 }
 .row{
     display: grid;
@@ -21,7 +21,7 @@ main{
     font-size: 20px;
 }
 .user{
-    background-color: silver;
+    background-color: rgb(192, 211, 245);
 }
 section{
     margin-bottom: 90px;
@@ -38,3 +38,19 @@ section{
     display: inline-block;
     padding:10px;
   }
+
+  /* Responsive columns */
+@media screen and (max-width: 600px)
+{
+    div.headbar  {  
+        display: none;
+         }
+    
+    .row{
+        padding: 10px 10px;
+        grid-template-columns: 2fr;
+        grid-gap: 10px 5px;
+        justify-items: left;
+    }
+
+ }
