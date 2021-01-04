@@ -35,12 +35,17 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         appButton.setAttribute("name",jsonData.id)
         appButton.innerText="Approve"
         appButton.setAttribute("value","approve")
+        appButton.setAttribute("onclick","postRequest(this)")
+        appButton.classList.add("permissionButton")
 
         var denyButton=document.createElement("button")
         denyButton.setAttribute("type","submit")
         denyButton.setAttribute("name",jsonData.id)
         denyButton.innerText="Deny"
         denyButton.setAttribute("value","deny")
+        denyButton.setAttribute("onclick","postRequest(this)")
+        denyButton.classList.add("permissionButton")
+
        
 
         var desc=document.createElement("div")
@@ -86,7 +91,9 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         
         var button=document.createElement("button") 
         button.setAttribute("type","button")
-        button.setAttribute("class","accordion")
+        button.classList.add("accordion")
+        
+
       
         var section=document.createElement("div")
         section.setAttribute("class","section")
@@ -202,4 +209,77 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 })
 .catch((err)=>{
     console.log(err);
+})
+
+function toggleBlock(){
+    /*
+    var submitButton = document.getElementById("submit-button");
+    submitButton.classList.toggle("loading");
+    if(!submitButton.disabled)
+        submitButton.setAttribute("value","Submitting...");
+    else
+    submitButton.setAttribute("value","Submit");
+    submitButton.disabled = !submitButton.disabled; */
+} 
+
+function postRequest(reqInfo){
+    return new Promise((resolve, reject)=>{
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', reqInfo.url);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function(){
+            if(xhr.status === 200){
+                var response = JSON.parse(xhr.response);
+                resolve({success: true, message: response.message, url: response.redirectLink})
+            }else if(xhr.status === 406){
+                var response = JSON.parse(xhr.response);
+                resolve({success: false, error: response.error})
+            }else{
+                reject(xhr.response);
+            }
+        }
+        var body = (reqInfo.body.map(e=>e.join("=")).join("&"));
+        xhr.send(body);
+    })
+}
+function postRequest(element) {
+    toggleBlock();
+    
+    var date         = document.getElementById("date").value;
+    var startTime    = document.getElementById("startTime").value;
+    var endTime      = document.getElementById("endTime").value;
+    var hallNo       = document.getElementById("hallno").value;
+    var eventName    = document.getElementById("eventname").value;
+    var eventDesc    = document.getElementById("eventdesc").value;
+    var reqInfo     = {
+        url: "/new-request",
+        body: [
+            ["eventDate", date],
+            ["startTime", startTime],
+            ["endTime", endTime],
+            ["hallNumber", hallNo],
+            ["eventName", eventName],
+            ["eventDesc", eventDesc]
+        ]
+    } 
+    postRequest(reqInfo)
+    .then(response=>{
+        if(!response.success)
+            toggleBlock();
+        showPopup(response);
+    })
+    .catch((response)=>{
+        showPopup({success: false, error: "Unrecognised Response"})
+    })
+    console.log(element);
+}
+
+
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    var myapprovalForm = document.getElementById("pending-holder");
+    myapprovalForm.addEventListener("submit", event=>{
+        event.preventDefault();
+    })
+   
 })
