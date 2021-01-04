@@ -223,8 +223,8 @@ module.exports = function (app) {
     })
     .post(auth.ensureAuthenticated, (req, res)=>{
         console.log(req.body);
-        var requestID = Object.getOwnPropertyNames(req.body)[0];
-        if(req.body[requestID] == "delete"){
+        var requestID = req.body.name;
+        if(req.body.value == "delete"){
             requestService.del(requestID)
             .then(()=>res.status(200).json({redirectLink: '/my-requests', message: "Message deleted successfully"}))
         }
