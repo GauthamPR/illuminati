@@ -24,7 +24,6 @@ Promise.all([initialContentLoaded(), getData('/getData/halls')])
         option.setAttribute("value",hallno.number)
         option.innerText=hallno.name
         hallNo.appendChild(option)
-        console.log(hallno)
     })
 })
 

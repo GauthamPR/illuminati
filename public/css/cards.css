@@ -11,7 +11,7 @@ section{
 .row-holder{
   display:grid;
   grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-  column-gap: 20px;
+  column-gap: 30px;
   row-gap: 30px;
 }
 .headbar{
@@ -21,12 +21,11 @@ section{
 body {
   font-family: Verdana;
 }
-
-
-
 .card-holder{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   position: relative;
   overflow: hidden;
+  border-radius: 20px;
 }
 .collapse{
   z-index: -100;
@@ -35,20 +34,19 @@ body {
 }
 /* Style the counter cards */
 .card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 25px;
   text-align: left;
   letter-spacing :1px;
-  background-color: #db4141;
+  background-color: #41dbdb;
   min-height: 250px;
+  padding-top: 10px;
 }
 
 .desc{
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 25px;
   text-align: left;
   letter-spacing :1px;
-  background-color: #db4141;
+  background-color: #41be2f;
   min-height: 250px;
   position: absolute;
   top:0;

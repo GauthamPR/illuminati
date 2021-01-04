@@ -31,7 +31,6 @@ function parseTime(start, end) {
 Promise.all([initialContentLoaded(), getData('/getData/events/5')])
     .then(data => data[1])
     .then(jsonObject => {
-        console.log(jsonObject)
         var upcomingEvents = document.getElementById("upcoming-events")
         var previousEvents = document.getElementById("previous-events")
         jsonObject.upcoming.forEach(event => {

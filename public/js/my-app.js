@@ -291,7 +291,6 @@ function pRequest(element) {
     .catch((response)=>{
         showPopup({success: false, error: "Unrecognised Response"})
     })
-    console.log(element);
 }
 
 

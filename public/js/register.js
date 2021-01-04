@@ -31,8 +31,6 @@ Promise.all([initialContentLoaded(), getData('/getData/supervisors')])
         option.innerText=supervisor.name
         sv.appendChild(option)
     })
-
-
 })
 
   .catch((err)=>{
