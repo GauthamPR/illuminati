@@ -108,6 +108,9 @@ body{
 .denied{
   background-color:#c5240f;
 }
+.loading{
+  opacity:0.7;
+}
 /* Responsive columns */
 @media screen and (max-width: 600px)
  {

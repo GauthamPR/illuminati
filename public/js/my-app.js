@@ -35,7 +35,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         appButton.setAttribute("name",jsonData.id)
         appButton.innerText="Approve"
         appButton.setAttribute("value","approve")
-        appButton.setAttribute("onclick","postRequest(this)")
+        appButton.setAttribute("onclick","pRequest(this)")
         appButton.classList.add("permissionButton")
 
         var denyButton=document.createElement("button")
@@ -43,7 +43,7 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
         denyButton.setAttribute("name",jsonData.id)
         denyButton.innerText="Deny"
         denyButton.setAttribute("value","deny")
-        denyButton.setAttribute("onclick","postRequest(this)")
+        denyButton.setAttribute("onclick","pRequest(this)")
         denyButton.classList.add("permissionButton")
 
        
@@ -210,16 +210,46 @@ Promise.all([initialContentLoaded(), getData('/getData/user-approvals')])
 .catch((err)=>{
     console.log(err);
 })
+function showPopup(info){
+    var timeOut;
+    var popupHolder = document.getElementById("popup-holder");
+    var popup = document.getElementById("popup");
+    if(info.success){
+        popup.innerText = info.message;
+        popup.classList.add("success");
+        timeOut = 1000;
+    }else{
+        popup.innerText = info.error;
+        popup.classList.add("fail");
+        timeOut = 3000;
+    }
+    popup.classList.add("fadeIn");
+    popupHolder.style.display = "block";
+    setTimeout(()=>{
+        popupHolder.style.display = "none";
+        popup.classList.remove("fail");
+        if(info.url)
+            window.location.replace(info.url)
+    }, timeOut);
+}
 
-function toggleBlock(){
-    /*
-    var submitButton = document.getElementById("submit-button");
-    submitButton.classList.toggle("loading");
-    if(!submitButton.disabled)
-        submitButton.setAttribute("value","Submitting...");
-    else
-    submitButton.setAttribute("value","Submit");
-    submitButton.disabled = !submitButton.disabled; */
+function toggleBlock(element){  
+    
+    element.classList.toggle("loading");
+    if(element.value == "Approve") {
+        if(!element.disabled)
+            element.innerText = "Approving...";
+        else
+            element.innerText = "Approve";
+        element.disabled = !element.disabled; 
+
+    } else if(element.value=="Deny") {
+        if(!element.disabled)
+            element.innerText = "Denying..." ;
+        else
+            element.innerText = "Deny" ;
+        element.disabled = !element.disabled;  
+    }
 } 
 
 function postRequest(reqInfo){
@@ -242,30 +272,21 @@ function postRequest(reqInfo){
         xhr.send(body);
     })
 }
-function postRequest(element) {
-    toggleBlock();
+function pRequest(element) {
+    toggleBlock(element);
     
-    var date         = document.getElementById("date").value;
-    var startTime    = document.getElementById("startTime").value;
-    var endTime      = document.getElementById("endTime").value;
-    var hallNo       = document.getElementById("hallno").value;
-    var eventName    = document.getElementById("eventname").value;
-    var eventDesc    = document.getElementById("eventdesc").value;
-    var reqInfo     = {
-        url: "/new-request",
+    
+    var reqInfo = {
+        url: "/my-approvals",
         body: [
-            ["eventDate", date],
-            ["startTime", startTime],
-            ["endTime", endTime],
-            ["hallNumber", hallNo],
-            ["eventName", eventName],
-            ["eventDesc", eventDesc]
+            ["name", element.name],
+            ["value", element.value]
         ]
     } 
     postRequest(reqInfo)
     .then(response=>{
         if(!response.success)
-            toggleBlock();
+            toggleBlock(element);
         showPopup(response);
     })
     .catch((response)=>{
