@@ -209,7 +209,7 @@ module.exports = {
                     newUser.save((err)=>{
                         if(err) console.error(err);
                         user.remove();
-                        resolve("Approved User");
+                        resolve({accepted: true, message: user.name + " is now your subordinate"});;
                     })
                 })
 
@@ -217,7 +217,7 @@ module.exports = {
                 customModel.unapprovedUsers.findById(userID, (err, user)=>{
                     if(err) console.error(err);
                     user.remove();
-                    resolve("User Removed");
+                    resolve({accepted: false, message: "Rejected " + user.name + " from being your subordinate"});
                 })
             }else{
                 reject("Undefined response");
@@ -305,7 +305,7 @@ module.exports = {
                     ])
                     .then(()=>{
                         user.remove();
-                        resolve("Deleted User");
+                        resolve({replaced: false, message: "Deleted " + user.name + "'s account"});
                     })
                 })
             }else if(response.order === ""){

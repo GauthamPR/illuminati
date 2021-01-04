@@ -200,19 +200,21 @@ module.exports = function (app) {
     })
     app.route('/manage/unapproved')
     .post(auth.ensureAuthenticated, (req, res)=>{
-        var userID = Object.getOwnPropertyNames(req.body)[0];
-        userService.updateUnapproved({id: userID, order: req.body[userID]})
-        .then(()=>{
-            res.redirect('/manage');
+        var userID = req.body.name;
+        userService.updateUnapproved({id: userID, order: req.body.value})
+        .then(response=>{
+            response.redirectLink = "/manage";
+            res.status(200).json(response);
         })
         .catch(err=>showError(req, res, err))
     })
     app.route('/manage/subordinates')
     .post(auth.ensureAuthenticated, (req, res)=>{
-        var userID = Object.getOwnPropertyNames(req.body)[0];
-        userService.del({id:userID, order: req.body[userID]})
-        .then(()=>{
-            res.redirect('/manage');
+        var userID = req.body.name;
+        userService.del({id:userID, order: req.body.value})
+        .then(response=>{
+            response.redirectLink = "/manage";
+            res.status(200).json(response);
         })
         .catch(err=>showError(req, res, err))
     })
@@ -226,7 +228,7 @@ module.exports = function (app) {
         var requestID = req.body.name;
         if(req.body.value == "delete"){
             requestService.del(requestID)
-            .then(()=>res.status(200).json({redirectLink: '/my-requests', message: "Message deleted successfully"}))
+            .then(()=>res.status(200).json({redirectLink: '/my-requests', message: "Request Deleted!"}))
         }
     })
 
@@ -237,7 +239,7 @@ module.exports = function (app) {
     .post(auth.ensureAuthenticated, (req, res) => {
         requestService.saveRequest(req.body, req.user)
         .then((message) => {
-            res.status(200).json({redirectLink: '/my-requests', message: "Requested message submitted successfully"});
+            res.status(200).json({redirectLink: '/my-requests', message: "Request Created!"});
         })
         .catch(err=>{
             console.log(err)
@@ -256,7 +258,12 @@ module.exports = function (app) {
             requestID: requestID,
             response: req.body.value
         })
-        .then(message=>res.status(200).json({redirectLink: "/my-approvals", message: "Approved"}))
+        .then(message=>{
+            if(message == "approved")
+                res.status(200).json({redirectLink: "/my-approvals", order: "approve", message: "Request Approved!"})
+            else
+                res.status(200).json({redirectLink: "/my-approvals", order: "deny", message: "Request Denied!"})
+        })
     });
 
     app.route('/success')
